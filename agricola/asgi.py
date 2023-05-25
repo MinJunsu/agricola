@@ -17,13 +17,19 @@ from django.core.asgi import get_asgi_application
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'agricola.settings')
 
 application = ProtocolTypeRouter({
-    "http": get_asgi_application(),
-    "websocket": AllowedHostsOriginValidator(
-        AuthMiddlewareStack(
-            URLRouter(
+    "http": {
+        "asgi_app": get_asgi_application(),
+        "port": 8000,
+    },
+    "websocket": {
+        "asgi_app": AllowedHostsOriginValidator(
+            AuthMiddlewareStack(
+                URLRouter(
                 []
+                )
             )
-        )
-    )
+        ),
+        "port": 433,
+    }
 })
 

@@ -1,4 +1,6 @@
 import logging
+
+from asgiref.sync import async_to_sync
 from channels.generic.websocket import WebsocketConsumer
 
 
@@ -10,6 +12,9 @@ class ChatConsumer(WebsocketConsumer):
         self.logger = logging.getLogger(__name__)
 
     async def connect(self):
+        async_to_sync(self.channel_layer.group_add)(
+
+        )
         await self.accept()
 
     def disconnect(self, close_code):

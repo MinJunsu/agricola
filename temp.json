@@ -1,0 +1,121 @@
+{
+  "turn": 0,
+  "round": 0,
+  "phase": 2,
+  "action_on_round": [
+    {
+      "action": "CARD_01",
+      "player": "Player 1",
+      "is_kid": false
+    },
+    {
+      "action": "CARD_02",
+      "player": "Player 2",
+      "is_kid": false
+    },
+    {
+      "action": "CARD_05",
+      "player": "Player 3",
+      "is_kid": false
+    }
+  ],
+  "common_resources": {
+    "wood": 0,
+    "clay": 0,
+    "reed": 0,
+    "stone": 0,
+    "grain": 0,
+    "vegetable": 0,
+    "sheep": 0,
+    "boar": 0,
+    "cattle": 0,
+    "food": 0,
+    "family": 0,
+    "room": 0,
+    "fence": 0
+  },
+  "players": [
+    {
+      "name": "Player 1",
+      "avatar": "",
+      "resources": {
+        "pig": 0,
+        "cow": 0
+      },
+      "job_cards": [
+        {
+          "number": "JOB_01",
+          "name": "CARD Name",
+          "image": "https://i.imgur.com/1Q2QXem.png",
+          "is_use": true
+        }
+      ],
+      "main_facility_cards": [
+        {
+          "number": "MAIN_FACILITY_01",
+          "name": "CARD Name",
+          "image": "https://i.imgur.com/1Q2QXem.png",
+          "is_use": false
+        }
+      ],
+      "sub_facility_cards": [
+        {
+          "number": "MAIN_FACILITY_01",
+          "name": "CARD Name",
+          "image": "https://i.imgur.com/1Q2QXem.png",
+          "is_use": false
+        }
+      ],
+      "fields": [
+        {
+          "type": "room",
+          "position": [0, 0],
+          "fences": [],
+          "in": {
+            "family": 1,
+            "kid": 0,
+            "sheep": 0,
+            "cattle": 0,
+            "boar": 0
+          }
+        }
+      ],
+      "fences": [
+        [0, 0],
+        [0, 1]
+      ]
+    },
+    {
+      "name": "Player 2",
+      "resources": {
+        "wood": 0,
+        "clay": 0,
+        "reed": 0,
+        "stone": 0,
+        "grain": 0,
+        "vegetable": 0,
+        "sheep": 0,
+        "boar": 0,
+        "cattle": 0,
+        "food": 0,
+        "family": 0,
+        "room": 0,
+        "fence": 0
+      }
+    },
+    {
+      "name": "Player 3",
+      "resources": {
+        "pig": 0,
+        "cow": 0
+      }
+    },
+    {
+      "name": "Player 4",
+      "resources": {
+        "pig": 0,
+        "cow": 0
+      }
+    }
+  ]
+}
