@@ -3,7 +3,6 @@ from channels.generic.websocket import WebsocketConsumer
 
 class GameConsumer(WebsocketConsumer):
     def connect(self):
-        print('connect')
         self.accept()
 
     def disconnect(self, close_code):
