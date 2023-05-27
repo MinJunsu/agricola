@@ -6,9 +6,13 @@ class Player(Base):
     _name: str
     _resource: Resource
 
-    def __init__(self, name):
+    def __init__(
+            self,
+            name: str = "",
+            resource: dict = None,
+    ):
         self._name = name
-        self._resource = Resource()
+        self._resource = Resource.from_dict(**resource) if resource else Resource()
 
     # 플레이어 행동 처리 (카드 드로우, 카드 사용, 자원 사용 등)
     # 만약 행동이 종료될 경우 True, 종료되지 않을 경우 False를 반환한다. (카드의 속성에 따라 다르게 처리)

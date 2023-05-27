@@ -10,11 +10,8 @@ class Base:
 
     # dict 형태의 자원 정보를 객체를 생성
     @classmethod
-    def from_dict(cls, **kwargs):
-        instance = cls()
-        for key, value in kwargs.items():
-            instance.__setattr__(key, value)
-        return instance
+    def from_dict(cls, *args, **kwargs):
+        return cls(**kwargs)
 
     # 객체에 존재하는 자원을 가져오는 함수
     def get(self, key: str):

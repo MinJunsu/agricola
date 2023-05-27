@@ -28,21 +28,18 @@ class Game(Base):
             turn: int = 0,
             round: int = 0,
             phase: int = 0,
-            players: List[Player] = None,
-            action_on_round: List[Action] = None,
-            common_resources: Resource = Resource()
+            common_resources: dict = None,
+            players: List[dict] = None,
+            action_on_round: List[dict] = None,
     ):
-        if players is None:
-            players = []
-        if action_on_round is None:
-            action_on_round = []
+        # 게임 정보 초기화
         self._first = first
         self._turn = turn
         self._round = round
         self._phase = phase
-        self._players = players
-        self._action_on_round = action_on_round
-        self._common_resources = common_resources
+        self._players = [Player.from_dict(**player) for player in players] if players else []
+        self._action_on_round = [Action.from_dict(**action) for action in action_on_round] if action_on_round else []
+        self._common_resources = Resource.from_dict(**common_resources) if common_resources else Resource()
 
     def play(self, card_number: str) -> dict:
         # 플레이어의 종료 여부 확인
