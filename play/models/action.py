@@ -13,6 +13,6 @@ class Action(Base):
             player: str,
             is_kid: bool = False
     ):
-        self._card = Card.get_card_by_card_number(card_number)
+        self._card = card_number
         self._player = player
         self._is_kid = is_kid

@@ -41,9 +41,29 @@ class Game(Base):
         self._action_on_round = [Action.from_dict(**action) for action in action_on_round] if action_on_round else []
         self._common_resources = Resource.from_dict(**common_resources) if common_resources else Resource()
 
-    def play(self, card_number: str) -> dict:
-        # 플레이어의 종료 여부 확인
-        is_done = self.player_action(card_number=card_number)
+    # TODO: initialize 실행 시 플레이어에 대한 정보를 어느정도 넣어줄지에 대해서 수정하기
+    @classmethod
+    def initialize(cls, players: List[str]) -> 'Game':
+        instance = cls()
+        players_instance = [Player(name=player) for player in players]
+        instance.set("players", players_instance)
+        return instance
+
+    @staticmethod
+    def parse_command(command: dict) -> tuple[str, str, int]:
+        action: str = command['action']
+        card_number: str = command['number']
+        player: int = command['player']
+        return action, card_number, player
+
+    def play(self, command: dict) -> dict:
+        # 기본 값 설정
+        is_done: bool = False
+        action, card_number, player = self.parse_command(command)
+
+        if action == 'action' and self._turn == int(player):
+            # 플레이어의 종료 여부 확인
+            is_done = self.player_action(card_number=card_number)
 
         # 게임의 정보를 바탕으로 게임의 턴을 변경
         self.change_turn_and_round_and_phase(is_done=is_done)

@@ -6,11 +6,19 @@ class Base:
     # 자원 객체를 dict 형태로 변환
     def to_dict(self) -> dict:
         items = self.__dict__.items()
-        return {key[1:]: value if not isinstance(value, Base) else value.to_dict() for key, value in items}
+        dictionary = dict()
+        for key, value in items:
+            if isinstance(value, Base):
+                dictionary[key[1:]] = value.to_dict()
+            elif type(value) is list:
+                dictionary[key[1:]] = [item.to_dict() if isinstance(item, Base) else item for item in value]
+            else:
+                dictionary[key[1:]] = value
+        return dictionary
 
     # dict 형태의 자원 정보를 객체를 생성
     @classmethod
-    def from_dict(cls, *args, **kwargs):
+    def from_dict(cls, **kwargs):
         return cls(**kwargs)
 
     # 객체에 존재하는 자원을 가져오는 함수
