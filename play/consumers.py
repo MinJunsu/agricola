@@ -6,6 +6,7 @@ from play.models.game import Game
 
 class GameConsumer(AsyncJsonWebsocketConsumer):
     id: int
+    group_name: str
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -15,8 +16,10 @@ class GameConsumer(AsyncJsonWebsocketConsumer):
 
     async def connect(self):
         self.id = self.scope['url_route']['kwargs']['pk']
+        self.group_name = f"game_{self.id}"
+
         await self.channel_layer.group_add(
-            f"game_{self.id}",
+            self.group_name,
             self.channel_name
         )
 
@@ -28,7 +31,7 @@ class GameConsumer(AsyncJsonWebsocketConsumer):
 
     async def disconnect(self, code):
         await self.channel_layer.group_discard(
-            f"game_{self.id}",
+            self.group_name,
             self.channel_name
         )
 
@@ -43,7 +46,7 @@ class GameConsumer(AsyncJsonWebsocketConsumer):
         game.play(content)
 
         await self.channel_layer.group_send(
-            f"game_{self.id}",
+            self.group_name,
             {
                 'type': 'game_message',
                 'message': {

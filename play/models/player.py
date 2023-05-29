@@ -1,10 +1,14 @@
+from typing import List
+
 from play.models.base import Base
+from play.models.card import Card
 from play.models.resource import Resource
 
 
 class Player(Base):
     _name: str
     _resource: Resource
+    _card: List[Card]
 
     def __init__(
             self,

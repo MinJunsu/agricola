@@ -39,9 +39,10 @@ INSTALLED_APPS = [
 
     # Django Third Party Apps
     'daphne',
-    
+
     # Django Local Apps
     'chat.apps.ChatConfig',
+    'play.apps.PlayConfig',
 ]
 
 MIDDLEWARE = [

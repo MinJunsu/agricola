@@ -1,3 +1,8 @@
-from django.db import models
+class ChatMessage:
+    def __init__(self, message, user, timestamp):
+        self.message = message
+        self.user = user
+        self.timestamp = timestamp
 
-# Create your models here.
+    def __str__(self):
+        return str(self.__dict__)
