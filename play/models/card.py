@@ -3,22 +3,40 @@ from core.models import Base
 
 class Card(Base):
     _card_number: str
+    _type: str
     _name: str
     _image: str
+    _cost: dict
+    _score: int
+    _condition: str
+    _command: str
     _description: str
     _is_use: bool
     _command: str
 
+
     def __init__(
             self,
             card_number: str,
+            type: str,
             name: str,
             image: str,
+            cost: dict,
+            score: int,
+            condition: str,
+            command: str,
+            description: str,
             is_use: bool = False
     ):
         self._card_number = card_number
+        self._type = type
         self._name = name
         self._image = image
+        self._cost = cost
+        self._score = score
+        self._condition = condition
+        self._command = command
+        self._description = description
         self._is_use = is_use
 
     # card 데이터베이스로부터 카드 정보를 가져온다.
