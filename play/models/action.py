@@ -16,3 +16,4 @@ class Action(Base):
         self._card = card_number
         self._player = player
         self._is_kid = is_kid
+

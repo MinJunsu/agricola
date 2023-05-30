@@ -42,9 +42,14 @@ INSTALLED_APPS = [
     'corsheaders',
 
     # Django Local Apps
+    'accounts.apps.AccountsConfig',
     'chat.apps.ChatConfig',
     'play.apps.PlayConfig',
+    'cards.apps.CardsConfig',
+    'games.apps.GamesConfig',
 ]
+
+AUTH_USER_MODEL = 'accounts.User'
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
