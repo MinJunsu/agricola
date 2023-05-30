@@ -1,3 +1,6 @@
+from core.formatter import dict_to_json
+
+
 class ChatMessage:
     def __init__(self, message, user, timestamp):
         self.message = message

@@ -1,8 +1,8 @@
 from typing import List
 
 from core.const import FIRST_CHANGE_CARD_NUMBER, LAST_TURN
+from core.models import Base
 from play.models.action import Action
-from play.models.base import Base
 from play.models.player import Player
 from play.models.resource import Resource
 

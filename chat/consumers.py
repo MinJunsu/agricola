@@ -32,6 +32,7 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
             self.group_name,
             self.channel_name
         )
+
         await self.accept()
 
     async def disconnect(self, code):
@@ -62,9 +63,9 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
             return await self.channel_layer.group_send(
                 self.group_name,
                 {
-                    'type': 'message',
-                    'message': {
-                        'data': str(message)
+                    "type": "message",
+                    "message": {
+                        "data": eval(str(message))
                     }
                 }
             )

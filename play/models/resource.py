@@ -1,4 +1,4 @@
-from play.models.base import Base
+from core.models import Base
 
 
 class Resource(Base):
