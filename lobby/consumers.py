@@ -1,5 +1,3 @@
-from typing import List
-
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
 
 from core.redis import connection
@@ -48,6 +46,11 @@ class LobbyConsumer(AsyncJsonWebsocketConsumer):
                 }
             )
 
+            await self.channel_layer.group_add(
+                f"room_{new_room.get('room_id')}",
+                self.channel_name,
+            )
+
             self.redis.lpush(LOBBY, str(new_room.to_lobby_dict()))
             self.redis.sadd(f"rooms:{new_room.get('room_id')}:participant", self.user_id)
 
@@ -57,9 +60,7 @@ class LobbyConsumer(AsyncJsonWebsocketConsumer):
             LOBBY,
             {
                 "type": "message",
-                "message": {
-                    "rooms": rooms,
-                }
+                "message": rooms,
             }
         )
 
@@ -87,7 +88,11 @@ class RoomConsumer(AsyncJsonWebsocketConsumer):
     room_id: int
     room: str
 
-    def connect(self):
+    def __init__(self):
+        super().__init__()
+        self.redis = connection()
+
+    async def connect(self):
         self.room_id = self.scope['url_route']['kwargs']['pk']
         self.user_id = self.scope['url_route']['kwargs']['user_id']
         self.room = f"room_{self.room_id}"
@@ -97,12 +102,60 @@ class RoomConsumer(AsyncJsonWebsocketConsumer):
             self.channel_name
         )
 
-        self.accept()
+        await self.accept()
 
-    def disconnect(self, code):
-        self.channel_layer.group_discard(
+        self.redis.set(f"users:{self.user_id}:room", self.room_id)
+        self.redis.sadd(f"rooms:{self.room_id}:participant", self.user_id)
+
+        rooms = list(map(self.room_in_participant, self.redis.lrange(LOBBY, 0, -1)))
+        room = Room.from_dict(**eval(self.redis.get(f"rooms:{self.room_id}:info")))
+
+        await self.channel_layer.group_send(
+            LOBBY,
+            {
+                "type": "message",
+                "message": rooms,
+            }
+        )
+
+        await self.send_json(room.to_dict())
+
+        return await self.channel_layer.group_send(
+            self.room,
+            {
+                "type": "message",
+                "message": room.to_dict()
+            }
+        )
+
+    async def disconnect(self, code):
+        await self.channel_layer.group_discard(
             self.room,
             self.channel_name
+        )
+
+        self.redis.srem(f"rooms:{self.room_id}:participant", self.user_id)
+        if self.redis.scard(f"rooms:{self.room_id}:participant") == 0:
+            room_id = self.redis.get(f"users:{self.user_id}:room")
+            room = Room.from_dict(**eval(self.redis.get(f"rooms:{room_id}:info")))
+            self.redis.lrem(LOBBY, 0, str(room.to_lobby_dict()))
+
+        room = Room.from_dict(**eval(self.redis.get(f"rooms:{self.room_id}:info")))
+        await self.channel_layer.group_send(
+            self.room,
+            {
+                "type": "message",
+                "message": room.to_dict()
+            }
+        )
+
+        rooms = list(map(self.room_in_participant, self.redis.lrange(LOBBY, 0, -1)))
+        return await self.channel_layer.group_send(
+            LOBBY,
+            {
+                "type": "message",
+                "message": rooms,
+            }
         )
 
     def receive_json(self, content, **kwargs):
@@ -110,3 +163,9 @@ class RoomConsumer(AsyncJsonWebsocketConsumer):
 
     async def message(self, event) -> None:
         return await self.send_json(event['message'])
+
+    def room_in_participant(self, room: str) -> dict:
+        return {
+            **eval(room),
+            "participant": self.redis.scard(f"rooms:{eval(room).get('room_id')}:participant")
+        }

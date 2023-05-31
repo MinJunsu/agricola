@@ -2,7 +2,6 @@ from typing import List
 
 from core.models import Base
 from play.models.card import Card
-from play.models.effect import Effect
 from play.models.field import Field, FieldType
 from play.models.resource import Resource
 
@@ -11,7 +10,7 @@ class Player(Base):
     _name: str
     _resource: Resource
     _card: List[Card]
-    _effects: List[Effect]
+    _effects: List[None]
     _fields: List[Field]
 
     def __init__(
