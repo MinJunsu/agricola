@@ -79,9 +79,9 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
         return await self.send("invalid command")
 
     @staticmethod
-    async def parse_command(message: dict) -> tuple[str, str]:
-        command: str = message.get('command', 'sync')
-        message: str = message.get('message', None)
+    async def parse_command(commands: dict) -> tuple[str, str]:
+        command: str = commands.get('command', 'sync')
+        message: str = commands.get('message', None)
         return command, message
 
     async def message(self, event):
