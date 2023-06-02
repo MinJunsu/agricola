@@ -314,3 +314,5 @@ INITIAL_ROUND_CARDS = {
         }
     ],
 }
+
+NO_USER = -1

@@ -3,7 +3,7 @@ from core.models import Base
 
 class Card(Base):
     _card_number: str
-    _type: str
+    _card_type: str
     _name: str
     _image: str
     _cost: dict
@@ -12,13 +12,11 @@ class Card(Base):
     _command: str
     _description: str
     _is_use: bool
-    _command: str
-
 
     def __init__(
             self,
             card_number: str,
-            type: str,
+            card_type: str,
             name: str,
             image: str,
             cost: dict,
@@ -29,7 +27,7 @@ class Card(Base):
             is_use: bool = False
     ):
         self._card_number = card_number
-        self._type = type
+        self._card_type = card_type
         self._name = name
         self._image = image
         self._cost = cost

@@ -42,15 +42,18 @@ class GameConsumer(AsyncJsonWebsocketConsumer):
     # }
     async def receive_json(self, content, **kwargs):
         data = self.redis.get(f"game_{self.id}")
-        game = Game.from_dict(**eval(data.decode("utf-8")))
-        game.play(content)
+
+        game = Game.from_dict(**eval(data))
+        played_data = game.play(content)
+
+        self.redis.set(f"game_{self.id}", str(played_data))
 
         await self.channel_layer.group_send(
             self.group_name,
             {
                 'type': 'game_message',
                 'message': {
-                    'data': str(game.to_dict())
+                    'data': str(played_data)
                 }
             }
         )

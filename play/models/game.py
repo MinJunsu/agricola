@@ -1,6 +1,7 @@
+from enum import Enum
 from typing import List
 
-from core.const import FIRST_CHANGE_CARD_NUMBER, LAST_TURN
+from core.const import FIRST_CHANGE_CARD_NUMBER, LAST_TURN, NO_USER
 from core.models import Base
 from play.models.action import Action
 from play.models.player import Player
@@ -12,6 +13,12 @@ from play.models.round_card import RoundCard
 first: 게임의 선 플레이어
 turn: 게임의 턴
 """
+
+
+class CommandType(Enum):
+    ACTION = 'action'
+    ADDITIONAL = 'additional'
+    ALWAYS = 'always'
 
 
 class Game(Base):
@@ -54,17 +61,19 @@ class Game(Base):
     # TODO: initialize 실행 시 플레이어에 대한 정보를 어느정도 넣어줄지에 대해서 수정하기
     @classmethod
     def initialize(cls, players: List[str]) -> 'Game':
+        from cards.models import Card as MCard
         instance = cls()
         players_instance = [Player(name=player) for player in players]
         instance.set("players", players_instance)
         instance.increment_resource()
+        cards = MCard.objects.filter(card_type='job').values_list('card_number', flat=True)
         return instance
 
     @staticmethod
-    def parse_command(command: dict) -> tuple[str, str, int]:
-        action: str = command['action']
-        card_number: str = command['number']
-        player: int = command['player']
+    def parse_command(command: dict) -> tuple[CommandType, str, int]:
+        action: CommandType = command.get('action', CommandType.ACTION)
+        card_number: str = command.get('number', None)
+        player: int = command.get('player', NO_USER)
         return action, card_number, player
 
     def play(self, command: dict) -> dict:
@@ -72,9 +81,15 @@ class Game(Base):
         is_done: bool = False
         action, card_number, player = self.parse_command(command)
 
-        if action == 'action' and self._turn == int(player):
+        if action == CommandType.ACTION and self._turn == int(player):
             # 플레이어의 종료 여부 확인
             is_done = self.player_action(card_number=card_number)
+
+        elif action == CommandType.ADDITIONAL and self._turn == int(player):
+            pass
+
+        elif action == CommandType.ALWAYS:
+            pass
 
         # 게임의 정보를 바탕으로 게임의 턴을 변경
         self.change_turn_and_round_and_phase(is_done=is_done)
@@ -82,6 +97,7 @@ class Game(Base):
         # 만약 선을 번경하는 카드를 낸 경우 게임의 선을 변경
         if card_number == FIRST_CHANGE_CARD_NUMBER:
             self._first = self._turn
+
         return self.to_dict()
 
     def player_action(self, card_number: str) -> bool:
