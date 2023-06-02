@@ -208,19 +208,19 @@ INITIAL_ROUND_CARDS = {
     1: [
         {
             'card_number': "ACTION_01",
-            'is_stacked': True,
+            'is_stacked': False,
             'count': 0,
             'resource': None
         },
         {
             'card_number': "ACTION_02",
-            'is_stacked': True,
+            'is_stacked': False,
             'count': 0,
             'resource': None
         },
         {
             'card_number': "ACTION_03",
-            'is_stacked': True,
+            'is_stacked': False,
             'count': 0,
             'resource': None
         },
@@ -244,13 +244,13 @@ INITIAL_ROUND_CARDS = {
         },
         {
             'card_number': "ACTION_06",
-            'is_stacked': True,
+            'is_stacked': False,
             'count': 0,
             'resource': None
         },
         {
             'card_number': "ACTION_07",
-            'is_stacked': True,
+            'is_stacked': False,
             'count': 0,
             'resource': None
         }
@@ -294,13 +294,13 @@ INITIAL_ROUND_CARDS = {
     5: [
         {
             'card_number': "ACTION_12",
-            'is_stacked': True,
+            'is_stacked': False,
             'count': 0,
             'resource': None
         },
         {
             'card_number': "ACTION_13",
-            'is_stacked': True,
+            'is_stacked': False,
             'count': 0,
             'resource': None
         }
@@ -308,7 +308,7 @@ INITIAL_ROUND_CARDS = {
     6: [
         {
             'card_number': "ACTION_14",
-            'is_stacked': True,
+            'is_stacked': False,
             'count': 0,
             'resource': None
         }
