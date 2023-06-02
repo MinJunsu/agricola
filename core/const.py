@@ -206,7 +206,32 @@ INITIAL_BASE_CARDS = [
 # TODO: 라운드 카드 시작 정보 값
 INITIAL_ROUND_CARDS = {
     1: [
-
+        {
+            'card_number': "ACTION_01",
+            'is_stacked': True,
+            'count': 0,
+            'resource': None
+        },
+        {
+            'card_number': "ACTION_02",
+            'is_stacked': True,
+            'count': 0,
+            'resource': None
+        },
+        {
+            'card_number': "ACTION_03",
+            'is_stacked': True,
+            'count': 0,
+            'resource': None
+        },
+        {
+            'card_number': "ACTION_04",
+            'is_stacked': True,
+            'count': 1,
+            'resource': {
+                'sheep': 0,
+            }
+        }
     ],
     2: [
 
