@@ -10,17 +10,14 @@ from play.models.resource import Resource
 class Action(Base):
     _card: Card
     _player: Player
-    _is_kid: bool
 
     def __init__(
             self,
             card_number: str,
             player: Player,
-            is_kid: bool = False
     ):
         self._card = card_number
         self._player = player
-        self._is_kid = is_kid
 
     # "
     def run(self, players: List[Player], common_resources: Resource, turn: int, card_number: str):
@@ -63,6 +60,20 @@ class Action(Base):
         command.replace('resource', 'grain')
         command.replace('count', '1')
         command.replace('position', "[0, 0]")
+
+        # 농장 확장
+        command = """
+        """
+
+        # 집 개조, 농장 개조
+        command = """
+            require(resource, count), require(resource, count), self._player.remodeling(self._player)
+        """
+        command.replace('resource', 'reed')
+        command.replace('count', '1')
+        if self._player.get("_room_type") == "WOOD":
+            command.replace('resource', 'wood')
+            command.replace('count', 'self._field.get')
 
 
         is_done = all(eval(command))
