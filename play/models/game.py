@@ -61,6 +61,14 @@ class Game(Base):
         self._common_resources = Resource.from_dict(
             **common_resources) if common_resources else Resource.initialize_common_resource()
 
+    @property
+    def action_cards(self) -> List[RoundCard]:
+        return [*self._base_cards, *self._round_cards]
+
+    def get_action_card_by_card_number(self, card_number: str) -> RoundCard | None:
+        cards = list(filter(lambda card: card.get('card_number') == card_number, self.action_cards))
+        return cards[0] if cards else None
+
     # TODO: initialize 실행 시 플레이어에 대한 정보를 어느정도 넣어줄지에 대해서 수정하기
     @classmethod
     def initialize(cls, players: List[str]) -> 'Game':
@@ -109,6 +117,7 @@ class Game(Base):
         print(card_number)
         command = redis.hget("commands", card_number)
         print(command)
+        print(self.get_action_card_by_card_number(card_number=card_number).to_dict())
         # is_done = self._players[self._turn].action(card_number=card_number)
         #
         # # TODO: is_kid 처리 -> Player 정보 중 자식이 있으며, 자식이 움직이는 턴인지 확인
