@@ -1,5 +1,53 @@
 from core.models import Base
 
+RESOURCE_SCORE_BOARD = {
+    'grain': {
+        0: -1,
+        1: 1,
+        2: 1,
+        3: 1,
+        4: 2,
+        5: 2,
+        6: 3,
+        7: 3,
+    },
+    'vegetable': {
+        0: -1,
+        1: 1,
+        2: 2,
+        3: 3,
+        4: 4,
+    },
+    'sheep': {
+        0: -1,
+        1: 1,
+        2: 1,
+        3: 1,
+        4: 2,
+        5: 2,
+        6: 3,
+        7: 3,
+    },
+    'boar': {
+        0: -1,
+        1: 1,
+        2: 1,
+        3: 2,
+        4: 2,
+        5: 3,
+        6: 3,
+        7: 4,
+    },
+    'cattle': {
+        0: -1,
+        1: 1,
+        2: 2,
+        3: 2,
+        4: 3,
+        5: 3,
+        6: 4,
+    },
+}
 
 class Resource(Base):
     _wood: int
@@ -52,4 +100,8 @@ class Resource(Base):
 
     # TODO: 점수 계산 수식 작성
     def calculate_score(self):
-        pass
+        keys = RESOURCE_SCORE_BOARD.keys()
+        score = 0
+        for key in keys:
+            score += RESOURCE_SCORE_BOARD[key][min(self.get(key), 8)]
+        return score
