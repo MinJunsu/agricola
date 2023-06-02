@@ -107,5 +107,141 @@ INITIAL_BASE_CARDS = [
         'resource': {
             'wood': 0,
         }
-    }
+    },
+    {
+        'card_number': "BASE_03",
+        'is_stacked': False,
+        'count': 0,
+        'resource': {
+            'reed': 1,
+            'food': 1,
+            'stone': 1,
+        }
+    },
+    {
+        'card_number': "BASE_04",
+        'is_stacked': True,
+        'count': 2,
+        'resource': {
+            'clay': 0,
+        }
+    },
+    {
+        'card_number': "BASE_05",
+        'is_stacked': True,
+        'count': '교습',
+        'resource': {
+            'wood': 0,
+        }
+    },
+    {
+        'card_number': "BASE_06",
+        'is_stacked': True,
+        'count': 1,
+        'resource': {
+            'food': 0,
+        }
+    },
+    {
+        'card_number': "BASE_07",
+        'is_stacked': True,
+        'count': '농장 확장',
+        'resource': {
+            'food': 0,
+        }
+    },
+    {
+        'card_number': "BASE_08",
+        'is_stacked': True,
+        'count': '회합 장소',
+        'resource': {
+            'food': 0,
+        }
+    },
+    {
+        'card_number': "BASE_09",
+        'is_stacked': False,
+        'count': 0,
+        'resource': {
+            'grain': 1,
+        }
+    },
+    {
+        'card_number': "BASE_10",
+        'is_stacked': True,
+        'count': '농지',
+        'resource': {
+            'food': 0,
+        }
+    },
+    {
+        'card_number': "BASE_11",
+        'is_stacked': True,
+        'count': '교습',
+        'resource': {
+            'food': 0,
+        }
+    },
+    {
+        'card_number': "BASE_12",
+        'is_stacked': False,
+        'count': 0,
+        'resource': {
+            'food': 2,
+        }
+    },
+    {
+        'card_number': "BASE_13",
+        'is_stacked': True,
+        'count': 3,
+        'resource': {
+            'wood': 0,
+        }
+    },
+    {
+        'card_number': "BASE_14",
+        'is_stacked': True,
+        'count': 1,
+        'resource': {
+            'clay': 0,
+        }
+    },
+    {
+        'card_number': "BASE_15",
+        'is_stacked': True,
+        'count': 1,
+        'resource': {
+            'reed': 0,
+        }
+    },
+    {
+        'card_number': "BASE_16",
+        'is_stacked': True,
+        'count': 1,
+        'resource': {
+            'food': 0,
+        }
+    },
 ]
+
+# TODO: 라운드 카드 시작 정보 값
+INITIAL_ROUND_CARDS = {
+    1: [
+
+    ],
+    2: [
+
+    ],
+    3: [
+
+    ],
+    4: [
+
+    ],
+    5: [
+
+    ],
+    6: [
+
+    ],
+}
