@@ -44,8 +44,9 @@ class Game(Base):
         self._phase = phase
         self._players = [Player.from_dict(**player) for player in players] if players else []
         self._actions = [Action.from_dict(**action) for action in actions] if actions else []
-        self._base_cards = [RoundCard.from_dict(**base_card) for base_card in
-                            base_cards] if base_cards else RoundCard.initialize()
+        self._base_cards = [
+            RoundCard.from_dict(**base_card) for base_card in
+            base_cards] if base_cards else RoundCard.initialize_base_cards()
         self._round_cards = [RoundCard.from_dict(**round_card) for round_card in round_cards] if round_cards else []
         self._common_resources = Resource.from_dict(
             **common_resources) if common_resources else Resource.initialize_common_resource()
@@ -56,6 +57,7 @@ class Game(Base):
         instance = cls()
         players_instance = [Player(name=player) for player in players]
         instance.set("players", players_instance)
+        instance.increment_resource()
         return instance
 
     @staticmethod
@@ -93,8 +95,21 @@ class Game(Base):
                 is_kid=False
             )
         )
-
         return is_done
+
+    def increment_resource(self) -> None:
+        # TODO: 공개되지 않은 자원 카드의 경우 자원을 늘려주지 않게 처리
+        stacked_cards = filter(lambda c: c.get('is_stacked'), [*self._base_cards, *self._round_cards])
+        for card in stacked_cards:
+            # 리소스 dict 으로부터 특정한 리소스 키를 가져옴.
+            resource = list(card.get("resource").keys())[-1]
+            common_resource_count = self._common_resources.get(resource)
+
+            # 리소스가 스택되는 상황이며, 공용 자원에서 충분히 배분해줄 수 있는 상황일 때 자원 변경
+            if card.get('is_stacked') and common_resource_count - card.get('count') > 0:
+                # 리소스는 추가해주고,
+                card.get('resource')[resource] += card.get('count')
+                self._common_resources.set(resource, common_resource_count - card.get('count'))
 
     def change_turn_and_round_and_phase(self, is_done: bool) -> None:
         if not is_done:

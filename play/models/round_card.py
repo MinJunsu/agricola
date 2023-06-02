@@ -1,5 +1,6 @@
 from typing import List
 
+from core.const import INITIAL_BASE_CARDS
 from core.models import Base
 
 
@@ -25,5 +26,5 @@ class RoundCard(Base):
         self._additional_action = additional_action
 
     @classmethod
-    def initialize(cls) -> List['RoundCard']:
-        pass
+    def initialize_base_cards(cls) -> List['RoundCard']:
+        return [cls(**card) for card in INITIAL_BASE_CARDS]

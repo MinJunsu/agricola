@@ -70,19 +70,8 @@ INITIAL_COMMON_RESOURCE = {
 }
 
 INITIAL_PLAYER_RESOURCE = {
-    "wood": 0,
-    "clay": 0,
-    "reed": 0,
-    "stone": 0,
-    "grain": 0,
-    "vegetable": 0,
-    "sheep": 0,
-    "boar": 0,
-    "cattle": 0,
-    "food": 0,
     "family": 2,
     "room": 2,
-    "fence": 0
 }
 
 LAST_TURN = 3
@@ -128,11 +117,9 @@ INITIAL_BASE_CARDS = [
     },
     {
         'card_number': "BASE_05",
-        'is_stacked': True,
-        'count': '교습',
-        'resource': {
-            'wood': 0,
-        }
+        'is_stacked': False,
+        'count': 0,
+        'resource': None,
     },
     {
         'card_number': "BASE_06",
@@ -144,19 +131,15 @@ INITIAL_BASE_CARDS = [
     },
     {
         'card_number': "BASE_07",
-        'is_stacked': True,
-        'count': '농장 확장',
-        'resource': {
-            'food': 0,
-        }
+        'is_stacked': False,
+        'count': 0,
+        'resource': None,
     },
     {
         'card_number': "BASE_08",
-        'is_stacked': True,
-        'count': '회합 장소',
-        'resource': {
-            'food': 0,
-        }
+        'is_stacked': False,
+        'count': 0,
+        'resource': None,
     },
     {
         'card_number': "BASE_09",
@@ -168,19 +151,15 @@ INITIAL_BASE_CARDS = [
     },
     {
         'card_number': "BASE_10",
-        'is_stacked': True,
-        'count': '농지',
-        'resource': {
-            'food': 0,
-        }
+        'is_stacked': False,
+        'count': 0,
+        'resource': None,
     },
     {
         'card_number': "BASE_11",
-        'is_stacked': True,
-        'count': '교습',
-        'resource': {
-            'food': 0,
-        }
+        'is_stacked': False,
+        'count': 0,
+        'resource': None,
     },
     {
         'card_number': "BASE_12",

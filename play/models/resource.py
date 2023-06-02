@@ -17,6 +17,7 @@ class Resource(Base):
     _family: int
     _room: int
     _fence: int
+    _barn: int
 
     """
     자원 초기화 함수: 자원의 초기 값을 설정 한다.
@@ -36,7 +37,8 @@ class Resource(Base):
             food: int = 0,
             family: int = 0,
             room: int = 0,
-            fence: int = 0
+            fence: int = 0,
+            barn: int = 0
     ):
         self._wood = wood
         self._clay = clay
@@ -51,6 +53,7 @@ class Resource(Base):
         self._family = family
         self._room = room
         self._fence = fence
+        self._barn = barn
 
     @classmethod
     def initialize_common_resource(cls):
