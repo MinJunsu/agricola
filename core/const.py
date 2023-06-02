@@ -234,18 +234,83 @@ INITIAL_ROUND_CARDS = {
         }
     ],
     2: [
-
+        {
+            'card_number': "ACTION_05",
+            'is_stacked': True,
+            'count': 1,
+            'resource': {
+                'stone': 0,
+            }
+        },
+        {
+            'card_number': "ACTION_06",
+            'is_stacked': True,
+            'count': 0,
+            'resource': None
+        },
+        {
+            'card_number': "ACTION_07",
+            'is_stacked': True,
+            'count': 0,
+            'resource': None
+        }
     ],
     3: [
-
+        {
+            'card_number': "ACTION_08",
+            'is_stacked': True,
+            'count': 1,
+            'resource': {
+                'boar': 0,
+            }
+        },
+        {
+            'card_number': "ACTION_09",
+            'is_stacked': False,
+            'count': 0,
+            'resource': {
+                'vegetable': 1,
+            }
+        }
     ],
     4: [
-
+        {
+            'card_number': "ACTION_10",
+            'is_stacked': True,
+            'count': 1,
+            'resource': {
+                'stone': 0,
+            }
+        },
+        {
+            'card_number': "ACTION_11",
+            'is_stacked': True,
+            'count': 1,
+            'resource': {
+                'cattle': 0,
+            }
+        }
     ],
     5: [
-
+        {
+            'card_number': "ACTION_12",
+            'is_stacked': True,
+            'count': 0,
+            'resource': None
+        },
+        {
+            'card_number': "ACTION_13",
+            'is_stacked': True,
+            'count': 0,
+            'resource': None
+        }
     ],
     6: [
-
+        {
+            'card_number': "ACTION_14",
+            'is_stacked': True,
+            'count': 0,
+            'resource': None
+        }
     ],
 }

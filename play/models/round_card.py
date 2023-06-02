@@ -28,3 +28,8 @@ class RoundCard(Base):
     @classmethod
     def initialize_base_cards(cls) -> List['RoundCard']:
         return [cls(**card) for card in INITIAL_BASE_CARDS]
+
+    # 각 주기에 알맞는 라운드 카드를 넣은 배열을 리턴한다.
+    @classmethod
+    def initialize_round_cards(cls) -> List['RoundCard']:
+        pass
