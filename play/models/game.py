@@ -5,6 +5,7 @@ from core.models import Base
 from play.models.action import Action
 from play.models.player import Player
 from play.models.resource import Resource
+from play.models.round_card import RoundCard
 
 """
 게임 정보를 담는 클래스
@@ -19,7 +20,8 @@ class Game(Base):
     _round: int
     _phase: int
     _players: List[Player]
-    _action_on_round: List[Action]
+    _actions: List[Action]
+    _round_cards: List[RoundCard]
     _common_resources: Resource
 
     def __init__(
@@ -30,7 +32,8 @@ class Game(Base):
             phase: int = 0,
             common_resources: dict = None,
             players: List[dict] = None,
-            action_on_round: List[dict] = None,
+            actions: List[dict] = None,
+            round_cards: List[dict] = None,
     ):
         # 게임 정보 초기화
         self._first = first
@@ -38,7 +41,8 @@ class Game(Base):
         self._round = round
         self._phase = phase
         self._players = [Player.from_dict(**player) for player in players] if players else []
-        self._action_on_round = [Action.from_dict(**action) for action in action_on_round] if action_on_round else []
+        self._actions = [Action.from_dict(**action) for action in actions] if actions else []
+        self._round_cards = [RoundCard.from_dict(**round_card) for round_card in round_cards] if round_cards else []
         self._common_resources = Resource.from_dict(**common_resources) if common_resources else Resource()
 
     # TODO: initialize 실행 시 플레이어에 대한 정보를 어느정도 넣어줄지에 대해서 수정하기

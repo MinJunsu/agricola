@@ -10,7 +10,6 @@ class Player(Base):
     _name: str
     _resource: Resource
     _card: List[Card]
-    _effects: List[None]
     _fields: List[Field]
 
     def __init__(
@@ -36,7 +35,7 @@ class Player(Base):
     def harvest(self):
         pass
 
-    def create_farm(self, position: List[int]) -> bool:
+    def create_farm(self, position: int) -> bool:
         farm = Field(filed_type=FieldType.FARM, position=position, is_in={})
         self._fields.append(farm)
         return True
