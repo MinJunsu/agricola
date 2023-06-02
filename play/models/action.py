@@ -2,7 +2,6 @@ from typing import List
 
 from core.models import Base
 from play.models.card import Card
-from play.models.effect import Effect
 from play.models.player import Player
 from play.models.resource import Resource
 
@@ -63,7 +62,6 @@ class Action(Base):
         command.replace('resource', 'grain')
         command.replace('count', '1')
         command.replace('position', "[0, 0]")
-
 
         is_done = all(eval(command))
 
