@@ -129,10 +129,8 @@ INITIAL_BASE_CARDS = [
     {
         'card_number': "BASE_05",
         'is_stacked': True,
-        'count': '교습',
-        'resource': {
-            'wood': 0,
-        }
+        'count': 0,
+        'resource': None
     },
     {
         'card_number': "BASE_06",
@@ -145,18 +143,14 @@ INITIAL_BASE_CARDS = [
     {
         'card_number': "BASE_07",
         'is_stacked': True,
-        'count': '농장 확장',
-        'resource': {
-            'food': 0,
-        }
+        'count': 0,
+        'resource': None
     },
     {
         'card_number': "BASE_08",
         'is_stacked': True,
-        'count': '회합 장소',
-        'resource': {
-            'food': 0,
-        }
+        'count': 0,
+        'resource': None
     },
     {
         'card_number': "BASE_09",
@@ -169,18 +163,14 @@ INITIAL_BASE_CARDS = [
     {
         'card_number': "BASE_10",
         'is_stacked': True,
-        'count': '농지',
-        'resource': {
-            'food': 0,
-        }
+        'count': 0,
+        'resource': None
     },
     {
         'card_number': "BASE_11",
         'is_stacked': True,
-        'count': '교습',
-        'resource': {
-            'food': 0,
-        }
+        'count': 0,
+        'resource': None
     },
     {
         'card_number': "BASE_12",
@@ -227,21 +217,111 @@ INITIAL_BASE_CARDS = [
 # TODO: 라운드 카드 시작 정보 값
 INITIAL_ROUND_CARDS = {
     1: [
-
+        {
+            'card_number': "ACTION_01",
+            'is_stacked': True,
+            'count': 0,
+            'resource': None
+        },
+        {
+            'card_number': "ACTION_02",
+            'is_stacked': True,
+            'count': 0,
+            'resource': None
+        },
+        {
+            'card_number': "ACTION_03",
+            'is_stacked': True,
+            'count': 0,
+            'resource': None
+        },
+        {
+            'card_number': "ACTION_04",
+            'is_stacked': True,
+            'count': 1,
+            'resource': {
+                'sheep': 0,
+            }
+        }
     ],
     2: [
-
+        {
+            'card_number': "ACTION_05",
+            'is_stacked': True,
+            'count': 1,
+            'resource': {
+                'stone': 0,
+            }
+        },
+        {
+            'card_number': "ACTION_06",
+            'is_stacked': True,
+            'count': 0,
+            'resource': None
+        },
+        {
+            'card_number': "ACTION_07",
+            'is_stacked': True,
+            'count': 0,
+            'resource': None
+        }
     ],
     3: [
-
+        {
+            'card_number': "ACTION_08",
+            'is_stacked': True,
+            'count': 1,
+            'resource': {
+                'boar': 0,
+            }
+        },
+        {
+            'card_number': "ACTION_09",
+            'is_stacked': False,
+            'count': 0,
+            'resource': {
+                'vegetable': 1,
+            }
+        }
     ],
     4: [
-
+        {
+            'card_number': "ACTION_10",
+            'is_stacked': True,
+            'count': 1,
+            'resource': {
+                'stone': 0,
+            }
+        },
+        {
+            'card_number': "ACTION_11",
+            'is_stacked': True,
+            'count': 1,
+            'resource': {
+                'cattle': 0,
+            }
+        }
     ],
     5: [
-
+        {
+            'card_number': "ACTION_12",
+            'is_stacked': True,
+            'count': 0,
+            'resource': None
+        },
+        {
+            'card_number': "ACTION_13",
+            'is_stacked': True,
+            'count': 0,
+            'resource': None
+        }
     ],
     6: [
-
+        {
+            'card_number': "ACTION_14",
+            'is_stacked': True,
+            'count': 0,
+            'resource': None
+        }
     ],
 }
