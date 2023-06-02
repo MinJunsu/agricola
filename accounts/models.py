@@ -7,8 +7,9 @@ class User(AbstractUser):
 
 
 class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     nickname = models.CharField(max_length=100)
-    avatar = models.CharField(max_length=100)
+    avatar = models.ImageField(max_length=100)
     plays = models.IntegerField(default=0)
     wins = models.IntegerField(default=0)
     loses = models.IntegerField(default=0)
@@ -16,21 +17,19 @@ class Profile(models.Model):
     updatedAt = models.DateTimeField(auto_now=True)
 
     @staticmethod
-    def create(nickname, avatar):
-        return Profile.objects.create(nickname=nickname, avatar=avatar)
+    def create(user, nickname, avatar):
+        return Profile.objects.create(user=user, nickname=nickname, avatar=avatar)
 
     @staticmethod
     def follow(user, friend):
         if Friend.objects.filter(user=user, friend=friend).exists():
             raise RelationAlreadyExistException()
         Friend.objects.create(user=user, friend=friend)
-        Friend.objects.create(user=friend, friend=user)
 
     @staticmethod
     def unfollow(user, friend):
         if not Friend.objects.filter(user=user, friend=friend).exists():
             raise RelationDoesNotExistException()
-        Friend.objects.filter(user=user, friend=friend).delete()
         Friend.objects.filter(user=friend, friend=user).delete()
 
 
