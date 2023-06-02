@@ -1,3 +1,5 @@
+from core.const import RESOURCE_SCORE_BOARD, INITIAL_COMMON_RESOURCE, \
+    INITIAL_PLAYER_RESOURCE
 from core.models import Base
 
 
@@ -15,6 +17,7 @@ class Resource(Base):
     _family: int
     _room: int
     _fence: int
+    _barn: int
 
     """
     자원 초기화 함수: 자원의 초기 값을 설정 한다.
@@ -34,7 +37,8 @@ class Resource(Base):
             food: int = 0,
             family: int = 0,
             room: int = 0,
-            fence: int = 0
+            fence: int = 0,
+            barn: int = 0
     ):
         self._wood = wood
         self._clay = clay
@@ -49,7 +53,25 @@ class Resource(Base):
         self._family = family
         self._room = room
         self._fence = fence
+        self._barn = barn
+
+    @classmethod
+    def initialize_common_resource(cls):
+        common_resource = cls(**INITIAL_COMMON_RESOURCE)
+        common_resource.remove('room')
+        common_resource.remove('fence')
+        common_resource.remove('barn')
+        common_resource.remove('family')
+        return common_resource
+
+    @classmethod
+    def initialize_player_resource(cls):
+        return cls(**INITIAL_PLAYER_RESOURCE)
 
     # TODO: 점수 계산 수식 작성
     def calculate_score(self):
-        pass
+        keys = RESOURCE_SCORE_BOARD.keys()
+        score = 0
+        for key in keys:
+            score += RESOURCE_SCORE_BOARD[key][min(self.get(key), 8)]
+        return score

@@ -2,22 +2,21 @@ from typing import List
 
 from core.models import Base
 from play.models.card import Card
-from play.models.effect import Effect
 from play.models.player import Player
 from play.models.resource import Resource
 
 
 class Action(Base):
-    _card: Card
-    _player: Player
+    _card_number: str
+    _turn: int
 
     def __init__(
             self,
             card_number: str,
-            player: Player,
+            turn: int,
     ):
         self._card = card_number
-        self._player = player
+        self._turn = turn
 
     # "
     def run(self, players: List[Player], common_resources: Resource, turn: int, card_number: str):
@@ -75,10 +74,7 @@ class Action(Base):
             command.replace('resource', 'wood')
             command.replace('count', 'self._field.get')
 
-
         is_done = all(eval(command))
-
-        [effect.check_effect(self._player, card_number, round=turn) for effect in self._player.get("effects")]
 
         pass
 
@@ -92,8 +88,4 @@ class Action(Base):
 
     def add(self, resource: str, value: int) -> bool:
         self._player.get("resources").set(resource, self._player.get("resources").get(resource) + value)
-        return True
-
-    def add_effect(self, conditions: List[str], effects: List[str]):
-        self._player.set("effects", self._player.get("effects").append(Effect(conditions, effects)))
         return True

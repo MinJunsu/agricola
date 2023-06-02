@@ -29,6 +29,9 @@ class Base:
     def set(self, key: str, value):
         self.__setattr__(f'_{key}', value)
 
+    def remove(self, key: str):
+        self.__delattr__(f'_{key}')
+
     def plus(self, key: str, value):
         prev_value = self.get(key)
         self.set(key, prev_value + value)

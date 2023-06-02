@@ -9,8 +9,7 @@ from play.models.resource import Resource
 class Player(Base):
     _name: str
     _resource: Resource
-    _card: List[Card]
-    _effects: List[None]
+    _cards: List[Card]
     _fields: List[Field]
 
     def __init__(
@@ -18,10 +17,12 @@ class Player(Base):
             name: str = "",
             resource: dict = None,
             fields: List[dict] = None,
+            cards: List[dict] = None,
     ):
         self._name = name
-        self._resource = Resource.from_dict(**resource) if resource else Resource()
+        self._resource = Resource.from_dict(**resource) if resource else Resource.initialize_player_resource()
         self._fields = [Field.from_dict(**field) for field in fields] if fields else Field.initialize()
+        self._cards = [Card.from_dict(**card) for card in cards] if cards else []
 
     # 플레이어 행동 처리 (카드 드로우, 카드 사용, 자원 사용 등)
     # 만약 행동이 종료될 경우 True, 종료되지 않을 경우 False를 반환한다. (카드의 속성에 따라 다르게 처리)
@@ -36,7 +37,7 @@ class Player(Base):
     def harvest(self):
         pass
 
-    def create_farm(self, position: List[int]) -> bool:
+    def create_farm(self, position: int) -> bool:
         farm = Field(filed_type=FieldType.FARM, position=position, is_in={})
         self._fields.append(farm)
         return True
