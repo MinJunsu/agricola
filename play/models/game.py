@@ -6,6 +6,7 @@ from play.models.action import Action
 from play.models.player import Player
 from play.models.resource import Resource
 from play.models.round_card import RoundCard
+import random
 
 """
 게임 정보를 담는 클래스
@@ -55,11 +56,24 @@ class Game(Base):
     @classmethod
     def initialize(cls, players: List[str]) -> 'Game':
         from cards.models import Card as MCard
+        job_cards = list(MCard.objects.filter(card_type='job').values_list('card_number', flat=True))
+        sub_cards = list(MCard.objects.filter(card_type='sub_fac').values_list('card_number', flat=True))
+        random.shuffle(job_cards)
+        random.shuffle(sub_cards)
+        
         instance = cls()
         players_instance = [Player(name=player) for player in players]
+        
+        for player in players_instance:
+            player_cards = job_cards[:7] + sub_cards[:7]
+            job_cards = job_cards[7:]
+            sub_cards = sub_cards[7:]
+            player.set("cards", player_cards)
+        
         instance.set("players", players_instance)
         instance.increment_resource()
-        cards = MCard.objects.filter(card_type='job').values_list('card_number', flat=True)
+        
+        
         return instance
 
     @staticmethod
