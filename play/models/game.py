@@ -98,8 +98,8 @@ class Game(Base):
         return is_done
 
     def increment_resource(self) -> None:
-        # TODO: 공개되지 않은 자원 카드의 경우 자원을 늘려주지 않게 처리
-        stacked_cards = filter(lambda c: c.get('is_stacked'), [*self._base_cards, *self._round_cards])
+        opend_round_cards = self._round_cards[:self._round]
+        stacked_cards = filter(lambda c: c.get('is_stacked'), [*self._base_cards, *opend_round_cards])
         for card in stacked_cards:
             # 리소스 dict 으로부터 특정한 리소스 키를 가져옴.
             resource = list(card.get("resource").keys())[-1]
