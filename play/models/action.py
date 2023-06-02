@@ -9,17 +9,14 @@ from play.models.resource import Resource
 class Action(Base):
     _card: Card
     _player: Player
-    _is_kid: bool
 
     def __init__(
             self,
             card_number: str,
             player: Player,
-            is_kid: bool = False
     ):
         self._card = card_number
         self._player = player
-        self._is_kid = is_kid
 
     # "
     def run(self, players: List[Player], common_resources: Resource, turn: int, card_number: str):
@@ -65,8 +62,6 @@ class Action(Base):
 
         is_done = all(eval(command))
 
-        [effect.check_effect(self._player, card_number, round=turn) for effect in self._player.get("effects")]
-
         pass
 
     # 카드를 낼 때 필요한 자원을 가져간다. -> 필요한 자원을 내는 것 뿐이므로 턴이 유지되는 것은 아님
@@ -79,8 +74,4 @@ class Action(Base):
 
     def add(self, resource: str, value: int) -> bool:
         self._player.get("resources").set(resource, self._player.get("resources").get(resource) + value)
-        return True
-
-    def add_effect(self, conditions: List[str], effects: List[str]):
-        self._player.set("effects", self._player.get("effects").append(Effect(conditions, effects)))
         return True

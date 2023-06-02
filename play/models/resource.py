@@ -1,53 +1,7 @@
+from core.const import RESOURCE_SCORE_BOARD, INITIAL_COMMON_RESOURCE, \
+    INITIAL_PLAYER_RESOURCE
 from core.models import Base
 
-RESOURCE_SCORE_BOARD = {
-    'grain': {
-        0: -1,
-        1: 1,
-        2: 1,
-        3: 1,
-        4: 2,
-        5: 2,
-        6: 3,
-        7: 3,
-    },
-    'vegetable': {
-        0: -1,
-        1: 1,
-        2: 2,
-        3: 3,
-        4: 4,
-    },
-    'sheep': {
-        0: -1,
-        1: 1,
-        2: 1,
-        3: 1,
-        4: 2,
-        5: 2,
-        6: 3,
-        7: 3,
-    },
-    'boar': {
-        0: -1,
-        1: 1,
-        2: 1,
-        3: 2,
-        4: 2,
-        5: 3,
-        6: 3,
-        7: 4,
-    },
-    'cattle': {
-        0: -1,
-        1: 1,
-        2: 2,
-        3: 2,
-        4: 3,
-        5: 3,
-        6: 4,
-    },
-}
 
 class Resource(Base):
     _wood: int
@@ -97,6 +51,14 @@ class Resource(Base):
         self._family = family
         self._room = room
         self._fence = fence
+
+    @classmethod
+    def initialize_common_resource(cls):
+        return cls(**INITIAL_COMMON_RESOURCE)
+
+    @classmethod
+    def initialize_player_resource(cls):
+        return cls(**INITIAL_PLAYER_RESOURCE)
 
     # TODO: 점수 계산 수식 작성
     def calculate_score(self):

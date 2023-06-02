@@ -47,3 +47,10 @@ class Field(Base):
             }
         )
         return [room1, room2]
+
+    def to_dict(self) -> dict:
+        return {
+            "filed_type": self._filed_type.value,
+            "position": self._position,
+            "is_in": self._is_in,
+        }

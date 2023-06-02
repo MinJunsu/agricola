@@ -21,6 +21,7 @@ class Game(Base):
     _phase: int
     _players: List[Player]
     _actions: List[Action]
+    _base_cards: List[RoundCard]
     _round_cards: List[RoundCard]
     _common_resources: Resource
 
@@ -33,6 +34,7 @@ class Game(Base):
             common_resources: dict = None,
             players: List[dict] = None,
             actions: List[dict] = None,
+            base_cards: List[dict] = None,
             round_cards: List[dict] = None,
     ):
         # 게임 정보 초기화
@@ -42,8 +44,11 @@ class Game(Base):
         self._phase = phase
         self._players = [Player.from_dict(**player) for player in players] if players else []
         self._actions = [Action.from_dict(**action) for action in actions] if actions else []
+        self._base_cards = [RoundCard.from_dict(**base_card) for base_card in
+                            base_cards] if base_cards else RoundCard.initialize()
         self._round_cards = [RoundCard.from_dict(**round_card) for round_card in round_cards] if round_cards else []
-        self._common_resources = Resource.from_dict(**common_resources) if common_resources else Resource()
+        self._common_resources = Resource.from_dict(
+            **common_resources) if common_resources else Resource.initialize_common_resource()
 
     # TODO: initialize 실행 시 플레이어에 대한 정보를 어느정도 넣어줄지에 대해서 수정하기
     @classmethod
