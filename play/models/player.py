@@ -23,6 +23,8 @@ FIELD_SCORE_BOARD = {
         5: 4,
     },
 }
+
+
 class Player(Base):
     _name: str
     _resource: Resource
@@ -79,12 +81,12 @@ class Player(Base):
         for card in self._card:
             score += card.score
         return score
-    
+
     def calculate_field_score(self) -> int:
         score = 0
         farm = 0
         cage = 0
-        
+
         for field in self._fields:
             if field.field_type == FieldType.ROOM:
                 if self._roomtype == "clay":
@@ -99,18 +101,18 @@ class Player(Base):
                     score += 1
                     cage += 1
             elif field.field_type == FieldType.FARM:
-                    farm += 1        
-                    
+                farm += 1
+
         keys = FIELD_SCORE_BOARD.keys()
         for key in keys:
             score += FIELD_SCORE_BOARD[key][min(self.get(key), 5)]
-            
+
         return score
 
     def calculate_score(self) -> int:
-            card_score = self.calculate_card_score()
-            field_score = self.calculate_field_score()
-            resource_score = self._resource.calculate_score()
+        card_score = self.calculate_card_score()
+        field_score = self.calculate_field_score()
+        resource_score = self._resource.calculate_score()
 
-            total_score = card_score + field_score + resource_score
-            return total_score
+        total_score = card_score + field_score + resource_score
+        return total_score

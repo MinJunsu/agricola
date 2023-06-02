@@ -52,9 +52,7 @@ class GameConsumer(AsyncJsonWebsocketConsumer):
             self.group_name,
             {
                 'type': 'game_message',
-                'message': {
-                    'data': str(played_data)
-                }
+                'message': played_data
             }
         )
 

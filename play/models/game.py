@@ -3,6 +3,7 @@ from typing import List
 
 from core.const import FIRST_CHANGE_CARD_NUMBER, LAST_TURN, NO_USER
 from core.models import Base
+from core.redis import connection
 from play.models.action import Action
 from play.models.player import Player
 from play.models.resource import Resource
@@ -52,9 +53,11 @@ class Game(Base):
         self._players = [Player.from_dict(**player) for player in players] if players else []
         self._actions = [Action.from_dict(**action) for action in actions] if actions else []
         self._base_cards = [
-            RoundCard.from_dict(**base_card) for base_card in
-            base_cards] if base_cards else RoundCard.initialize_base_cards()
-        self._round_cards = [RoundCard.from_dict(**round_card) for round_card in round_cards] if round_cards else []
+            RoundCard.from_dict(**base_card) for base_card in base_cards
+        ] if base_cards else RoundCard.initialize_base_cards()
+        self._round_cards = [
+            RoundCard.from_dict(**round_card) for round_card in round_cards
+        ] if round_cards else RoundCard.initialize_round_cards()
         self._common_resources = Resource.from_dict(
             **common_resources) if common_resources else Resource.initialize_common_resource()
 
@@ -70,25 +73,26 @@ class Game(Base):
         return instance
 
     @staticmethod
-    def parse_command(command: dict) -> tuple[CommandType, str, int]:
-        action: CommandType = command.get('action', CommandType.ACTION)
-        card_number: str = command.get('number', None)
-        player: int = command.get('player', NO_USER)
-        return action, card_number, player
+    def parse_command(command_str: dict) -> tuple[CommandType, str, int]:
+        command: CommandType = command_str.get('command', CommandType.ACTION)
+        card_number: str = command_str.get('card_number', None)
+        player: int = command_str.get('player', NO_USER)
+        return command, card_number, player
 
     def play(self, command: dict) -> dict:
         # 기본 값 설정
         is_done: bool = False
-        action, card_number, player = self.parse_command(command)
+        command, card_number, player = self.parse_command(command)
+        command = CommandType(command)
 
-        if action == CommandType.ACTION and self._turn == int(player):
+        if command == CommandType.ACTION and self._turn == int(player):
             # 플레이어의 종료 여부 확인
             is_done = self.player_action(card_number=card_number)
 
-        elif action == CommandType.ADDITIONAL and self._turn == int(player):
+        elif command == CommandType.ADDITIONAL and self._turn == int(player):
             pass
 
-        elif action == CommandType.ALWAYS:
+        elif command == CommandType.ALWAYS:
             pass
 
         # 게임의 정보를 바탕으로 게임의 턴을 변경
@@ -101,17 +105,22 @@ class Game(Base):
         return self.to_dict()
 
     def player_action(self, card_number: str) -> bool:
-        is_done = self._players[self._turn].action(card_number=card_number)
-
-        # TODO: is_kid 처리 -> Player 정보 중 자식이 있으며, 자식이 움직이는 턴인지 확인
-        self._action_on_round.append(
-            Action(
-                card_number=card_number,
-                player=self._players[self._turn].get('name'),
-                is_kid=False
-            )
-        )
-        return is_done
+        redis = connection()
+        print(card_number)
+        command = redis.hget("commands", card_number)
+        print(command)
+        # is_done = self._players[self._turn].action(card_number=card_number)
+        #
+        # # TODO: is_kid 처리 -> Player 정보 중 자식이 있으며, 자식이 움직이는 턴인지 확인
+        # self._action_on_round.append(
+        #     Action(
+        #         card_number=card_number,
+        #         player=self._players[self._turn].get('name'),
+        #         is_kid=False
+        #     )
+        # )
+        # return is_done
+        return False
 
     def increment_resource(self) -> None:
         opend_round_cards = self._round_cards[:self._round]

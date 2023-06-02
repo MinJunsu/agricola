@@ -16,31 +16,31 @@ class FieldType(Enum):
 # 6 7 8 9 10
 # 11 12 13 14 15
 class Field(Base):
-    _filed_type: FieldType
+    _field_type: FieldType
     _position: int
     _is_in: dict
 
     def __init__(
             self,
-            filed_type: FieldType,
+            field_type: FieldType,
             position: int,
             is_in: dict,
     ):
-        self._filed_type = filed_type
+        self._field_type = field_type
         self._position = position
         self._is_in = is_in
 
     @classmethod
     def initialize(cls) -> 'List[Field]':
         room1 = cls(
-            filed_type=FieldType.ROOM,
+            field_type=FieldType.ROOM,
             position=6,
             is_in={
                 "familly": 1,
             }
         )
         room2 = cls(
-            filed_type=FieldType.ROOM,
+            field_type=FieldType.ROOM,
             position=11,
             is_in={
                 "familly": 1,
@@ -50,7 +50,13 @@ class Field(Base):
 
     def to_dict(self) -> dict:
         return {
-            "filed_type": self._filed_type.value,
+            "field_type": self._field_type.value,
             "position": self._position,
             "is_in": self._is_in,
         }
+
+    @classmethod
+    def from_dict(cls, **kwargs):
+        field_type = kwargs.pop("field_type")
+        kwargs["field_type"] = FieldType(field_type)
+        return super().from_dict(**kwargs)
