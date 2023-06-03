@@ -16,6 +16,18 @@ async def main():
     # redis DB 전체 초기화
     redis.flushdb()
 
+    # ! 임시 코드 작성 시작
+    from cards.models import Card
+    redis = connection()
+    cards = Card.objects.all().values('card_number', 'command', 'name', 'score')
+    redis.hset('commands', mapping={card['card_number']: card['command'] for card in cards})
+    redis.hset('cards', mapping={card['card_number']: str({
+        'card_number': card['card_number'],
+        'name': card['name'],
+        'score': card['score']
+    }) for card in cards})
+    # ! 임시 코드 작성 끝
+
     game = await Game.initialize(["1", "2", "3", "4"])
     redis.set("game_3", str(game.to_dict()))
 
