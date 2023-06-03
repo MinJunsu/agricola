@@ -68,8 +68,11 @@ class Game(Base):
     # TODO: initialize 실행 시 플레이어에 대한 정보를 어느정도 넣어줄지에 대해서 수정하기
     @classmethod
     async def initialize(cls, players: List[str]) -> 'Game':
-        job_cards = await cls.get_cards('job')
-        sub_cards = await cls.get_cards('sub_fac')
+        redis = connection()
+        cards = redis.hkeys('cards')
+        t_card = redis.hget('cards', "JOB_01")
+        job_cards = list(filter(lambda card: "JOB" in card, cards))
+        sub_cards = list(filter(lambda card: "SUB_FAC" in card, cards))
         random.shuffle(job_cards)
         random.shuffle(sub_cards)
 
