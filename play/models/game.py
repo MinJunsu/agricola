@@ -95,7 +95,9 @@ class Game(Base):
 
         if command == CommandType.ACTION and self._turn == int(player):
             # 플레이어의 종료 여부 확인
-            is_done = self.player_action(card_number=card_number)
+            action = Action(card_number=card_number, turn=self._turn)
+            action.run(self._players, self.get_action_card_by_card_number(card_number=card_number))
+            # is_done = self.player_action(card_number=card_number)
 
         elif command == CommandType.ADDITIONAL and self._turn == int(player):
             pass
