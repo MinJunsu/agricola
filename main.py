@@ -12,6 +12,10 @@ async def main():
     from play.models.game import Game
 
     redis = connection()
+
+    # redis DB 전체 초기화
+    redis.flushdb()
+
     game = await Game.initialize(["1", "2", "3", "4"])
     redis.set("game_3", str(game.to_dict()))
 

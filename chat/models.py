@@ -1,11 +1,20 @@
-from core.formatter import dict_to_json
+from core.models import Base
 
 
-class ChatMessage:
-    def __init__(self, message, user, timestamp):
-        self.message = message
-        self.user = user
-        self.timestamp = timestamp
+class ChatMessage(Base):
+    _index: int
+    _message: str
+    _user_id: int
+    _timestamp: str
 
-    def __str__(self):
-        return str(self.__dict__)
+    def __init__(
+            self,
+            index: int,
+            message: str,
+            user_id: int,
+            timestamp: str
+    ):
+        self._index = index
+        self._message = message
+        self._user_id = user_id
+        self._timestamp = timestamp
