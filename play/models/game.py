@@ -1,4 +1,7 @@
+import random
 from typing import List
+
+from asgiref.sync import sync_to_async
 
 from core.const import FIRST_CHANGE_CARD_NUMBER, LAST_TURN
 from core.models import Base
@@ -6,7 +9,6 @@ from play.models.action import Action
 from play.models.player import Player
 from play.models.resource import Resource
 from play.models.round_card import RoundCard
-import random
 
 """
 게임 정보를 담는 클래스
@@ -54,26 +56,24 @@ class Game(Base):
 
     # TODO: initialize 실행 시 플레이어에 대한 정보를 어느정도 넣어줄지에 대해서 수정하기
     @classmethod
-    def initialize(cls, players: List[str]) -> 'Game':
-        from cards.models import Card as MCard
-        job_cards = list(MCard.objects.filter(card_type='job').values_list('card_number', flat=True))
-        sub_cards = list(MCard.objects.filter(card_type='sub_fac').values_list('card_number', flat=True))
+    async def initialize(cls, players: List[str]) -> 'Game':
+        job_cards = await cls.get_cards('job')
+        sub_cards = await cls.get_cards('sub_fac')
         random.shuffle(job_cards)
         random.shuffle(sub_cards)
-        
+
         instance = cls()
         players_instance = [Player(name=player) for player in players]
-        
+
         for player in players_instance:
             player_cards = job_cards[:7] + sub_cards[:7]
             job_cards = job_cards[7:]
             sub_cards = sub_cards[7:]
             player.set("cards", player_cards)
-        
+
         instance.set("players", players_instance)
         instance.increment_resource()
-        
-        
+
         return instance
 
     @staticmethod
@@ -135,3 +135,9 @@ class Game(Base):
             self._turn = 0
             self._round += 1
             return
+
+    @staticmethod
+    @sync_to_async
+    def get_cards(card_type: str):
+        from cards.models import Card
+        return list(Card.objects.filter(card_type=card_type).values_list('card_number', flat=True))

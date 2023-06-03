@@ -3,17 +3,9 @@ from core.models import Base
 
 class Card(Base):
     _card_number: str
-    _type: str
     _name: str
-    _image: str
-    _cost: dict
     _score: int
-    _condition: str
-    _command: str
-    _description: str
-    _is_use: bool
-    _command: str
-
+    _is_used: bool
 
     def __init__(
             self,

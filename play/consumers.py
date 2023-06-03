@@ -11,8 +11,6 @@ class GameConsumer(AsyncJsonWebsocketConsumer):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.redis = connection()
-        game = Game.initialize(["1", "2", "3", "4"])
-        self.redis.set("game_3", str(game.to_dict()))
 
     async def connect(self):
         self.id = self.scope['url_route']['kwargs']['pk']
