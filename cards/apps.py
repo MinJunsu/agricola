@@ -8,6 +8,7 @@ class CardsConfig(AppConfig):
     name = "cards"
 
     def ready(self):
+        super().ready()
         from .models import Card
         redis = connection()
         cards = Card.objects.all().values('card_number', 'command', 'name', 'score')

@@ -49,9 +49,9 @@ def user_create(email: str, nickname: Optional[str], avatar: Optional[str]):
             'email': email,
         }
     )
-
-    Profile.create(
-        user=user, nickname=nickname, avatar=avatar,
-    )
+    if created:
+        Profile.create(
+            user=user, nickname=nickname, avatar=avatar,
+        )
 
     return user
