@@ -9,6 +9,7 @@ from core.const import NO_USER
 from core.models import Base
 from core.redis import connection
 from play.models.action import Action
+from play.models.card import Card
 from play.models.player import Player
 from play.models.resource import Resource
 from play.models.round_card import RoundCard
@@ -77,7 +78,7 @@ class Game(Base):
     @classmethod
     async def initialize(cls, players: List[str]) -> 'Game':
         redis = connection()
-        cards = redis.hkeys('cards')
+        cards = redis.hvals('cards')
         job_cards = list(filter(lambda card: "JOB" in card, cards))
         sub_cards = list(filter(lambda card: "SUB_FAC" in card, cards))
         random.shuffle(job_cards)
@@ -90,7 +91,8 @@ class Game(Base):
             player_cards = job_cards[:7] + sub_cards[:7]
             job_cards = job_cards[7:]
             sub_cards = sub_cards[7:]
-            player.set("cards", player_cards)
+
+            player.set("cards", [Card.from_dict(**eval(card)) for card in player_cards])
 
         instance.set("players", players_instance)
         instance.increment_resource()
