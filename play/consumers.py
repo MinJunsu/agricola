@@ -1,6 +1,8 @@
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
+from deepdiff import DeepDiff
 
 from core.redis import connection
+from play.exception import IsNotPlayerTurnException
 from play.models.game import Game
 
 
@@ -42,15 +44,33 @@ class GameConsumer(AsyncJsonWebsocketConsumer):
         data = self.redis.get(f"game_{self.id}")
 
         game = Game.from_dict(**eval(data))
-        played_data = game.play(content)
+        try:
+            played_data = game.play(content)
+        except IsNotPlayerTurnException as e:
+            return await self.send_json({
+                "error": str(e)
+            })
+
+        change = []
+
+        difference_data = DeepDiff(eval(data), played_data)
+        difference = difference_data.get("values_changed", {})
+        if difference:
+            for key, value in difference.items():
+                key = key.replace("root", "")
+                change.append({
+                    key: value['new_value']
+                })
+
+        print(change)
 
         self.redis.set(f"game_{self.id}", str(played_data))
 
-        await self.channel_layer.group_send(
+        return await self.channel_layer.group_send(
             self.group_name,
             {
                 'type': 'game_message',
-                'message': played_data
+                'message': change
             }
         )
 

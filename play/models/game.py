@@ -1,5 +1,4 @@
 import random
-from enum import Enum
 from typing import List
 
 from asgiref.sync import sync_to_async
@@ -8,6 +7,8 @@ from core.const import FIRST_CHANGE_CARD_NUMBER, LAST_TURN
 from core.const import NO_USER
 from core.models import Base
 from core.redis import connection
+from play.enum import CommandType
+from play.exception import IsNotPlayerTurnException
 from play.models.action import Action
 from play.models.card import Card
 from play.models.player import Player
@@ -19,12 +20,6 @@ from play.models.round_card import RoundCard
 first: 게임의 선 플레이어
 turn: 게임의 턴
 """
-
-
-class CommandType(Enum):
-    ACTION = 'action'
-    ADDITIONAL = 'additional'
-    ALWAYS = 'always'
 
 
 class Game(Base):
@@ -112,17 +107,16 @@ class Game(Base):
         command, card_number, player = self.parse_command(command)
         command = CommandType(command)
 
-        if command == CommandType.ACTION and self._turn == int(player):
-            # 플레이어의 종료 여부 확인
-            action = Action(card_number=card_number, turn=self._turn)
-            action.run(self._players, self.get_action_card_by_card_number(card_number=card_number))
-            # is_done = self.player_action(card_number=card_number)
+        # 턴에 맞지 않는 플레이어가 행동을 하려고 할 때 에러를 발생시킴.
+        if player != self._turn:
+            raise IsNotPlayerTurnException
 
-        elif command == CommandType.ADDITIONAL and self._turn == int(player):
-            pass
-
-        elif command == CommandType.ALWAYS:
-            pass
+        # 플레이어의 행동 명령을 받아서 처리한다.
+        round_card = self.get_action_card_by_card_number(card_number)
+        is_done = Action.run(
+            command=command, card_number=card_number, players=self._players,
+            round_card=round_card, turn=self._turn
+        )
 
         # 게임의 정보를 바탕으로 게임의 턴을 변경
         self.change_turn_and_round_and_phase(is_done=is_done)
@@ -132,25 +126,6 @@ class Game(Base):
             self._first = self._turn
 
         return self.to_dict()
-
-    def player_action(self, card_number: str) -> bool:
-        redis = connection()
-        print(card_number)
-        command = redis.hget("commands", card_number)
-        print(command)
-        print(self.get_action_card_by_card_number(card_number=card_number).to_dict())
-        # is_done = self._players[self._turn].action(card_number=card_number)
-        #
-        # # TODO: is_kid 처리 -> Player 정보 중 자식이 있으며, 자식이 움직이는 턴인지 확인
-        # self._action_on_round.append(
-        #     Action(
-        #         card_number=card_number,
-        #         player=self._players[self._turn].get('name'),
-        #         is_kid=False
-        #     )
-        # )
-        # return is_done
-        return False
 
     def increment_resource(self) -> None:
         opend_round_cards = self._round_cards[:self._round]

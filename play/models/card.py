@@ -1,4 +1,5 @@
 from core.models import Base
+from play.models.round_card import RoundCard
 
 
 class Card(Base):
@@ -23,3 +24,7 @@ class Card(Base):
     @classmethod
     def get_card_by_card_number(cls, card_number: str) -> 'Card':
         return cls()
+
+    # 플레이어가 들고 있는 카드를 사용함과 동시에 라운드 카드에 특정한 이펙트를 추가해준다.
+    def use(self, round_card: RoundCard):
+        self._is_use = True

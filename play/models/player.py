@@ -1,7 +1,7 @@
-from enum import Enum
 from typing import List
 
 from core.models import Base
+from play.enum import HouseType
 from play.models.card import Card
 from play.models.field import Field, FieldType
 from play.models.resource import Resource
@@ -26,19 +26,13 @@ FIELD_SCORE_BOARD = {
 }
 
 
-class RoomType(Enum):
-    WOOD_ROOM = "wood_room"
-    CLAY_ROOM = "clay_room"
-    STONE_ROOM = "stone_room"
-
-
 class Player(Base):
     _name: str
     _resource: Resource
-    _card: List[Card]
+    _cards: List[Card]
     _effects: List[None]
     _fields: List[Field]
-    _room_type: RoomType
+    _house_type: HouseType
     _fences: dict
 
     def __init__(
@@ -46,14 +40,16 @@ class Player(Base):
             name: str = "",
             resource: dict = None,
             fields: List[dict] = None,
-            room_type: RoomType = RoomType.WOOD_ROOM,
+            house_type: HouseType = HouseType.WOOD_HOUSE,
             fences: dict = None,
+            cards: List[Card] = None,
     ):
         self._name = name
         self._resource = Resource.from_dict(**resource) if resource else Resource()
         self._fields = [Field.from_dict(**field) for field in fields] if fields else Field.initialize()
-        self._room_type = room_type
+        self._house_type = house_type
         self._fences = fences if fences else {}
+        self._cards = cards if cards else []
 
     # 플레이어 행동 처리 (카드 드로우, 카드 사용, 자원 사용 등)
     # 만약 행동이 종료될 경우 True, 종료되지 않을 경우 False를 반환한다. (카드의 속성에 따라 다르게 처리)
@@ -131,11 +127,11 @@ class Player(Base):
 
     def to_dict(self) -> dict:
         dictionary = super().to_dict()
-        dictionary["room_type"] = self._room_type.value
+        dictionary["house_type"] = self._house_type.value
         return dictionary
 
     @classmethod
     def from_dict(cls, **kwargs):
-        room_type = kwargs.pop("room_type")
-        kwargs["room_type"] = RoomType(room_type)
+        house_type = kwargs.pop("house_type")
+        kwargs["house_type"] = HouseType(house_type)
         return super().from_dict(**kwargs)

@@ -58,10 +58,10 @@ class Resource(Base):
     @classmethod
     def initialize_common_resource(cls):
         common_resource = cls(**INITIAL_COMMON_RESOURCE)
-        common_resource.remove('room')
-        common_resource.remove('fence')
-        common_resource.remove('barn')
-        common_resource.remove('family')
+        # common_resource.remove('room')
+        # common_resource.remove('fence')
+        # common_resource.remove('barn')
+        # common_resource.remove('family')
         return common_resource
 
     @classmethod

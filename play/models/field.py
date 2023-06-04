@@ -1,13 +1,7 @@
-from enum import Enum
 from typing import List
 
 from core.models import Base
-
-
-class FieldType(Enum):
-    ROOM = "room"
-    FARM = "farm"
-    CAGE = "cage"
+from play.enum import FieldType
 
 
 # position 의 경우 1 ~ 15 까지의 숫자로 이루어진 좌표의 index 값을 사용한다.
