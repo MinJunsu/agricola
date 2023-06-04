@@ -69,13 +69,13 @@ class Game(Base):
     @classmethod
     async def initialize(cls, players: List[str]) -> 'Game':
         redis = connection()
-        cards = redis.hkeys('cards')
-        t_card = redis.hget('cards', "JOB_01")
+        cards = redis.hvals('cards')
+
         job_cards = list(filter(lambda card: "JOB" in card, cards))
         sub_cards = list(filter(lambda card: "SUB_FAC" in card, cards))
         random.shuffle(job_cards)
         random.shuffle(sub_cards)
-
+        
         instance = cls()
         players_instance = [Player(name=player) for player in players]
 
