@@ -62,16 +62,48 @@ class Action(Base):
             round_card.get("resource")[resource] = 0
         return all(is_dones)
 
-    # 플레이어가 직업 카드 혹은 보조 설비 카드를 제출? 선택? 한다.
+    # 플레이어가 직업 카드를 제출? 선택? 한다.
     @classmethod
-    def submit_card(
+    def job_submit_card(
+            cls,
+            player: Player,
+            round_card: RoundCard,
+            card_number: str
+    ) -> bool:
+        # 1. 플레이어가 현재 몇장의 카드를 가지고 있는지 확인한다.
+        card_count = len(filter(
+            lambda card: "JOB" in card.get("card_number") and card.get("is_use") == True,
+            player.get("cards")
+        ))
+        # 2. 플레이어가 가지고 있는 카드의 수가 7장 이상이라면 카드를 제출할 수 없다. (예외 처리)
+        if (card_count > 7):
+            raise Exception("더 이상 활성화할 수 있는 직업 카드가 없습니다.")
+        # 3. 플레이어가 선택한 행동 칸이 몇개의 자원을 소모하는지 확인한다.
+
+        # 카드 0개면 그냥 활성화하고 리턴
+        if card_count == 0:
+            pass
+
+        cost = 2
+        if round_card.card_number == 'BASE_05':
+            cost = 1
+        # 4. 플레이어가 직업 카드를 내기 위해 소모되는 자원이 있는지 확인한다. (require)
+        cls.require(player=player, resource='food', amount=cost)
+        # 5. 플레이어에 선택한 직업 카드의 is_use 속성을 True로 변경한다.
+        return True
+
+    @classmethod
+    def fac_submit_card(
             cls,
             player: Player,
             round_card: RoundCard
     ) -> bool:
         # 1. 플레이어가 현재 몇장의 카드를 가지고 있는지 확인한다.
+
         # 2. 플레이어가 가지고 있는 카드의 수가 7장 이상이라면 카드를 제출할 수 없다. (예외 처리)
+
         # 3. 플레이어가 선택한 행동 칸이 몇개의 자원을 소모하는지 확인한다.
+
         # 4. 플레이어가 직업 혹은 보조설비 카드를 내기 위해 소모되는 자원이 있는지 확인한다. (require)
         # 5. 플레이어에 선택한 직업 카드의 is_use 속성을 True로 변경한다.
         return True
