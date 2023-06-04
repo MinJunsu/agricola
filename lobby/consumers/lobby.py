@@ -36,7 +36,10 @@ class LobbyConsumer(BaseLobbyConsumer):
         )
 
         await self.accept()
-        await self.send_json(self.rooms_with_participant)
+        await self.send_json({
+            "type": "lobby",
+            "data": self.rooms_with_participant,
+        })
 
     async def disconnect(self, code):
         await self.channel_layer.group_discard(
@@ -51,16 +54,16 @@ class LobbyConsumer(BaseLobbyConsumer):
         # 유저 정보가 잘못 될 경우 처리
         if user == "-1":
             await self.send("INVALID USER ID")
-            return await self.close()
+            return
 
         # 방 정보가 잘못될 경우 처리
         if command != RoomCommand.CREATE and room_id == "-1":
             await self.send("INVALID ROOM ID")
-            return await self.close()
+            return
 
         if command == RoomCommand.ENTER and self.redis.hget("rooms", room_id) is None:
             await self.send("INVALID ROOM ID")
-            return await self.close()
+            return
 
         # 방 생성 정보가 잘못될 경우
         if command == RoomCommand.CREATE:
@@ -104,13 +107,18 @@ class LobbyConsumer(BaseLobbyConsumer):
             room: Room = Room.from_dict(**eval(self.redis.hget("rooms", room_id)))
             room.enter(user_id)
 
-            self.redis.hset(f"rooms:participants", user_id, room_id)
+            self.redis.hset("rooms:participants", user_id, room_id)
             self.redis.hset("rooms", room_id, str(room.to_dict()))
+            self.redis.hset("lobby:watch:participants", user_id, room_id)
+            await self.send_json(room.to_dict())
+
+            # TODO: 인원수가 4명이 될 경우 게임 자동 시작
+            # if len(room.get('participants')) == 4:
 
         elif command == RoomCommand.EXIT:
             if str(user_id) not in self.redis.hkeys(f"rooms:participants"):
                 await self.send("NOT ENTERED")
-                return await self.close()
+                return
 
             room: Room = Room.from_dict(**eval(self.redis.hget("rooms", room_id)))
             room.exit(user_id)
@@ -129,7 +137,7 @@ class LobbyConsumer(BaseLobbyConsumer):
 
         else:
             await self.send("UNDEFINED COMMAND")
-            return await self.close()
+            return
 
         if command == RoomCommand.CREATE or command == RoomCommand.ENTER or command == RoomCommand.EXIT:
             await self.send_message_to_lobby()
@@ -166,7 +174,10 @@ class LobbyConsumer(BaseLobbyConsumer):
             "lobby",
             {
                 "type": "message",
-                "message": self.rooms_with_participant,
+                "message": {
+                    "type": "lobby",
+                    "data": self.rooms_with_participant,
+                }
             }
         )
 
@@ -176,7 +187,10 @@ class LobbyConsumer(BaseLobbyConsumer):
             f"room_{room_id}",
             {
                 "type": "message",
-                "message": room.to_dict(),
+                "message": {
+                    "type": "room",
+                    "data": room.to_dict(),
+                },
             }
         )
 

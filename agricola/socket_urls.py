@@ -9,6 +9,6 @@ websocket_urlpatterns = URLRouter([
     path('ws/v1/', URLRouter([
         path('chat/', URLRouter(chat_websocket_urlpatterns)),
         path('play/', URLRouter(play_websocket_urlpatterns)),
-        path('lobby/', URLRouter(lobby_websocket_urlpatterns)),
+        path('lobby', URLRouter(lobby_websocket_urlpatterns)),
     ])),
 ])
