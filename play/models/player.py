@@ -1,3 +1,4 @@
+from enum import Enum
 from typing import List
 
 from core.models import Base
@@ -5,24 +6,54 @@ from play.models.card import Card
 from play.models.field import Field, FieldType
 from play.models.resource import Resource
 
+FIELD_SCORE_BOARD = {
+    'farm': {
+        0: -1,
+        1: -1,
+        2: 1,
+        3: 2,
+        4: 3,
+        5: 4,
+    },
+    'cage': {
+        0: -1,
+        1: 1,
+        2: 2,
+        3: 3,
+        4: 4,
+        5: 4,
+    },
+}
+
+
+class RoomType(Enum):
+    WOOD_ROOM = "wood_room"
+    CLAY_ROOM = "clay_room"
+    STONE_ROOM = "stone_room"
+
 
 class Player(Base):
     _name: str
     _resource: Resource
-    _cards: List[Card]
+    _card: List[Card]
+    _effects: List[None]
     _fields: List[Field]
+    _room_type: RoomType
+    _fences: dict
 
     def __init__(
             self,
             name: str = "",
             resource: dict = None,
             fields: List[dict] = None,
-            cards: List[dict] = None,
+            room_type: RoomType = RoomType.WOOD_ROOM,
+            fences: dict = None,
     ):
         self._name = name
-        self._resource = Resource.from_dict(**resource) if resource else Resource.initialize_player_resource()
+        self._resource = Resource.from_dict(**resource) if resource else Resource()
         self._fields = [Field.from_dict(**field) for field in fields] if fields else Field.initialize()
-        self._cards = [Card.from_dict(**card) for card in cards] if cards else []
+        self._room_type = room_type
+        self._fences = fences if fences else {}
 
     # 플레이어 행동 처리 (카드 드로우, 카드 사용, 자원 사용 등)
     # 만약 행동이 종료될 경우 True, 종료되지 않을 경우 False를 반환한다. (카드의 속성에 따라 다르게 처리)
@@ -37,7 +68,7 @@ class Player(Base):
     def harvest(self):
         pass
 
-    def create_farm(self, position: int) -> bool:
+    def create_farm(self, position: List[int]) -> bool:
         farm = Field(filed_type=FieldType.FARM, position=position, is_in={})
         self._fields.append(farm)
         return True
@@ -56,3 +87,55 @@ class Player(Base):
             return True
 
         # elif field.get("field_type") == FieldType.CAGE:
+
+    def calculate_card_score(self) -> int:
+        score = 0
+        for card in self._card:
+            score += card.score
+        return score
+
+    def calculate_field_score(self) -> int:
+        score = 0
+        farm = 0
+        cage = 0
+
+        for field in self._fields:
+            if field.field_type == FieldType.ROOM:
+                if self._roomtype == "clay":
+                    score += 1
+                elif self._roomtype == "stone":
+                    score += 2
+            elif field.field_type == FieldType.EMPTY:
+                if "cowshed" not in field.is_in:
+                    score -= 1
+            elif field.field_type == FieldType.CAGE:
+                if "cowshed" in field.is_in:
+                    score += 1
+                    cage += 1
+            elif field.field_type == FieldType.FARM:
+                farm += 1
+
+        keys = FIELD_SCORE_BOARD.keys()
+        for key in keys:
+            score += FIELD_SCORE_BOARD[key][min(self.get(key), 5)]
+
+        return score
+
+    def calculate_score(self) -> int:
+        card_score = self.calculate_card_score()
+        field_score = self.calculate_field_score()
+        resource_score = self._resource.calculate_score()
+
+        total_score = card_score + field_score + resource_score
+        return total_score
+
+    def to_dict(self) -> dict:
+        dictionary = super().to_dict()
+        dictionary["room_type"] = self._room_type.value
+        return dictionary
+
+    @classmethod
+    def from_dict(cls, **kwargs):
+        room_type = kwargs.pop("room_type")
+        kwargs["room_type"] = RoomType(room_type)
+        return super().from_dict(**kwargs)

@@ -43,7 +43,7 @@ class Room(Base):
         self._room_id = room_id
         self._host = host
         self._options = RoomOption.from_dict(**options)
-        self._participants = []
+        self._participants = participants or []
 
     # 기존의 로비 데이터들을 불러와 Room 객체로 변환
     @classmethod
@@ -57,14 +57,18 @@ class Room(Base):
         # 생성한 room_number를 Cache에 저장
         redis.sadd('rooms:number', room_id)
 
+        # 새로운 방 생성 후, 유저 추가
         room = cls(
             room_id=room_id,
             host=host,
             options=options,
         )
+        room.enter(host)
 
-        redis.set(f"users:{host}:room", room_id)
-        redis.set(f"rooms:{room_id}:info", str(room.to_dict()))
+        redis.hset("rooms:participants", host, room_id)
+        redis.hset("lobby:watch:participants", host, room_id)
+        redis.hset("rooms", room_id, str(room.to_dict()))
+
         return room
 
     @staticmethod
@@ -81,3 +85,9 @@ class Room(Base):
                 'password': self._options.get('password'),
             },
         }
+
+    def enter(self, user_id: int) -> None:
+        self._participants.append(user_id)
+
+    def exit(self, user_id: int) -> None:
+        self._participants.remove(user_id)

@@ -1,9 +1,15 @@
+import random
 from enum import Enum
 from typing import List
 
-from core.const import FIRST_CHANGE_CARD_NUMBER, LAST_TURN, NO_USER
+from asgiref.sync import sync_to_async
+
+from core.const import FIRST_CHANGE_CARD_NUMBER, LAST_TURN
+from core.const import NO_USER
 from core.models import Base
+from core.redis import connection
 from play.models.action import Action
+from play.models.card import Card
 from play.models.player import Player
 from play.models.resource import Resource
 from play.models.round_card import RoundCard
@@ -52,43 +58,70 @@ class Game(Base):
         self._players = [Player.from_dict(**player) for player in players] if players else []
         self._actions = [Action.from_dict(**action) for action in actions] if actions else []
         self._base_cards = [
-            RoundCard.from_dict(**base_card) for base_card in
-            base_cards] if base_cards else RoundCard.initialize_base_cards()
-        self._round_cards = [RoundCard.from_dict(**round_card) for round_card in round_cards] if round_cards else []
+            RoundCard.from_dict(**base_card) for base_card in base_cards
+        ] if base_cards else RoundCard.initialize_base_cards()
+        self._round_cards = [
+            RoundCard.from_dict(**round_card) for round_card in round_cards
+        ] if round_cards else RoundCard.initialize_round_cards()
         self._common_resources = Resource.from_dict(
             **common_resources) if common_resources else Resource.initialize_common_resource()
 
+    @property
+    def action_cards(self) -> List[RoundCard]:
+        return [*self._base_cards, *self._round_cards]
+
+    def get_action_card_by_card_number(self, card_number: str) -> RoundCard | None:
+        cards = list(filter(lambda card: card.get('card_number') == card_number, self.action_cards))
+        return cards[0] if cards else None
+
     # TODO: initialize 실행 시 플레이어에 대한 정보를 어느정도 넣어줄지에 대해서 수정하기
     @classmethod
-    def initialize(cls, players: List[str]) -> 'Game':
-        from cards.models import Card as MCard
+    async def initialize(cls, players: List[str]) -> 'Game':
+        redis = connection()
+        cards = redis.hvals('cards')
+        job_cards = list(filter(lambda card: "JOB" in card, cards))
+        sub_cards = list(filter(lambda card: "SUB_FAC" in card, cards))
+        random.shuffle(job_cards)
+        random.shuffle(sub_cards)
+
         instance = cls()
         players_instance = [Player(name=player) for player in players]
+
+        for player in players_instance:
+            player_cards = job_cards[:7] + sub_cards[:7]
+            job_cards = job_cards[7:]
+            sub_cards = sub_cards[7:]
+
+            player.set("cards", [Card.from_dict(**eval(card)) for card in player_cards])
+
         instance.set("players", players_instance)
         instance.increment_resource()
-        cards = MCard.objects.filter(card_type='job').values_list('card_number', flat=True)
+
         return instance
 
     @staticmethod
-    def parse_command(command: dict) -> tuple[CommandType, str, int]:
-        action: CommandType = command.get('action', CommandType.ACTION)
-        card_number: str = command.get('number', None)
-        player: int = command.get('player', NO_USER)
-        return action, card_number, player
+    def parse_command(command_str: dict) -> tuple[CommandType, str, int]:
+        command: CommandType = command_str.get('command', CommandType.ACTION)
+        card_number: str = command_str.get('card_number', None)
+        player: int = command_str.get('player', NO_USER)
+        return command, card_number, player
 
     def play(self, command: dict) -> dict:
         # 기본 값 설정
         is_done: bool = False
-        action, card_number, player = self.parse_command(command)
+        command, card_number, player = self.parse_command(command)
+        command = CommandType(command)
 
-        if action == CommandType.ACTION and self._turn == int(player):
+        if command == CommandType.ACTION and self._turn == int(player):
             # 플레이어의 종료 여부 확인
-            is_done = self.player_action(card_number=card_number)
+            action = Action(card_number=card_number, turn=self._turn)
+            action.run(self._players, self.get_action_card_by_card_number(card_number=card_number))
+            # is_done = self.player_action(card_number=card_number)
 
-        elif action == CommandType.ADDITIONAL and self._turn == int(player):
+        elif command == CommandType.ADDITIONAL and self._turn == int(player):
             pass
 
-        elif action == CommandType.ALWAYS:
+        elif command == CommandType.ALWAYS:
             pass
 
         # 게임의 정보를 바탕으로 게임의 턴을 변경
@@ -101,17 +134,23 @@ class Game(Base):
         return self.to_dict()
 
     def player_action(self, card_number: str) -> bool:
-        is_done = self._players[self._turn].action(card_number=card_number)
-
-        # TODO: is_kid 처리 -> Player 정보 중 자식이 있으며, 자식이 움직이는 턴인지 확인
-        self._action_on_round.append(
-            Action(
-                card_number=card_number,
-                player=self._players[self._turn].get('name'),
-                is_kid=False
-            )
-        )
-        return is_done
+        redis = connection()
+        print(card_number)
+        command = redis.hget("commands", card_number)
+        print(command)
+        print(self.get_action_card_by_card_number(card_number=card_number).to_dict())
+        # is_done = self._players[self._turn].action(card_number=card_number)
+        #
+        # # TODO: is_kid 처리 -> Player 정보 중 자식이 있으며, 자식이 움직이는 턴인지 확인
+        # self._action_on_round.append(
+        #     Action(
+        #         card_number=card_number,
+        #         player=self._players[self._turn].get('name'),
+        #         is_kid=False
+        #     )
+        # )
+        # return is_done
+        return False
 
     def increment_resource(self) -> None:
         opend_round_cards = self._round_cards[:self._round]
@@ -135,3 +174,9 @@ class Game(Base):
             self._turn = 0
             self._round += 1
             return
+
+    @staticmethod
+    @sync_to_async
+    def get_cards(card_type: str):
+        from cards.models import Card
+        return list(Card.objects.filter(card_type=card_type).values_list('card_number', flat=True))
