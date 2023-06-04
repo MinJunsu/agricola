@@ -1,5 +1,6 @@
 from typing import List
 
+from core.const import RESOURCE_CONVERT_FUNCTION
 from core.models import Base
 from core.redis import connection
 from play.enum import CommandType
@@ -79,3 +80,42 @@ class Action(Base):
     @classmethod
     def get_command(cls, card_number: str) -> str:
         return cls.redis.hget("commands", card_number)
+
+    @classmethod
+    def convert_resource(
+            cls,
+            player: Player,
+            command: str,
+            card_number: str,
+            resources: dict
+    ):
+        redis = cls.redis
+        TARGET = "food"
+        player_resources = player.get("resources")
+        for resource, count in resources.items():
+            ratio = RESOURCE_CONVERT_FUNCTION[card_number][command][resource]
+            # TODO: 1. validate 처리 (플레이어가 자원을 가져갈 수 있는지)
+            cls.require(player, resource, count)
+
+            # TODO: 2 자원 변경 처리
+            cls.plus(player, player_resources, ratio)
+            player_resources.set(resource, player_resources.get(resource) + resources[resource])
+            player_resources.set(TARGET, player_resources.get(TARGET) + resources[resource])
+
+    @classmethod
+    def move_animal(
+            cls,
+            player: Player,
+            command: str,
+            card_number: str,
+            resource: dict,
+            count: int,
+            arrivals: int,
+            departures: int,
+    ):
+        redis = cls.redis
+
+        MOVE_ANIMALS[card_number][command][departures][arrivals]
+        fields = player.get("fields")
+        fields[departures].get("is_in").set(resource.get("resource_name"), resource.get("count"))
+        fields[arrivals].get("is_in").set(resource.get("resource_name"), resource.get("count"))
