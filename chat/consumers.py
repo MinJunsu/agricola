@@ -59,10 +59,6 @@ class ChatConsumer(AsyncJsonWebsocketConsumer):
                 timestamp=datetime.now().strftime("%Y-%m-%d %H:%M:%S")
             )
 
-            print(message)
-            print(message.to_dict())
-            print(str(message.to_dict()))
-
             # redis 에 새롭게 생성한 메시지 저장
             self.redis.sadd(self.group_name, str(message.to_dict()))
 

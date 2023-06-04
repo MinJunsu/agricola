@@ -316,3 +316,17 @@ INITIAL_ROUND_CARDS = {
 }
 
 NO_USER = -1
+
+RESOURCE_CONVERT_FUNCTION = {
+    "PRI_FAC_01": {
+        "additional": {
+            "grain": 2,
+        },
+        "always": {
+            "vegetable": 2,
+            "sheep": 2,
+            "boar": 2,
+            "cattle": 3,
+        }
+    }
+}
