@@ -69,10 +69,24 @@ INITIAL_COMMON_RESOURCE = {
     'food': 76,
 }
 
+# FIXME: 테스트 환경을 위해 임시로 자원 수정
 INITIAL_PLAYER_RESOURCE = {
-    "family": 2,
-    "room": 2,
+    'wood': 30,
+    'clay': 24,
+    'reed': 14,
+    'stone': 16,
+    'grain': 24,
+    'vegetable': 16,
+    'sheep': 18,
+    'boar': 15,
+    'cattle': 13,
+    'food': 76,
 }
+
+# INITIAL_PLAYER_RESOURCE = {
+#     "family": 2,
+#     "room": 2,
+# }
 
 LAST_TURN = 3
 LAST_ROUND = 3
@@ -390,72 +404,72 @@ RESOURCE_CONVERT_FUNCTION = {
 }
 
 MOVE_ANIMAL_FUNCTION = {
-    "move_animal_card":{
+    "move_animal_card": {
         "always": {
-            'to':{
-                'position' : 'index',
-                'count' : 2,
+            'to': {
+                'position': 'index',
+                'count': 2,
             },
-            'from':{
-                'position' : 'index',
-                'count' : 2,
+            'from': {
+                'position': 'index',
+                'count': 2,
             }
         }
     }
 }
 
 INSTALL_FENCE_FUNCTION = {
-    "card_number":{
+    "card_number": {
         "aditional": {
-            'to':{
-                'position' : 'index',
-                'count' : 2,
+            'to': {
+                'position': 'index',
+                'count': 2,
             }
         }
     }
 }
 
 UPGRADE_FIELD_FUNCTION = {
-    "room_card_number":{
+    "room_card_number": {
         "aditional": {
-            'to':{
-                'position' : 'index',
-                'count' : 2,
+            'to': {
+                'position': 'index',
+                'count': 2,
             }
         }
     },
-    "farm_card_number":{
+    "farm_card_number": {
         "aditional": {
-            'to':{
-                'position' : 'index',
-                'count' : 2,
+            'to': {
+                'position': 'index',
+                'count': 2,
             }
         }
     },
-    "barn_card_number":{
+    "barn_card_number": {
         "aditional": {
-            'to':{
-                'position' : 'index',
-                'count' : 2,
+            'to': {
+                'position': 'index',
+                'count': 2,
             }
         }
     }
 }
 
 DUMP_FIELD_FUNCTION = {
-    "seed":{
+    "seed": {
         "aditional": {
-            'to':{
-                'position' : 'index',
-                'count' : 2,
+            'to': {
+                'position': 'index',
+                'count': 2,
             }
         }
     },
-    "animal":{
+    "animal": {
         "aditional": {
-            'to':{
-                'position' : 'index',
-                'count' : 2,
+            'to': {
+                'position': 'index',
+                'count': 2,
             }
         }
     },

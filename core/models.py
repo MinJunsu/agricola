@@ -31,3 +31,6 @@ class Base:
 
     def remove(self, key: str):
         self.__delattr__(f'_{key}')
+
+    def pop(self, key: str, default=None):
+        return self.__dict__.pop(f'_{key}', default)

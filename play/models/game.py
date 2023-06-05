@@ -116,7 +116,8 @@ class Game(Base):
         round_card = self.get_action_card_by_card_number(card_number)
         is_done = Action.run(
             command=command, card_number=card_number, players=self._players,
-            round_cards=self.action_cards, turn=self._turn, additional=additional
+            round_cards=self.action_cards, turn=self._turn, common_resource=self._common_resources,
+            additional=additional
         )
 
         # 게임의 정보를 바탕으로 게임의 턴을 변경

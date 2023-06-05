@@ -46,7 +46,7 @@ class GameConsumer(AsyncJsonWebsocketConsumer):
         game = Game.from_dict(**eval(data))
         try:
             played_data = game.play(content)
-            
+
         except IsNotPlayerTurnException as e:
             return await self.send_json({
                 "error": str(e)
@@ -61,6 +61,7 @@ class GameConsumer(AsyncJsonWebsocketConsumer):
 
         # 이전 데이터와 달라진 데이터를 조회하기 위한 처리 (DeepDiff)
         deep_diff = DeepDiff(eval(data), played_data)
+        print(deep_diff)
         values = deep_diff.get("values_changed", {})
         types = deep_diff.get("type_changes", {})
 
@@ -70,7 +71,8 @@ class GameConsumer(AsyncJsonWebsocketConsumer):
                 key = key.replace("root", "")
                 change.append({
                     "key": key,
-                    "value": value['new_value']
+                    "value": value['new_value'],
+                    "prev": value['old_value']
                 })
 
         self.redis.set(f"game_{self.id}", str(played_data))
