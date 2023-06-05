@@ -108,3 +108,33 @@ class Action(Base):
             cls.plus(player, player_resources, count)
 
         return True
+
+    # fileds 중 arrival의 position과 자원을 입력받아 새로 선택한 departures의 position에 옮기는 함수
+    # client 입력값 (arrival, departures, count)
+    @classmethod
+    def move_animal(
+            cls,
+            player: Player,
+            arrival: int,
+            departures: int,
+            count: int,
+    ):
+        fields = player.get("fields")
+
+        arrival_field = player.get("fields")[arrival]
+        departures_field = player.get("fields")[departures]
+
+        # 옮기는 필드가 우리가 아니라면 에러
+        if arrival_field.get("field_type") != FieldType.CAGE or departures_field.get("field_type") != FieldType.CAGE:
+            raise Exception("이동은 우리에서만 가능합니다.")
+
+        # 옮기는 필드에 동물이 없다면 에러
+        resource, amount = arrival_field.get("is_in").item()
+        if amount < count:
+            raise Exception("이동할 수 있는 동물이 부족합니다.")
+
+        # 동물 옮기기
+        player.get("fields")[arrival].get("is_in").set(resource, amount - count)
+        player.get("fields")[departures].get("is_in").set(resource, amount + count)
+
+        return True
