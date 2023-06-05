@@ -46,3 +46,6 @@ class RoundCard(Base):
             random.shuffle(cards)
             round_cards.extend([cls(**card) for card in cards])
         return round_cards
+
+    @def create_cage(self, player, position):
+        pass
