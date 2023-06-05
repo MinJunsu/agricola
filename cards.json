@@ -1976,6 +1976,188 @@
     }
 },
 {
+    "model": "admin.logentry",
+    "pk": 153,
+    "fields": {
+        "action_time": "2023-06-03T12:40:11.591Z",
+        "user": 1,
+        "content_type": 10,
+        "object_id": "27",
+        "object_repr": "JOB_12",
+        "action_flag": 3,
+        "change_message": ""
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 154,
+    "fields": {
+        "action_time": "2023-06-04T14:24:38.894Z",
+        "user": 1,
+        "content_type": 10,
+        "object_id": "104",
+        "object_repr": "BASE_01",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Command\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 155,
+    "fields": {
+        "action_time": "2023-06-04T14:24:52.874Z",
+        "user": 1,
+        "content_type": 10,
+        "object_id": "105",
+        "object_repr": "BASE_02",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Command\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 156,
+    "fields": {
+        "action_time": "2023-06-04T14:25:46.958Z",
+        "user": 1,
+        "content_type": 10,
+        "object_id": "107",
+        "object_repr": "BASE_04",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Command\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 157,
+    "fields": {
+        "action_time": "2023-06-04T14:25:58.005Z",
+        "user": 1,
+        "content_type": 10,
+        "object_id": "109",
+        "object_repr": "BASE_06",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Command\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 158,
+    "fields": {
+        "action_time": "2023-06-04T14:26:07.491Z",
+        "user": 1,
+        "content_type": 10,
+        "object_id": "112",
+        "object_repr": "BASE_09",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Command\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 159,
+    "fields": {
+        "action_time": "2023-06-04T14:26:19.611Z",
+        "user": 1,
+        "content_type": 10,
+        "object_id": "115",
+        "object_repr": "BASE_12",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Command\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 160,
+    "fields": {
+        "action_time": "2023-06-04T14:26:30.151Z",
+        "user": 1,
+        "content_type": 10,
+        "object_id": "116",
+        "object_repr": "BASE_13",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Command\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 161,
+    "fields": {
+        "action_time": "2023-06-04T14:26:39.385Z",
+        "user": 1,
+        "content_type": 10,
+        "object_id": "117",
+        "object_repr": "BASE_14",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Command\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 162,
+    "fields": {
+        "action_time": "2023-06-04T14:26:51.267Z",
+        "user": 1,
+        "content_type": 10,
+        "object_id": "118",
+        "object_repr": "BASE_15",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Command\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 163,
+    "fields": {
+        "action_time": "2023-06-04T14:27:00.477Z",
+        "user": 1,
+        "content_type": 10,
+        "object_id": "119",
+        "object_repr": "BASE_16",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Command\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 164,
+    "fields": {
+        "action_time": "2023-06-04T14:27:36.683Z",
+        "user": 1,
+        "content_type": 10,
+        "object_id": "5",
+        "object_repr": "ACTION_05",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Command\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 165,
+    "fields": {
+        "action_time": "2023-06-04T14:27:50.310Z",
+        "user": 1,
+        "content_type": 10,
+        "object_id": "9",
+        "object_repr": "ACTION_09",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Command\"]}}]"
+    }
+},
+{
+    "model": "admin.logentry",
+    "pk": 166,
+    "fields": {
+        "action_time": "2023-06-04T14:28:03.361Z",
+        "user": 1,
+        "content_type": 10,
+        "object_id": "10",
+        "object_repr": "ACTION_10",
+        "action_flag": 2,
+        "change_message": "[{\"changed\": {\"fields\": [\"Command\"]}}]"
+    }
+},
+{
     "model": "auth.permission",
     "pk": 1,
     "fields": {
@@ -2626,19 +2808,46 @@
     }
 },
 {
+    "model": "accounts.user",
+    "pk": 2,
+    "fields": {
+        "password": "",
+        "last_login": null,
+        "is_superuser": false,
+        "username": "wognskec@naver.com",
+        "first_name": "",
+        "last_name": "",
+        "email": "wognskec@naver.com",
+        "is_staff": false,
+        "is_active": true,
+        "date_joined": "2023-06-03T06:45:31.712Z",
+        "groups": [],
+        "user_permissions": []
+    }
+},
+{
+    "model": "accounts.profile",
+    "pk": 1,
+    "fields": {
+        "user": 2,
+        "nickname": "재훈",
+        "avatar": "http://k.kakaocdn.net/dn/BXq9j/btsgNWhIZUb/1DrI2O0I36g8kKe2uyPd10/img_640x640.jpg",
+        "plays": 0,
+        "wins": 0,
+        "loses": 0,
+        "createdAt": "2023-06-03T06:45:32.197Z",
+        "updatedAt": "2023-06-03T06:45:32.197Z"
+    }
+},
+{
     "model": "cards.card",
     "pk": 1,
     "fields": {
         "card_number": "ACTION_01",
         "card_type": "action",
         "name": "곡식 활용",
-        "image": "images/1.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "minus(\"vegi\", prop 1) 또는 minus(\"grain\", prop 2)",
-        "description": "씨를 뿌리세요 그리고/ 또는 빵을 구우세요.",
-        "is_use": false
+        "command": "minus(\"vegi\", prop 1) 또는 minus(\"grain\", prop 2)"
     }
 },
 {
@@ -2648,13 +2857,8 @@
         "card_number": "ACTION_02",
         "card_type": "action",
         "name": "울타리",
-        "image": "images/2.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "minus(\"wood\", prop 1), plus(\"fence\", prop 2), 설치(프론트값)",
-        "description": "나무를 울타리로 원하는 만큼 바꾸세요. 규칙에 맞게 울타리를 치세요.",
-        "is_use": false
+        "command": "minus(\"wood\", prop 1), plus(\"fence\", prop 2), 설치(프론트값)"
     }
 },
 {
@@ -2664,13 +2868,8 @@
         "card_number": "ACTION_03",
         "card_type": "action",
         "name": "주요 설비",
-        "image": "images/3.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "주요/보조 선택, 선택된 주요/보조 조건 확인, 주요/보조 활성화",
-        "description": "주요 설비 혹은 보조 설비 하나를 활성화 하세요.",
-        "is_use": false
+        "command": "주요/보조 선택, 선택된 주요/보조 조건 확인, 주요/보조 활성화"
     }
 },
 {
@@ -2680,13 +2879,8 @@
         "card_number": "ACTION_04",
         "card_type": "action",
         "name": "양시장",
-        "image": "images/4.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "plus(\"sheep\", accum ), 양 배치",
-        "description": "누적된 양을 데려가세요. 충분한 공간이 없다면 양들이 달아납니다.",
-        "is_use": false
+        "command": "plus(\"sheep\", accum ), 양 배치"
     }
 },
 {
@@ -2696,13 +2890,8 @@
         "card_number": "ACTION_05",
         "card_type": "action",
         "name": "서부 채석장",
-        "image": "images/5.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "plus(\"stone\", accum)",
-        "description": "누적된 돌을 가져가세요.",
-        "is_use": false
+        "command": "cls.use_round_card_resources(player, round_card)"
     }
 },
 {
@@ -2712,13 +2901,8 @@
         "card_number": "ACTION_06",
         "card_type": "action",
         "name": "집 개조",
-        "image": "images/6.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "minus(\"reed\",1) , minus(prop1, prop2) , 주요/보조 선택, 선택된 주요/보조 조건 확인, 주요/보조 활성화",
-        "description": "집을 고치고, 주요/보조 설비를 획득하세요.",
-        "is_use": false
+        "command": "minus(\"reed\",1) , minus(prop1, prop2) , 주요/보조 선택, 선택된 주요/보조 조건 확인, 주요/보조 활성화"
     }
 },
 {
@@ -2728,13 +2912,8 @@
         "card_number": "ACTION_07",
         "card_type": "action",
         "name": "기본 가족 늘리기",
-        "image": "images/7.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "plus(\"family\", 1), 보조 조건 확인, 보조 활성화 ,",
-        "description": "가족 구성원을 늘리고 보조 설비 하나를 획득하세요. 라운드 종료까지 빈 방이 없으면 가족 구성원은 사라집니다.",
-        "is_use": false
+        "command": "plus(\"family\", 1), 보조 조건 확인, 보조 활성화 ,"
     }
 },
 {
@@ -2744,13 +2923,8 @@
         "card_number": "ACTION_08",
         "card_type": "action",
         "name": "돼지 시장",
-        "image": "images/8.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "plus(\"pig\", accum), 돼지 배치",
-        "description": "누적된 돼지를 데려가세요. 충분한 공간이 없다면 돼지들이 달아납니다.",
-        "is_use": false
+        "command": "plus(\"pig\", accum), 돼지 배치"
     }
 },
 {
@@ -2760,13 +2934,8 @@
         "card_number": "ACTION_09",
         "card_type": "action",
         "name": "채소 종자",
-        "image": "images/9.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "plus(\"vegi\", 1)",
-        "description": "채소 종자 1개를 획득하세요.",
-        "is_use": false
+        "command": "cls.use_round_card_resources(player, round_card)"
     }
 },
 {
@@ -2776,13 +2945,8 @@
         "card_number": "ACTION_10",
         "card_type": "action",
         "name": "동부 채석장",
-        "image": "images/10.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "plus(\"stone\", accum)",
-        "description": "누적된 돌을 가져가세요.",
-        "is_use": false
+        "command": "cls.use_round_card_resources(player, round_card)"
     }
 },
 {
@@ -2792,13 +2956,8 @@
         "card_number": "ACTION_11",
         "card_type": "action",
         "name": "소 시장",
-        "image": "images/11.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "plus(\"cow\", accum), 소 배치",
-        "description": "누적된 소를 데려가세요. 충분한 공간이 없다면 소들이 달아납니다.",
-        "is_use": false
+        "command": "plus(\"cow\", accum), 소 배치"
     }
 },
 {
@@ -2808,13 +2967,8 @@
         "card_number": "ACTION_12",
         "card_type": "action",
         "name": "밭 농사",
-        "image": "images/12.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "plus(\"field\", 1), 밭 배치",
-        "description": "밭을 하나 일구세요. 그리고/ 또는 씨 뿌리기 행동을 취하세요.",
-        "is_use": false
+        "command": "plus(\"field\", 1), 밭 배치"
     }
 },
 {
@@ -2824,13 +2978,8 @@
         "card_number": "ACTION_13",
         "card_type": "action",
         "name": "급한 가족 늘리기",
-        "image": "images/13.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "plus(\"family\", 1)",
-        "description": "빈 방이 필요없는 가족 구성원을 획득하세요.",
-        "is_use": false
+        "command": "plus(\"family\", 1)"
     }
 },
 {
@@ -2840,13 +2989,8 @@
         "card_number": "ACTION_14",
         "card_type": "action",
         "name": "농장 개조",
-        "image": "images/14.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "minus(\"reed\",1) , minus(prop1, prop2) , minus(\"wood\", prop1), 울타리 설치",
-        "description": "집을 고치고, 나무를 울타리로 원하는 만큼 바꾸세요. 규칙에 맞게 울타리를 치세요.",
-        "is_use": false
+        "command": "minus(\"reed\",1) , minus(prop1, prop2) , minus(\"wood\", prop1), 울타리 설치"
     }
 },
 {
@@ -2856,13 +3000,8 @@
         "card_number": "JOB_01",
         "card_type": "job",
         "name": "양의 친구",
-        "image": "images/15.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "현재 라운드의 2,5,8,10을 더한 라운드가 되면 양을 1마리씩 얻는다. ( cond(round, self.round+2,5,8,10 , add(\"sheep\",1)) ) 양을 공",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "현재 라운드의 2,5,8,10을 더한 라운드가 되면 양을 1마리씩 얻는다. ( cond(round, self.round+2,5,8,10 , add(\"sheep\",1)) ) 양을 공"
     }
 },
 {
@@ -2872,13 +3011,8 @@
         "card_number": "JOB_02",
         "card_type": "job",
         "name": "목사",
-        "image": "images/16.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "방이 2개 뿐인 집에 사는 유일한 플레이어? -> 나무3개 흙 2개 갈대 1개 돌 1개 획득",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "방이 2개 뿐인 집에 사는 유일한 플레이어? -> 나무3개 흙 2개 갈대 1개 돌 1개 획득"
     }
 },
 {
@@ -2888,13 +3022,8 @@
         "card_number": "JOB_03",
         "card_type": "job",
         "name": "벽 건축가",
-        "image": "images/17.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "방을 만들 때, 다음 4개의 라운드 동안 라운드 시작 시 음식 1개 획득",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "방을 만들 때, 다음 4개의 라운드 동안 라운드 시작 시 음식 1개 획득"
     }
 },
 {
@@ -2904,13 +3033,8 @@
         "card_number": "JOB_04",
         "card_type": "job",
         "name": "마부",
-        "image": "images/18.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "plus(\"wood\",1) , 돌집에 살고있다면? -> 남은 모든 라운드 시작 시 나무 1개를 외양간 1개로 교환 가능",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "plus(\"wood\",1) , 돌집에 살고있다면? -> 남은 모든 라운드 시작 시 나무 1개를 외양간 1개로 교환 가능"
     }
 },
 {
@@ -2920,13 +3044,8 @@
         "card_number": "JOB_05",
         "card_type": "job",
         "name": "소규모 농부",
-        "image": "images/19.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "방이 2개 뿐인 집에 살면? -> 라운드 시작 시 plus(\"wood\", 1)",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "방이 2개 뿐인 집에 살면? -> 라운드 시작 시 plus(\"wood\", 1)"
     }
 },
 {
@@ -2936,13 +3055,8 @@
         "card_number": "JOB_06",
         "card_type": "job",
         "name": "쟁기 몰이꾼",
-        "image": "images/20.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "돌 집에 살면? -> 라운드 시작 시 선택 -> plus(\"field\", 1) , minus(\"food\", 1) 또는 NONE",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "돌 집에 살면? -> 라운드 시작 시 선택 -> plus(\"field\", 1) , minus(\"food\", 1) 또는 NONE"
     }
 },
 {
@@ -2952,13 +3066,8 @@
         "card_number": "JOB_07",
         "card_type": "job",
         "name": "학자",
-        "image": "images/21.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "돌 집에 살면? -> 라운드 시작 시 선택 -> 보조 또는 직업 획득 -> 직업은 음식 1개 minus , 보조는 조건",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "돌 집에 살면? -> 라운드 시작 시 선택 -> 보조 또는 직업 획득 -> 직업은 음식 1개 minus , 보조는 조건"
     }
 },
 {
@@ -2968,13 +3077,8 @@
         "card_number": "JOB_08",
         "card_type": "job",
         "name": "하인",
-        "image": "images/22.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "돌 집에 살면? -> 라운드 시작 시 plus(\"food\", 3)",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "돌 집에 살면? -> 라운드 시작 시 plus(\"food\", 3)"
     }
 },
 {
@@ -2984,13 +3088,8 @@
         "card_number": "JOB_09",
         "card_type": "job",
         "name": "무자식",
-        "image": "images/23.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "room>=3, family == 2 ? -> 라운드 시작 시 plus(\"food\", 1) , 선택 -> plus(\"vegi\", 1) 또는 plus(\"grain\", 1)",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "room>=3, family == 2 ? -> 라운드 시작 시 plus(\"food\", 1) , 선택 -> plus(\"vegi\", 1) 또는 plus(\"grain\", 1)"
     }
 },
 {
@@ -3000,13 +3099,8 @@
         "card_number": "JOB_10",
         "card_type": "job",
         "name": "흙집 건축업자",
-        "image": "images/24.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "나무집 아니면? -> 다음 5라운드 동안 plus(\"soil\", 2)",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "나무집 아니면? -> 다음 5라운드 동안 plus(\"soil\", 2)"
     }
 },
 {
@@ -3016,13 +3110,8 @@
         "card_number": "JOB_11",
         "card_type": "job",
         "name": "지붕 다지는 사람",
-        "image": "images/25.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "minus(\"food\", 1), plus(\"stone\", player.room)",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "minus(\"food\", 1), plus(\"stone\", player.room)"
     }
 },
 {
@@ -3032,29 +3121,8 @@
         "card_number": "JOB_12",
         "card_type": "job",
         "name": "상담가",
-        "image": "images/26.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "plus(\"sheep\", 2)",
-        "description": "이미지 참조",
-        "is_use": false
-    }
-},
-{
-    "model": "cards.card",
-    "pk": 27,
-    "fields": {
-        "card_number": "JOB_12",
-        "card_type": "job",
-        "name": "상담가",
-        "image": "images/26_9iAnKbG.png",
-        "cost": 0,
-        "score": 0,
-        "condition": "NONE",
-        "command": "plus(\"sheep\", 2)",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "plus(\"sheep\", 2)"
     }
 },
 {
@@ -3064,13 +3132,8 @@
         "card_number": "JOB_13",
         "card_type": "job",
         "name": "사제",
-        "image": "images/27.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "room == 2 , 흙집? -> plus(\"soil\", 3), plus(\"stone\", 2), plus(\"reed\", 2)",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "room == 2 , 흙집? -> plus(\"soil\", 3), plus(\"stone\", 2), plus(\"reed\", 2)"
     }
 },
 {
@@ -3080,13 +3143,8 @@
         "card_number": "JOB_14",
         "card_type": "job",
         "name": "가마 떼는 사람",
-        "image": "images/28.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "나무 누적 행동 칸 이용 시 -> 선택 -> 빵 굽기 행동 또는 NONE",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "나무 누적 행동 칸 이용 시 -> 선택 -> 빵 굽기 행동 또는 NONE"
     }
 },
 {
@@ -3096,13 +3154,8 @@
         "card_number": "JOB_15",
         "card_type": "job",
         "name": "양부모",
-        "image": "images/29.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "가족 늘리기 행동 칸 이용 시 -> 선택 -> minus(\"food\", 1), is_kid = false 또는 NONE",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "가족 늘리기 행동 칸 이용 시 -> 선택 -> minus(\"food\", 1), is_kid = false 또는 NONE"
     }
 },
 {
@@ -3112,13 +3165,8 @@
         "card_number": "JOB_16",
         "card_type": "job",
         "name": "재산관리인",
-        "image": "images/30.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "집 고치는 행동 칸 이용시 -> 돌집 코스트 받고 바로 돌집",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "집 고치는 행동 칸 이용시 -> 돌집 코스트 받고 바로 돌집"
     }
 },
 {
@@ -3128,13 +3176,8 @@
         "card_number": "JOB_17",
         "card_type": "job",
         "name": "골조 건축업자",
-        "image": "images/31.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "집 고치는 행동 칸 혹은 방 만드는 행동 칸 이용 시 -> 흙 2개 대신 나무 1개 또는 돌 2개 대신 나무 1개",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "집 고치는 행동 칸 혹은 방 만드는 행동 칸 이용 시 -> 흙 2개 대신 나무 1개 또는 돌 2개 대신 나무 1개"
     }
 },
 {
@@ -3144,13 +3187,8 @@
         "card_number": "JOB_18",
         "card_type": "job",
         "name": "채소 장수",
-        "image": "images/32.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "곡식 종자 행동 칸 이용 시 -> plus(\"vegi\", 1)",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "곡식 종자 행동 칸 이용 시 -> plus(\"vegi\", 1)"
     }
 },
 {
@@ -3160,13 +3198,8 @@
         "card_number": "JOB_19",
         "card_type": "job",
         "name": "류트 연주자",
-        "image": "images/33.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "나를 제외한 플레이어가 유랑극단 행동 칸 이용 시 -> plus(\"food\", 1) , plus(\"wood\", 1)  선택 -> minus(\"food\", 2) , plus(\"veg",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "나를 제외한 플레이어가 유랑극단 행동 칸 이용 시 -> plus(\"food\", 1) , plus(\"wood\", 1)  선택 -> minus(\"food\", 2) , plus(\"veg"
     }
 },
 {
@@ -3176,13 +3209,8 @@
         "card_number": "JOB_20",
         "card_type": "job",
         "name": "소 사육사",
-        "image": "images/34.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "곡식 종자 행동 칸 이용 시 -> 선택 -> minus(\"food\", 1) , plus(\"cow\", 1) 또는 NONE",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "곡식 종자 행동 칸 이용 시 -> 선택 -> minus(\"food\", 1) , plus(\"cow\", 1) 또는 NONE"
     }
 },
 {
@@ -3192,13 +3220,8 @@
         "card_number": "JOB_21",
         "card_type": "job",
         "name": "장작 채집자",
-        "image": "images/35.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "농지 또는 곡식 종자 또는 곡식 활용 또는 밭 농사 행동 칸 이용시 -> plus(\"wood\", 1) 근데 이제.. 차례가 끝날 때 줘서 당장은 못쓰는 나무 형태로..",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "농지 또는 곡식 종자 또는 곡식 활용 또는 밭 농사 행동 칸 이용시 -> plus(\"wood\", 1) 근데 이제.. 차례가 끝날 때 줘서 당장은 못쓰는 나무 형태로.."
     }
 },
 {
@@ -3208,13 +3231,8 @@
         "card_number": "JOB_22",
         "card_type": "job",
         "name": "농번기 일꾼",
-        "image": "images/36.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "날품팔이 행동 칸 이용시 -> plus(\"grain\", 1)  if(round>=6) {선택 -> plus(\"grain\", 1) 또는 plus(\"vegi\", 1)",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "날품팔이 행동 칸 이용시 -> plus(\"grain\", 1)  if(round>=6) {선택 -> plus(\"grain\", 1) 또는 plus(\"vegi\", 1)"
     }
 },
 {
@@ -3224,13 +3242,8 @@
         "card_number": "JOB_23",
         "card_type": "job",
         "name": "오두막집살이",
-        "image": "images/37.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "날품팔이 행동 칸 이용시 -> 선택 -> 집 고치기 액션 또는 방 만들기 (1개만 가능) 액션",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "날품팔이 행동 칸 이용시 -> 선택 -> 집 고치기 액션 또는 방 만들기 (1개만 가능) 액션"
     }
 },
 {
@@ -3240,13 +3253,8 @@
         "card_number": "JOB_24",
         "card_type": "job",
         "name": "작살꾼",
-        "image": "images/38.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "낚시 행동 칸 이용시 -> 선택 -> minus(\"wood\", 1), plus(\"food\", player.family), plus(\"reed\", 1) 또는 NONE",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "낚시 행동 칸 이용시 -> 선택 -> minus(\"wood\", 1), plus(\"food\", player.family), plus(\"reed\", 1) 또는 NONE"
     }
 },
 {
@@ -3256,13 +3264,8 @@
         "card_number": "JOB_25",
         "card_type": "job",
         "name": "창고 관리인",
-        "image": "images/39.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "자원 시장 행동 칸 이용시 -> 선택 -> plus(\"soil\", 1) 또는 plus(\"grain\", 1)",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "자원 시장 행동 칸 이용시 -> 선택 -> plus(\"soil\", 1) 또는 plus(\"grain\", 1)"
     }
 },
 {
@@ -3272,13 +3275,8 @@
         "card_number": "JOB_26",
         "card_type": "job",
         "name": "산울타리지기",
-        "image": "images/40.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "울타리 치기 행동 칸 이용시 -> plus(\"fence\", 3) (울타리 3개 무료 제공)",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "울타리 치기 행동 칸 이용시 -> plus(\"fence\", 3) (울타리 3개 무료 제공)"
     }
 },
 {
@@ -3288,13 +3286,8 @@
         "card_number": "JOB_27",
         "card_type": "job",
         "name": "숙련 벽돌공",
-        "image": "images/41.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "주요 설비 행동 칸 이용시 -> 주요설비 선택하면? -> cost에서 돌을 room-2만큼 빼줌",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "주요 설비 행동 칸 이용시 -> 주요설비 선택하면? -> cost에서 돌을 room-2만큼 빼줌"
     }
 },
 {
@@ -3304,13 +3297,8 @@
         "card_number": "JOB_28",
         "card_type": "job",
         "name": "돌 자르는 사람",
-        "image": "images/42.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "설비 또는 방 만들기 또는 집 고치기 행동 칸 이용시 -> cost에서 돌 1개 빼줌",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "설비 또는 방 만들기 또는 집 고치기 행동 칸 이용시 -> cost에서 돌 1개 빼줌"
     }
 },
 {
@@ -3320,13 +3308,8 @@
         "card_number": "JOB_29",
         "card_type": "job",
         "name": "가축 상인",
-        "image": "images/43.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "양 시장 또는 돼지 시장 또는 소 시장 행동 칸 이용 시 -> 선택 -> minus(\"food\", 1), plus(\"해당 시장 가축\", 1) 또는 NONE",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "양 시장 또는 돼지 시장 또는 소 시장 행동 칸 이용 시 -> 선택 -> minus(\"food\", 1), plus(\"해당 시장 가축\", 1) 또는 NONE"
     }
 },
 {
@@ -3336,13 +3319,8 @@
         "card_number": "JOB_30",
         "card_type": "job",
         "name": "지질학자",
-        "image": "images/44.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "숲 또는 갈대밭 또는 흙 채굴장 행동 칸 이용시 -> plus(\"soil\", 1)",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "숲 또는 갈대밭 또는 흙 채굴장 행동 칸 이용시 -> plus(\"soil\", 1)"
     }
 },
 {
@@ -3352,13 +3330,8 @@
         "card_number": "JOB_31",
         "card_type": "job",
         "name": "나뭇가지 모으는 사람",
-        "image": "images/45.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "방 만들기 또는 집 고치기 행동 칸 이용시 -> 선택 -> 필요한 cost 중 갈대를 나무 1개로 바꿈 또는 NONE",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "방 만들기 또는 집 고치기 행동 칸 이용시 -> 선택 -> 필요한 cost 중 갈대를 나무 1개로 바꿈 또는 NONE"
     }
 },
 {
@@ -3368,13 +3341,8 @@
         "card_number": "JOB_32",
         "card_type": "job",
         "name": "목수",
-        "image": "images/46.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "방 만들기 행동 칸 이용시 -> cost에서 갈대를 제외한 필요 cost 2개 빼줌",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "방 만들기 행동 칸 이용시 -> cost에서 갈대를 제외한 필요 cost 2개 빼줌"
     }
 },
 {
@@ -3384,13 +3352,8 @@
         "card_number": "JOB_33",
         "card_type": "job",
         "name": "보조 경작자",
-        "image": "images/47.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "날품팔이 행동 칸 이용시 -> 선택 -> plus(\"field\", 1) , 밭 배치 또는 NONE",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "날품팔이 행동 칸 이용시 -> 선택 -> plus(\"field\", 1) , 밭 배치 또는 NONE"
     }
 },
 {
@@ -3400,13 +3363,8 @@
         "card_number": "JOB_34",
         "card_type": "job",
         "name": "나무꾼",
-        "image": "images/48.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "누적 나무 행동 칸 이용시 -> plus(\"wood\", 1)",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "누적 나무 행동 칸 이용시 -> plus(\"wood\", 1)"
     }
 },
 {
@@ -3416,13 +3374,8 @@
         "card_number": "JOB_35",
         "card_type": "job",
         "name": "버섯 따는 사람",
-        "image": "images/49.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "누적 나무 행동 칸 이용시 -> 선택 -> 나무 한 개 누적 칸에 남겨놓고, plus(\"food\", 2) 또는 NONE",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "누적 나무 행동 칸 이용시 -> 선택 -> 나무 한 개 누적 칸에 남겨놓고, plus(\"food\", 2) 또는 NONE"
     }
 },
 {
@@ -3432,13 +3385,8 @@
         "card_number": "JOB_36",
         "card_type": "job",
         "name": "초벽질공",
-        "image": "images/50.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "방 만들기 또는 집 고치기 행동 칸 이용시 -> 흙집이면? -> plus(\"food\", 3)",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "방 만들기 또는 집 고치기 행동 칸 이용시 -> 흙집이면? -> plus(\"food\", 3)"
     }
 },
 {
@@ -3448,13 +3396,8 @@
         "card_number": "JOB_37",
         "card_type": "job",
         "name": "마술사",
-        "image": "images/51.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "유랑극단 행동 칸 이용시 -> plus(\"wood\", 1), plus(\"grain\", 1)",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "유랑극단 행동 칸 이용시 -> plus(\"wood\", 1), plus(\"grain\", 1)"
     }
 },
 {
@@ -3464,13 +3407,8 @@
         "card_number": "JOB_38",
         "card_type": "job",
         "name": "잡화상인",
-        "image": "images/52.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "아무 때나, 선택 -> minus(\"food\", 1) plus(prop1, 1) (나무 - 곡식 - 갈대 - 돌 - 채소 - 흙 - 갈대 - 채소 리스트에서 차례대로 prop1에",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "아무 때나, 선택 -> minus(\"food\", 1) plus(prop1, 1) (나무 - 곡식 - 갈대 - 돌 - 채소 - 흙 - 갈대 - 채소 리스트에서 차례대로 prop1에"
     }
 },
 {
@@ -3480,13 +3418,8 @@
         "card_number": "JOB_39",
         "card_type": "job",
         "name": "양 보행자",
-        "image": "images/53.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "아무 때나, 선택 -> minus(\"sheep\", 1), plus(\"pig\", 1) 또는 minus(\"sheep\", 1), plus(\"vegi\", 1) 또는 minus(\"sheep",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "아무 때나, 선택 -> minus(\"sheep\", 1), plus(\"pig\", 1) 또는 minus(\"sheep\", 1), plus(\"vegi\", 1) 또는 minus(\"sheep"
     }
 },
 {
@@ -3496,13 +3429,8 @@
         "card_number": "PRI_FAC_01",
         "card_type": "pri_fac",
         "name": "우물",
-        "image": "images/54.png",
-        "cost": 4,
         "score": 4,
-        "condition": "NONE",
-        "command": "다음 5라운드 간 라운드 시작 시 plus(\"food\", 1)",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "다음 5라운드 간 라운드 시작 시 plus(\"food\", 1)"
     }
 },
 {
@@ -3512,13 +3440,8 @@
         "card_number": "PRI_FAC_02",
         "card_type": "pri_fac",
         "name": "바구니 제작소",
-        "image": "images/55.png",
-        "cost": 4,
         "score": 2,
-        "condition": "NONE",
-        "command": "수확 시? -> 선택 -> minus(\"reed\", 1), plus(\"food\", 3) 또는 NONE 계산 시? -> if(reed>=5) score+=3 \telif(reed>=4",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "수확 시? -> 선택 -> minus(\"reed\", 1), plus(\"food\", 3) 또는 NONE 계산 시? -> if(reed>=5) score+=3 \telif(reed>=4"
     }
 },
 {
@@ -3528,13 +3451,8 @@
         "card_number": "PRI_FAC_03",
         "card_type": "pri_fac",
         "name": "그릇 제작소",
-        "image": "images/56.png",
-        "cost": 4,
         "score": 2,
-        "condition": "NONE",
-        "command": "수확 시? -> 선택 -> minus(\"soil\", 1), plus(\"food\", 2) 또는 NONE 계산 시? -> if(soil>=7) score+=3 \telif(soil>=5",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "수확 시? -> 선택 -> minus(\"soil\", 1), plus(\"food\", 2) 또는 NONE 계산 시? -> if(soil>=7) score+=3 \telif(soil>=5"
     }
 },
 {
@@ -3544,13 +3462,8 @@
         "card_number": "PRI_FAC_04",
         "card_type": "pri_fac",
         "name": "가구 제작소",
-        "image": "images/57.png",
-        "cost": 4,
         "score": 2,
-        "condition": "NONE",
-        "command": "수확 시? -> 선택 -> minus(\"wood\", 1), plus(\"food\", 2) 또는 NONE 계산 시? -> if(wood>=7) score+=3 \telif(wood>=5",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "수확 시? -> 선택 -> minus(\"wood\", 1), plus(\"food\", 2) 또는 NONE 계산 시? -> if(wood>=7) score+=3 \telif(wood>=5"
     }
 },
 {
@@ -3560,13 +3473,8 @@
         "card_number": "PRI_FAC_05",
         "card_type": "pri_fac",
         "name": "화덕",
-        "image": "images/58.png",
-        "cost": 4,
         "score": 1,
-        "condition": "NONE",
-        "command": "아무 때나, 선택 -> minus(\"vegi\", prop 1), plus(\"food\", prop 1 * 3) 또는 minus(\"pig\", prop 1), plus(\"food\", p",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "아무 때나, 선택 -> minus(\"vegi\", prop 1), plus(\"food\", prop 1 * 3) 또는 minus(\"pig\", prop 1), plus(\"food\", p"
     }
 },
 {
@@ -3576,13 +3484,8 @@
         "card_number": "PRI_FAC_06",
         "card_type": "pri_fac",
         "name": "화로",
-        "image": "images/59.png",
-        "cost": 3,
         "score": 1,
-        "condition": "NONE",
-        "command": "아무 때나, 선택 -> minus(\"vegi\", prop 1), plus(\"food\", prop 1 * 2) 또는 minus(\"pig\", prop 1), plus(\"food\", p",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "아무 때나, 선택 -> minus(\"vegi\", prop 1), plus(\"food\", prop 1 * 2) 또는 minus(\"pig\", prop 1), plus(\"food\", p"
     }
 },
 {
@@ -3592,13 +3495,8 @@
         "card_number": "PRI_FAC_07",
         "card_type": "pri_fac",
         "name": "화덕",
-        "image": "images/60.png",
-        "cost": 5,
         "score": 1,
-        "condition": "NONE",
-        "command": "아무 때나, 선택 -> minus(\"vegi\", prop 1), plus(\"food\", prop 1 * 3) 또는 minus(\"pig\", prop 1), plus(\"food\", p",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "아무 때나, 선택 -> minus(\"vegi\", prop 1), plus(\"food\", prop 1 * 3) 또는 minus(\"pig\", prop 1), plus(\"food\", p"
     }
 },
 {
@@ -3608,13 +3506,8 @@
         "card_number": "PRI_FAC_08",
         "card_type": "pri_fac",
         "name": "화로",
-        "image": "images/61.png",
-        "cost": 2,
         "score": 1,
-        "condition": "NONE",
-        "command": "아무 때나, 선택 -> minus(\"vegi\", prop 1), plus(\"food\", prop 1 * 2) 또는 minus(\"pig\", prop 1), plus(\"food\", p",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "아무 때나, 선택 -> minus(\"vegi\", prop 1), plus(\"food\", prop 1 * 2) 또는 minus(\"pig\", prop 1), plus(\"food\", p"
     }
 },
 {
@@ -3624,13 +3517,8 @@
         "card_number": "PRI_FAC_09",
         "card_type": "pri_fac",
         "name": "돌가마",
-        "image": "images/62.png",
-        "cost": 4,
         "score": 3,
-        "condition": "NONE",
-        "command": "설비가 activate될 때 -> 빵 굽기 행동 빵 굽기 행동 시? -> 선택 -> prop 1은 2보다 작거나 같아야 함.. minus(\"grain\", prop 1), plus(",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "설비가 activate될 때 -> 빵 굽기 행동 빵 굽기 행동 시? -> 선택 -> prop 1은 2보다 작거나 같아야 함.. minus(\"grain\", prop 1), plus("
     }
 },
 {
@@ -3640,13 +3528,8 @@
         "card_number": "PRI_FAC_10",
         "card_type": "pri_fac",
         "name": "흙가마",
-        "image": "images/63.png",
-        "cost": 4,
         "score": 2,
-        "condition": "NONE",
-        "command": "설비가 activate될 때 -> 빵 굽기 행동 빵 굽기 행동 시? -> 선택 -> minus(\"grain\", 1), plus(\"food\", 5) 또는 NONE",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "설비가 activate될 때 -> 빵 굽기 행동 빵 굽기 행동 시? -> 선택 -> minus(\"grain\", 1), plus(\"food\", 5) 또는 NONE"
     }
 },
 {
@@ -3656,13 +3539,8 @@
         "card_number": "SUB_FAC_01",
         "card_type": "sub_fac",
         "name": "부엌방",
-        "image": "images/64.png",
-        "cost": 2,
         "score": 0,
-        "condition": "NONE",
-        "command": "라운드 시작 시? -> 나무집이면? -> plus(\"food\", 1)",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "라운드 시작 시? -> 나무집이면? -> plus(\"food\", 1)"
     }
 },
 {
@@ -3672,13 +3550,8 @@
         "card_number": "SUB_FAC_02",
         "card_type": "sub_fac",
         "name": "대형온실",
-        "image": "images/65.png",
-        "cost": 2,
         "score": 0,
-        "condition": "job>=2",
-        "command": "현재 라운드 +4, 7, 9 라운드 시작 시 -> plus(\"vegi\", 1) 얘도 미리 빼놔야 됨..",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "현재 라운드 +4, 7, 9 라운드 시작 시 -> plus(\"vegi\", 1) 얘도 미리 빼놔야 됨.."
     }
 },
 {
@@ -3688,13 +3561,8 @@
         "card_number": "SUB_FAC_03",
         "card_type": "sub_fac",
         "name": "연못 오두막",
-        "image": "images/66.png",
-        "cost": 1,
         "score": 1,
-        "condition": "job ==2",
-        "command": "다음 3개의 라운드 동안 라운드 시작 시 -> plus(\"food\", 1)",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "다음 3개의 라운드 동안 라운드 시작 시 -> plus(\"food\", 1)"
     }
 },
 {
@@ -3704,13 +3572,8 @@
         "card_number": "SUB_FAC_04",
         "card_type": "sub_fac",
         "name": "손수레",
-        "image": "images/67.png",
-        "cost": 2,
         "score": 0,
-        "condition": "job>=2",
-        "command": "5, 8, 11, 14 라운드 시작 시 -> plus(\"grain\", 1) 얘도 미리 빼놔야 됨..",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "5, 8, 11, 14 라운드 시작 시 -> plus(\"grain\", 1) 얘도 미리 빼놔야 됨.."
     }
 },
 {
@@ -3720,13 +3583,8 @@
         "card_number": "SUB_FAC_05",
         "card_type": "sub_fac",
         "name": "딸기포",
-        "image": "images/68.png",
-        "cost": 1,
         "score": 2,
-        "condition": "vegi_field >=2",
-        "command": "다음 3개의 라운드 동안 라운드 시작 시 -> plus(\"food\", 1)",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "다음 3개의 라운드 동안 라운드 시작 시 -> plus(\"food\", 1)"
     }
 },
 {
@@ -3736,13 +3594,8 @@
         "card_number": "SUB_FAC_06",
         "card_type": "sub_fac",
         "name": "손쟁기",
-        "image": "images/69.png",
-        "cost": 1,
         "score": 0,
-        "condition": "NONE",
-        "command": "현재 라운드 +5 라운드 시작 시 -> plus(\"field\", 1), 밭 배치",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "현재 라운드 +5 라운드 시작 시 -> plus(\"field\", 1), 밭 배치"
     }
 },
 {
@@ -3752,13 +3605,8 @@
         "card_number": "SUB_FAC_07",
         "card_type": "sub_fac",
         "name": "울창한 숲",
-        "image": "images/70.png",
-        "cost": 0,
         "score": 0,
-        "condition": "soil>=5",
-        "command": "짝수 라운드 시작 시? -> plus(\"wood\", 1) 얘도 미리 빼놔야 됨..",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "짝수 라운드 시작 시? -> plus(\"wood\", 1) 얘도 미리 빼놔야 됨.."
     }
 },
 {
@@ -3768,13 +3616,8 @@
         "card_number": "SUB_FAC_08",
         "card_type": "sub_fac",
         "name": "도토리 바구니",
-        "image": "images/71.png",
-        "cost": 1,
         "score": 0,
-        "condition": "job>=3",
-        "command": "다음 2개의 라운드 동안 라운드 시작 시 -> plus(\"pig\", 1)",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "다음 2개의 라운드 동안 라운드 시작 시 -> plus(\"pig\", 1)"
     }
 },
 {
@@ -3784,13 +3627,8 @@
         "card_number": "SUB_FAC_09",
         "card_type": "sub_fac",
         "name": "우유 주전자",
-        "image": "images/72.png",
-        "cost": 1,
         "score": 0,
-        "condition": "NONE",
-        "command": "if('소 시장' .is_used==true)-> if(카드 소유자) plus(\"food\", 3) else plus(\"food\", 1)",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "if('소 시장' .is_used==true)-> if(카드 소유자) plus(\"food\", 3) else plus(\"food\", 1)"
     }
 },
 {
@@ -3800,13 +3638,8 @@
         "card_number": "SUB_FAC_10",
         "card_type": "sub_fac",
         "name": "청어 냄비",
-        "image": "images/73.png",
-        "cost": 1,
         "score": 0,
-        "condition": "NONE",
-        "command": "낚시 행동 칸 이용시 -> 다음 3라운드 동안 plus(\"food\", 1)",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "낚시 행동 칸 이용시 -> 다음 3라운드 동안 plus(\"food\", 1)"
     }
 },
 {
@@ -3816,13 +3649,8 @@
         "card_number": "SUB_FAC_11",
         "card_type": "sub_fac",
         "name": "올가미 밧줄",
-        "image": "images/74.png",
-        "cost": 1,
         "score": 0,
-        "condition": "NONE",
-        "command": "양 시장 또는 돼지 시장 또는 소 시장 행동 칸 이용 시 -> 선택 -> 즉시 턴 또는 NONE",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "양 시장 또는 돼지 시장 또는 소 시장 행동 칸 이용 시 -> 선택 -> 즉시 턴 또는 NONE"
     }
 },
 {
@@ -3832,13 +3660,8 @@
         "card_number": "SUB_FAC_12",
         "card_type": "sub_fac",
         "name": "타작판",
-        "image": "images/75.png",
-        "cost": 1,
         "score": 1,
-        "condition": "job>=2",
-        "command": "농지 또는 밭 농사 행동 칸 이용시 -> 선택 -> 빵굽기 OR NONE",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "농지 또는 밭 농사 행동 칸 이용시 -> 선택 -> 빵굽기 OR NONE"
     }
 },
 {
@@ -3848,13 +3671,8 @@
         "card_number": "SUB_FAC_13",
         "card_type": "sub_fac",
         "name": "다진 흙",
-        "image": "images/76.png",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "plus(\"soil\", 1) , 울타리 치기 행동 시? -> 나무 대신 흙 선택 가능",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "plus(\"soil\", 1) , 울타리 치기 행동 시? -> 나무 대신 흙 선택 가능"
     }
 },
 {
@@ -3864,13 +3682,8 @@
         "card_number": "SUB_FAC_14",
         "card_type": "sub_fac",
         "name": "통나무배",
-        "image": "images/77.png",
-        "cost": 2,
         "score": 1,
-        "condition": "job>=1",
-        "command": "낚시 행동 칸 이용시 -> plus(\"food\", 1), plus(\"reed\", 1)",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "낚시 행동 칸 이용시 -> plus(\"food\", 1), plus(\"reed\", 1)"
     }
 },
 {
@@ -3880,13 +3693,8 @@
         "card_number": "SUB_FAC_15",
         "card_type": "sub_fac",
         "name": "채굴 망치",
-        "image": "images/78.png",
-        "cost": 1,
         "score": 0,
-        "condition": "NONE",
-        "command": "plus(\"food\", 1) , 집 고치기 행동 시 -> 선택 -> 외양간 짓기 OR NONE",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "plus(\"food\", 1) , 집 고치기 행동 시 -> 선택 -> 외양간 짓기 OR NONE"
     }
 },
 {
@@ -3896,13 +3704,8 @@
         "card_number": "SUB_FAC_16",
         "card_type": "sub_fac",
         "name": "바구니",
-        "image": "images/79.png",
-        "cost": 1,
         "score": 0,
-        "condition": "NONE",
-        "command": "나무 누적 행동 칸 이용 시 -> 선택 -> 나무 2개 남겨놓고 plus(\"food\", 3) OR NONE",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "나무 누적 행동 칸 이용 시 -> 선택 -> 나무 2개 남겨놓고 plus(\"food\", 3) OR NONE"
     }
 },
 {
@@ -3912,13 +3715,8 @@
         "card_number": "SUB_FAC_17",
         "card_type": "sub_fac",
         "name": "목수의 객실",
-        "image": "images/80.png",
-        "cost": 2,
         "score": 0,
-        "condition": "NONE",
-        "command": "방 만들기 행동 시-> if(나무집) 만들기 나무cost-2",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "방 만들기 행동 시-> if(나무집) 만들기 나무cost-2"
     }
 },
 {
@@ -3928,13 +3726,8 @@
         "card_number": "SUB_FAC_18",
         "card_type": "sub_fac",
         "name": "양토 채굴장",
-        "image": "images/81.png",
-        "cost": 1,
         "score": 1,
-        "condition": "job>=3",
-        "command": "날품팔이 행동 칸 이용시 -> plus(\"soil\", 3)",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "날품팔이 행동 칸 이용시 -> plus(\"soil\", 3)"
     }
 },
 {
@@ -3944,13 +3737,8 @@
         "card_number": "SUB_FAC_19",
         "card_type": "sub_fac",
         "name": "목재소",
-        "image": "images/82.png",
-        "cost": 2,
         "score": 2,
-        "condition": "job<=3",
-        "command": "모든 설비 cost에서 나무 -1",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "모든 설비 cost에서 나무 -1"
     }
 },
 {
@@ -3960,13 +3748,8 @@
         "card_number": "SUB_FAC_20",
         "card_type": "sub_fac",
         "name": "개울",
-        "image": "images/83.png",
-        "cost": 0,
         "score": 0,
-        "condition": "내 가족이 낚시 행동 칸 이용 중",
-        "command": "갈대밭, 흙 채굴장, 숲, 1라운드카드 이용 시 -> plus(\"food\", 1)",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "갈대밭, 흙 채굴장, 숲, 1라운드카드 이용 시 -> plus(\"food\", 1)"
     }
 },
 {
@@ -3976,13 +3759,8 @@
         "card_number": "SUB_FAC_21",
         "card_type": "sub_fac",
         "name": "곡식용 삽",
-        "image": "images/84.png",
-        "cost": 1,
         "score": 0,
-        "condition": "NONE",
-        "command": "곡식 종자 행동 칸 이용 시 -> plus(\"grain\", 1)",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "곡식 종자 행동 칸 이용 시 -> plus(\"grain\", 1)"
     }
 },
 {
@@ -3992,13 +3770,8 @@
         "card_number": "SUB_FAC_22",
         "card_type": "sub_fac",
         "name": "폐품 창고",
-        "image": "images/85.png",
-        "cost": 2,
         "score": 0,
-        "condition": "NONE",
-        "command": "설비 내려 놓거나, 지을 때 -> plus(\"food\", 1)",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "설비 내려 놓거나, 지을 때 -> plus(\"food\", 1)"
     }
 },
 {
@@ -4008,13 +3781,8 @@
         "card_number": "SUB_FAC_23",
         "card_type": "sub_fac",
         "name": "빵삽",
-        "image": "images/87.png",
-        "cost": 1,
         "score": 0,
-        "condition": "NONE",
-        "command": "plus(\"food\", 1), 직업 놓을 시 -> 빵굽기 행동",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "plus(\"food\", 1), 직업 놓을 시 -> 빵굽기 행동"
     }
 },
 {
@@ -4024,13 +3792,8 @@
         "card_number": "SUB_FAC_24",
         "card_type": "sub_fac",
         "name": "네덜란드식 풍차",
-        "image": "images/88.png",
-        "cost": 4,
         "score": 2,
-        "condition": "NONE",
-        "command": "수확 마친 다음 라운드(5, 8, 10, 12, 14)에 빵굽기 행동 시-> plus(\"food\", 3)",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "수확 마친 다음 라운드(5, 8, 10, 12, 14)에 빵굽기 행동 시-> plus(\"food\", 3)"
     }
 },
 {
@@ -4040,13 +3803,8 @@
         "card_number": "SUB_FAC_25",
         "card_type": "sub_fac",
         "name": "돌 집게",
-        "image": "images/89.png",
-        "cost": 1,
         "score": 0,
-        "condition": "NONE",
-        "command": "돌 누적 칸 이용 시 -> plus(\"stone\", 1)",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "돌 누적 칸 이용 시 -> plus(\"stone\", 1)"
     }
 },
 {
@@ -4056,13 +3814,8 @@
         "card_number": "SUB_FAC_26",
         "card_type": "sub_fac",
         "name": "이중날 쟁기",
-        "image": "images/90.png",
-        "cost": 2,
         "score": 0,
-        "condition": "job>=1",
-        "command": "미친놈인데? 뺴야할 듯",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "미친놈인데? 뺴야할 듯"
     }
 },
 {
@@ -4072,13 +3825,8 @@
         "card_number": "SUB_FAC_27",
         "card_type": "sub_fac",
         "name": "쇠스랑",
-        "image": "images/91.png",
-        "cost": 1,
         "score": 0,
-        "condition": "NONE",
-        "command": "곡식 종자 행동 칸 이용 시 -> if(농지 칸 이용 중일시) ->plus(\"food\", 3)",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "곡식 종자 행동 칸 이용 시 -> if(농지 칸 이용 중일시) ->plus(\"food\", 3)"
     }
 },
 {
@@ -4088,13 +3836,8 @@
         "card_number": "SUB_FAC_28",
         "card_type": "sub_fac",
         "name": "경질 자기",
-        "image": "images/92.png",
-        "cost": 1,
         "score": 0,
-        "condition": "NONE",
-        "command": "아무 때나, minus(\"soil\", 2), plus(\"stone\", 1) OR minus(\"soil\", 3), plus(\"stone\", 2) OR ...",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "아무 때나, minus(\"soil\", 2), plus(\"stone\", 1) OR minus(\"soil\", 3), plus(\"stone\", 2) OR ..."
     }
 },
 {
@@ -4104,13 +3847,8 @@
         "card_number": "SUB_FAC_29",
         "card_type": "sub_fac",
         "name": "삽",
-        "image": "images/93.png",
-        "cost": 1,
         "score": 0,
-        "condition": "NONE",
-        "command": "아무 때나, 작물 2 개 이상인 밭의 작물 빈 밭으로 이동 가능..... 미친놈인듯",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "아무 때나, 작물 2 개 이상인 밭의 작물 빈 밭으로 이동 가능..... 미친놈인듯"
     }
 },
 {
@@ -4120,13 +3858,8 @@
         "card_number": "SUB_FAC_30",
         "card_type": "sub_fac",
         "name": "흙판",
-        "image": "images/94.png",
-        "cost": 1,
         "score": 0,
-        "condition": "NONE",
-        "command": "plus(\"soil\", player.resource.soil/2), 카드 넘김",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "plus(\"soil\", player.resource.soil/2), 카드 넘김"
     }
 },
 {
@@ -4136,13 +3869,8 @@
         "card_number": "SUB_FAC_31",
         "card_type": "sub_fac",
         "name": "노점",
-        "image": "images/95.png",
-        "cost": 1,
         "score": 0,
-        "condition": "NONE",
-        "command": "plus(\"vegi\", 1), 카드 넘김",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "plus(\"vegi\", 1), 카드 넘김"
     }
 },
 {
@@ -4152,13 +3880,8 @@
         "card_number": "SUB_FAC_32",
         "card_type": "sub_fac",
         "name": "작은 우리",
-        "image": "images/96.png",
-        "cost": 2,
         "score": 0,
-        "condition": "NONE",
-        "command": "1칸 짜리 우리 설치, 카드 넘김",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "1칸 짜리 우리 설치, 카드 넘김"
     }
 },
 {
@@ -4168,13 +3891,8 @@
         "card_number": "SUB_FAC_33",
         "card_type": "sub_fac",
         "name": "우시장",
-        "image": "images/97.png",
-        "cost": 1,
         "score": 0,
-        "condition": "NONE",
-        "command": "plus(\"cow\", 1), 카드 넘김",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "plus(\"cow\", 1), 카드 넘김"
     }
 },
 {
@@ -4184,13 +3902,8 @@
         "card_number": "SUB_FAC_34",
         "card_type": "sub_fac",
         "name": "이동 경작",
-        "image": "images/98.png",
-        "cost": 2,
         "score": 0,
-        "condition": "NONE",
-        "command": "plus(\"field\", 1), 밭 배치, 카드 넘김",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "plus(\"field\", 1), 밭 배치, 카드 넘김"
     }
 },
 {
@@ -4200,13 +3913,8 @@
         "card_number": "SUB_FAC_35",
         "card_type": "sub_fac",
         "name": "병",
-        "image": "images/99.png",
-        "cost": 0,
         "score": 4,
-        "condition": "NONE",
-        "command": "minus(\"soil\", player.family), minus(\"food\", player.family)",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "minus(\"soil\", player.family), minus(\"food\", player.family)"
     }
 },
 {
@@ -4216,13 +3924,8 @@
         "card_number": "SUB_FAC_36",
         "card_type": "sub_fac",
         "name": "거대 농장",
-        "image": "images/100.png",
-        "cost": 0,
         "score": 0,
-        "condition": "field.빈땅 ==0",
-        "command": "남은 라운드 당 1점, 음식 2개",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "남은 라운드 당 1점, 음식 2개"
     }
 },
 {
@@ -4232,13 +3935,8 @@
         "card_number": "SUB_FAC_37",
         "card_type": "sub_fac",
         "name": "버터 제조기",
-        "image": "images/101.png",
-        "cost": 1,
         "score": 1,
-        "condition": "job<=3",
-        "command": "수확 시작 시-> plus(\"food\", sheep/3), plus(\"food\", cow/2)",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "수확 시작 시-> plus(\"food\", sheep/3), plus(\"food\", cow/2)"
     }
 },
 {
@@ -4248,13 +3946,8 @@
         "card_number": "SUB_FAC_38",
         "card_type": "sub_fac",
         "name": "삼포식 농법",
-        "image": "images/102.png",
-        "cost": 0,
         "score": 0,
-        "condition": "job>=3",
-        "command": "수확 시작 시 -> if(곡식밭>=1&&채소밭>=1 && 빈 밭>=1) -> plus(\"food\", 3)",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "수확 시작 시 -> if(곡식밭>=1&&채소밭>=1 && 빈 밭>=1) -> plus(\"food\", 3)"
     }
 },
 {
@@ -4264,13 +3957,8 @@
         "card_number": "SUB_FAC_39",
         "card_type": "sub_fac",
         "name": "물통",
-        "image": "images/103.png",
-        "cost": 1,
         "score": 0,
-        "condition": "NONE",
-        "command": "우리의 가축 최대 수용 수 +2",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "우리의 가축 최대 수용 수 +2"
     }
 },
 {
@@ -4280,13 +3968,8 @@
         "card_number": "BASE_01",
         "card_type": "BASE",
         "name": "덤불",
-        "image": "",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "plus(\"wood\", accum)",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "cls.use_round_card_resources(player, round_card)"
     }
 },
 {
@@ -4296,13 +3979,8 @@
         "card_number": "BASE_02",
         "card_type": "BASE",
         "name": "수풀",
-        "image": "",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "plus(\"wood\", accum)",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "cls.use_round_card_resources(player, round_card)"
     }
 },
 {
@@ -4312,13 +3990,8 @@
         "card_number": "BASE_03",
         "card_type": "BASE",
         "name": "자원 시장",
-        "image": "",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "plus(\"reed\", 1), plus(\"stone\", 1), plus(\"food\", 1)",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "cls.use_round_card_resources(player, round_card)"
     }
 },
 {
@@ -4328,13 +4001,8 @@
         "card_number": "BASE_04",
         "card_type": "BASE",
         "name": "점토 채굴장",
-        "image": "",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "plus(\"soil\", accum)",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "cls.use_round_card_resources(player, round_card)"
     }
 },
 {
@@ -4344,13 +4012,8 @@
         "card_number": "BASE_05",
         "card_type": "BASE",
         "name": "교습",
-        "image": "",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "minus(\"food\", 2), 직업카드 획득",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "cls.job_submit_card(player, round_card, info)"
     }
 },
 {
@@ -4360,13 +4023,8 @@
         "card_number": "BASE_06",
         "card_type": "BASE",
         "name": "유랑극단",
-        "image": "",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "plus(\"food\", accum)",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "cls.use_round_card_resources(player, round_card)"
     }
 },
 {
@@ -4376,13 +4034,8 @@
         "card_number": "BASE_07",
         "card_type": "BASE",
         "name": "농장 확장",
-        "image": "",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "코스트 내고 방 바꾸기",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "코스트 내고 방 바꾸기"
     }
 },
 {
@@ -4392,13 +4045,8 @@
         "card_number": "BASE_08",
         "card_type": "BASE",
         "name": "회합 장소",
-        "image": "",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "선 바꾸기, 그리고/또는 보조설비",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "선 바꾸기, 그리고/또는 보조설비"
     }
 },
 {
@@ -4408,13 +4056,8 @@
         "card_number": "BASE_09",
         "card_type": "BASE",
         "name": "곡식 종자",
-        "image": "",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "plus(\"grain\", 1)",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "cls.use_round_card_resources(player, round_card)"
     }
 },
 {
@@ -4424,13 +4067,8 @@
         "card_number": "BASE_10",
         "card_type": "BASE",
         "name": "농지",
-        "image": "",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "plus(\"field\", 1), 밭 배치",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "plus(\"field\", 1), 밭 배치"
     }
 },
 {
@@ -4440,13 +4078,8 @@
         "card_number": "BASE_11",
         "card_type": "BASE",
         "name": "교습",
-        "image": "",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "minus(\"food\", 1), 직업카드 획득",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "cls.job_submit_card(player, round_card, info)"
     }
 },
 {
@@ -4456,13 +4089,8 @@
         "card_number": "BASE_12",
         "card_type": "BASE",
         "name": "날품팔이",
-        "image": "",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "plus(\"food\", 2)",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "cls.use_round_card_resources(player, round_card)"
     }
 },
 {
@@ -4472,13 +4100,8 @@
         "card_number": "BASE_13",
         "card_type": "BASE",
         "name": "숲",
-        "image": "",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "plus(\"wood\", accum)",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "cls.use_round_card_resources(player, round_card)"
     }
 },
 {
@@ -4488,13 +4111,8 @@
         "card_number": "BASE_14",
         "card_type": "BASE",
         "name": "흙 채굴장",
-        "image": "",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "plus(\"soil\", accum)",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "cls.use_round_card_resources(player, round_card)"
     }
 },
 {
@@ -4504,13 +4122,8 @@
         "card_number": "BASE_15",
         "card_type": "BASE",
         "name": "갈대밭",
-        "image": "",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "plus(\"reed\", accum)",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "cls.use_round_card_resources(player, round_card)"
     }
 },
 {
@@ -4520,13 +4133,8 @@
         "card_number": "BASE_16",
         "card_type": "BASE",
         "name": "낚시",
-        "image": "",
-        "cost": 0,
         "score": 0,
-        "condition": "NONE",
-        "command": "plus(\"food\", accum)",
-        "description": "이미지 참조",
-        "is_use": false
+        "command": "cls.use_round_card_resources(player, round_card)"
     }
 }
 ]

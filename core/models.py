@@ -32,10 +32,5 @@ class Base:
     def remove(self, key: str):
         self.__delattr__(f'_{key}')
 
-    def plus(self, key: str, value):
-        prev_value = self.get(key)
-        self.set(key, prev_value + value)
-
-    def minus(self, key: str, value):
-        prev_value = self.get(key)
-        self.set(key, prev_value - value)
+    def pop(self, key: str, default=None):
+        return self.__dict__.pop(f'_{key}', default)

@@ -1,6 +1,8 @@
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
+from deepdiff import DeepDiff
 
 from core.redis import connection
+from play.exception import IsNotPlayerTurnException, CantUseCardException
 from play.models.game import Game
 
 
@@ -42,15 +44,44 @@ class GameConsumer(AsyncJsonWebsocketConsumer):
         data = self.redis.get(f"game_{self.id}")
 
         game = Game.from_dict(**eval(data))
-        played_data = game.play(content)
+        try:
+            played_data = game.play(content)
+
+        except IsNotPlayerTurnException as e:
+            return await self.send_json({
+                "error": str(e)
+            })
+
+        except CantUseCardException as e:
+            return await self.send_json({
+                "error": str(e)
+            })
+
+        change = []
+
+        # 이전 데이터와 달라진 데이터를 조회하기 위한 처리 (DeepDiff)
+        deep_diff = DeepDiff(eval(data), played_data)
+        print(deep_diff)
+        values = deep_diff.get("values_changed", {})
+        types = deep_diff.get("type_changes", {})
+
+        # 이전 데이터와 변화된 데이터가 있다면 change에 추가
+        if values or types:
+            for key, value in [*values.items(), *types.items()]:
+                key = key.replace("root", "")
+                change.append({
+                    "key": key,
+                    "value": value['new_value'],
+                    "prev": value['old_value']
+                })
 
         self.redis.set(f"game_{self.id}", str(played_data))
 
-        await self.channel_layer.group_send(
+        return await self.channel_layer.group_send(
             self.group_name,
             {
                 'type': 'game_message',
-                'message': played_data
+                'message': change
             }
         )
 

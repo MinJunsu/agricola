@@ -69,10 +69,24 @@ INITIAL_COMMON_RESOURCE = {
     'food': 76,
 }
 
+# FIXME: 테스트 환경을 위해 임시로 자원 수정
 INITIAL_PLAYER_RESOURCE = {
-    "family": 2,
-    "room": 2,
+    'wood': 30,
+    'clay': 24,
+    'reed': 14,
+    'stone': 16,
+    'grain': 24,
+    'vegetable': 16,
+    'sheep': 18,
+    'boar': 15,
+    'cattle': 13,
+    'food': 76,
 }
+
+# INITIAL_PLAYER_RESOURCE = {
+#     "family": 2,
+#     "room": 2,
+# }
 
 LAST_TURN = 3
 LAST_ROUND = 3
@@ -318,7 +332,33 @@ INITIAL_ROUND_CARDS = {
 NO_USER = -1
 
 RESOURCE_CONVERT_FUNCTION = {
-    "PRI_FAC_01": {
+    "PRI_FAC_02": {
+        "additional": {
+            "reed": 3,
+        }
+    },
+    "PRI_FAC_03": {
+        "additional": {
+            "clay": 2,
+        }
+    },
+    "PRI_FAC_04": {
+        "additional": {
+            "wood": 2,
+        }
+    },
+    "PRI_FAC_05": {
+        "additional": {
+            "grain": 3,
+        },
+        "always": {
+            "vegetable": 3,
+            "sheep": 2,
+            "boar": 3,
+            "cattle": 4,
+        }
+    },
+    "PRI_FAC_06": {
         "additional": {
             "grain": 2,
         },
@@ -328,5 +368,109 @@ RESOURCE_CONVERT_FUNCTION = {
             "boar": 2,
             "cattle": 3,
         }
+    },
+    "PRI_FAC_07": {
+        "additional": {
+            "grain": 3,
+        },
+        "always": {
+            "vegetable": 3,
+            "sheep": 2,
+            "boar": 3,
+            "cattle": 4,
+        }
+    },
+    "PRI_FAC_08": {
+        "additional": {
+            "grain": 2,
+        },
+        "always": {
+            "vegetable": 2,
+            "sheep": 2,
+            "boar": 2,
+            "cattle": 3,
+        }
+    },
+    "PRI_FAC_09": {
+        "additional": {
+            "grain": 4,
+        }
+    },
+    "PRI_FAC_10": {
+        "additional": {
+            "grain": 5,
+        }
+    },
+}
+
+MOVE_ANIMAL_FUNCTION = {
+    "move_animal_card": {
+        "always": {
+            'to': {
+                'position': 'index',
+                'count': 2,
+            },
+            'from': {
+                'position': 'index',
+                'count': 2,
+            }
+        }
     }
+}
+
+INSTALL_FENCE_FUNCTION = {
+    "card_number": {
+        "aditional": {
+            'to': {
+                'position': 'index',
+                'count': 2,
+            }
+        }
+    }
+}
+
+UPGRADE_FIELD_FUNCTION = {
+    "room_card_number": {
+        "aditional": {
+            'to': {
+                'position': 'index',
+                'count': 2,
+            }
+        }
+    },
+    "farm_card_number": {
+        "aditional": {
+            'to': {
+                'position': 'index',
+                'count': 2,
+            }
+        }
+    },
+    "barn_card_number": {
+        "aditional": {
+            'to': {
+                'position': 'index',
+                'count': 2,
+            }
+        }
+    }
+}
+
+DUMP_FIELD_FUNCTION = {
+    "seed": {
+        "aditional": {
+            'to': {
+                'position': 'index',
+                'count': 2,
+            }
+        }
+    },
+    "animal": {
+        "aditional": {
+            'to': {
+                'position': 'index',
+                'count': 2,
+            }
+        }
+    },
 }

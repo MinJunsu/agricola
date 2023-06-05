@@ -7,14 +7,6 @@ from lobby.models import Room
 
 LOBBY = "lobby"
 
-
-class RoomCommand(Enum):
-    CREATE = "create"
-    WATCH = "watch"
-    ENTER = "enter"
-    EXIT = "exit"
-
-
 DEFAULT_ROOM_OPTIONS = {
     "title": "Untitled",
     "is_chat": False,
@@ -22,6 +14,13 @@ DEFAULT_ROOM_OPTIONS = {
     "password": "",
     "time_limit": 30,
 }
+
+
+class RoomCommand(Enum):
+    CREATE = "create"
+    WATCH = "watch"
+    ENTER = "enter"
+    EXIT = "exit"
 
 
 class LobbyConsumer(BaseLobbyConsumer):
