@@ -11,6 +11,7 @@ class RoundCard(Base):
     _is_stacked: bool
     _count: int
     _resource: dict
+    _player: int | None
     _additional_action: dict
 
     def __init__(
@@ -20,12 +21,14 @@ class RoundCard(Base):
             count: int = 0,
             resource: dict = None,
             additional_action: dict = None,
+            player: int | None = None
     ):
         self._card_number = card_number
         self._is_stacked = is_stacked
         self._count = count
         self._resource = resource
         self._additional_action = additional_action
+        self._player = player
 
     @classmethod
     def initialize_base_cards(cls) -> List['RoundCard']:

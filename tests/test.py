@@ -8,7 +8,6 @@ def test():
     test2 = json.load(open('./tests/test2.json', 'r'))
 
     d = DeepDiff(test1, test2, ignore_order=False)
-    print(list(d['values_changed'].items()))
 
 
 if __name__ == '__main__':

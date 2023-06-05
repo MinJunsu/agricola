@@ -58,17 +58,12 @@ class Resource(Base):
     @classmethod
     def initialize_common_resource(cls):
         common_resource = cls(**INITIAL_COMMON_RESOURCE)
-        # common_resource.remove('room')
-        # common_resource.remove('fence')
-        # common_resource.remove('barn')
-        # common_resource.remove('family')
         return common_resource
 
     @classmethod
     def initialize_player_resource(cls):
         return cls(**INITIAL_PLAYER_RESOURCE)
 
-    # TODO: 점수 계산 수식 작성
     def calculate_score(self):
         keys = RESOURCE_SCORE_BOARD.keys()
         score = 0

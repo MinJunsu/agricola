@@ -1,4 +1,5 @@
 import random
+from functools import reduce
 from typing import List
 
 from asgiref.sync import sync_to_async
@@ -28,7 +29,6 @@ class Game(Base):
     _round: int
     _phase: int
     _players: List[Player]
-    _actions: List[Action]
     _base_cards: List[RoundCard]
     _round_cards: List[RoundCard]
     _common_resources: Resource
@@ -63,7 +63,7 @@ class Game(Base):
 
     @property
     def action_cards(self) -> List[RoundCard]:
-        return [*self._base_cards, *self._round_cards]
+        return self._base_cards + self._round_cards
 
     def get_action_card_by_card_number(self, card_number: str) -> RoundCard | None:
         cards = list(filter(lambda card: card.get('card_number') == card_number, self.action_cards))
@@ -95,16 +95,17 @@ class Game(Base):
         return instance
 
     @staticmethod
-    def parse_command(command_str: dict) -> tuple[CommandType, str, int]:
+    def parse_command(command_str: dict) -> tuple[CommandType, str, int, dict]:
         command: CommandType = command_str.get('command', CommandType.ACTION)
         card_number: str = command_str.get('card_number', None)
         player: int = command_str.get('player', NO_USER)
-        return command, card_number, player
+        additional: dict = command_str.get('additional', {})
+        return command, card_number, player, additional
 
     def play(self, command: dict) -> dict:
         # 기본 값 설정
         is_done: bool = False
-        command, card_number, player = self.parse_command(command)
+        command, card_number, player, additional = self.parse_command(command)
         command = CommandType(command)
 
         # 턴에 맞지 않는 플레이어가 행동을 하려고 할 때 에러를 발생시킴.
@@ -115,7 +116,7 @@ class Game(Base):
         round_card = self.get_action_card_by_card_number(card_number)
         is_done = Action.run(
             command=command, card_number=card_number, players=self._players,
-            round_card=round_card, turn=self._turn
+            round_cards=self.action_cards, turn=self._turn, additional=additional
         )
 
         # 게임의 정보를 바탕으로 게임의 턴을 변경
@@ -142,13 +143,35 @@ class Game(Base):
                 self._common_resources.set(resource, common_resource_count - card.get('count'))
 
     def change_turn_and_round_and_phase(self, is_done: bool) -> None:
+        # 만약, 턴이 끝나지 않은 상태로 온다면 아무것도 하지 않음.
         if not is_done:
             return
 
-        if self._turn == LAST_TURN:
-            self._turn = 0
-            self._round += 1
-            return
+        total_family = reduce(lambda acc, player: acc + player.get('resource').get('family'), self._players, 0)
+        total_worked = len(list(filter(lambda p: p.get('player') is not None, self.action_cards)))
+
+        while total_family != total_worked:
+            # 우선 턴을 진행 시키고, 이 플레이어가 턴을 진행할 수 있는지 확인한다.
+            self._turn += 1
+
+            # 만약, turn이 4 라면, 다시 0으로 변경하여 원형으로 돌 수 있게 한다.
+            if self._turn > LAST_TURN:
+                self._turn = 0
+
+            # 플레이어가 들고 있는 가족 구성원 수
+            player_family = self._players[self._turn].get("resource").get("family")
+            # 플레이어가 말판에 이동 시킨 가족 구성원 수 (일한 가족 구성원 수)
+            player_worked = len(list(filter(lambda p: p.get('player') == self._turn, self.action_cards)))
+
+            if player_family > player_worked:
+                return
+
+        # 만약, 게임 판에 존재하는 모든 플레이어가 가족 구성원들을 사용했다면, 바로 다음 라운드로 변경하는 로직을 진행한다.
+        # 라운드 변경 시 페이즈 변경 처리
+        self._round = self._round + 1
+        self._turn = self._first
+        # 만약, 모든 사람이 할 수 있는 턴이 끝난 상태인지
+        return
 
     @staticmethod
     @sync_to_async
