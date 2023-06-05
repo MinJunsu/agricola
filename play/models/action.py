@@ -5,6 +5,7 @@ from core.models import Base
 from core.redis import connection
 from play.enum import CommandType
 from play.models.player import Player
+from play.models.resource import Resource
 from play.models.round_card import RoundCard
 
 
@@ -18,10 +19,12 @@ class Action(Base):
             card_number: str,
             players: List[Player],
             round_card: RoundCard,
-            turn: int
+            turn: int,
+            common_resource: Resource
     ):
         player: Player = players[turn]
-        card_command = cls.get_command(card_number)
+        # card_command = cls.get_command(card_number)
+        card_command = cls.convert_resource(player, command, card_number, common_resource, resources)
         if command == CommandType.ACTION:
             return eval(card_command)
         elif command == CommandType.ADDITIONAL:
@@ -87,6 +90,7 @@ class Action(Base):
             player: Player,
             command: str,
             card_number: str,
+            common_resource: Resource,
             resources: dict
     ):
         redis = cls.redis
@@ -94,28 +98,13 @@ class Action(Base):
         player_resources = player.get("resources")
         for resource, count in resources.items():
             ratio = RESOURCE_CONVERT_FUNCTION[card_number][command][resource]
+            count = count * ratio
             # TODO: 1. validate 처리 (플레이어가 자원을 가져갈 수 있는지)
             cls.require(player, resource, count)
+            if common_resource.get(TARGET) < count:
+                raise Exception("공용 자원이 부족합니다.")
 
             # TODO: 2 자원 변경 처리
-            cls.plus(player, player_resources, ratio)
-            player_resources.set(resource, player_resources.get(resource) + resources[resource])
-            player_resources.set(TARGET, player_resources.get(TARGET) + resources[resource])
+            cls.plus(player, player_resources, count)
 
-    @classmethod
-    def move_animal(
-            cls,
-            player: Player,
-            command: str,
-            card_number: str,
-            resource: dict,
-            count: int,
-            arrivals: int,
-            departures: int,
-    ):
-        redis = cls.redis
-
-        MOVE_ANIMALS[card_number][command][departures][arrivals]
-        fields = player.get("fields")
-        fields[departures].get("is_in").set(resource.get("resource_name"), resource.get("count"))
-        fields[arrivals].get("is_in").set(resource.get("resource_name"), resource.get("count"))
+        return True
