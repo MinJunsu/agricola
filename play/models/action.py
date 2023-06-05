@@ -1,9 +1,11 @@
 from typing import List
 
+from core.const import RESOURCE_CONVERT_FUNCTION
 from core.models import Base
 from core.redis import connection
 from play.enum import CommandType
 from play.models.player import Player
+from play.models.resource import Resource
 from play.models.round_card import RoundCard
 
 
@@ -17,10 +19,12 @@ class Action(Base):
             card_number: str,
             players: List[Player],
             round_card: RoundCard,
-            turn: int
+            turn: int,
+            common_resource: Resource
     ):
         player: Player = players[turn]
-        card_command = cls.get_command(card_number)
+        # card_command = cls.get_command(card_number)
+        card_command = cls.convert_resource(player, command, card_number, common_resource, resources)
         if command == CommandType.ACTION:
             return eval(card_command)
         elif command == CommandType.ADDITIONAL:
@@ -79,3 +83,58 @@ class Action(Base):
     @classmethod
     def get_command(cls, card_number: str) -> str:
         return cls.redis.hget("commands", card_number)
+
+    @classmethod
+    def convert_resource(
+            cls,
+            player: Player,
+            command: str,
+            card_number: str,
+            common_resource: Resource,
+            resources: dict
+    ):
+        redis = cls.redis
+        TARGET = "food"
+        player_resources = player.get("resources")
+        for resource, count in resources.items():
+            ratio = RESOURCE_CONVERT_FUNCTION[card_number][command][resource]
+            count = count * ratio
+            # TODO: 1. validate 처리 (플레이어가 자원을 가져갈 수 있는지)
+            cls.require(player, resource, count)
+            if common_resource.get(TARGET) < count:
+                raise Exception("공용 자원이 부족합니다.")
+
+            # TODO: 2 자원 변경 처리
+            cls.plus(player, player_resources, count)
+
+        return True
+
+    # fileds 중 arrival의 position과 자원을 입력받아 새로 선택한 departures의 position에 옮기는 함수
+    # client 입력값 (arrival, departures, count)
+    @classmethod
+    def move_animal(
+            cls,
+            player: Player,
+            arrival: int,
+            departures: int,
+            count: int,
+    ):
+        fields = player.get("fields")
+
+        arrival_field = player.get("fields")[arrival]
+        departures_field = player.get("fields")[departures]
+
+        # 옮기는 필드가 우리가 아니라면 에러
+        if arrival_field.get("field_type") != FieldType.CAGE or departures_field.get("field_type") != FieldType.CAGE:
+            raise Exception("이동은 우리에서만 가능합니다.")
+
+        # 옮기는 필드에 동물이 없다면 에러
+        resource, amount = arrival_field.get("is_in").item()
+        if amount < count:
+            raise Exception("이동할 수 있는 동물이 부족합니다.")
+
+        # 동물 옮기기
+        player.get("fields")[arrival].get("is_in").set(resource, amount - count)
+        player.get("fields")[departures].get("is_in").set(resource, amount + count)
+
+        return True
