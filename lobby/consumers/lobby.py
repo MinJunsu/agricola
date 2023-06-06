@@ -2,6 +2,7 @@ from enum import Enum
 from typing import List
 
 from core.redis import connection
+from core.response import socket_response
 from lobby.consumers.base import BaseLobbyConsumer
 from lobby.models import Room
 
@@ -37,7 +38,7 @@ class LobbyConsumer(BaseLobbyConsumer):
         await self.accept()
         await self.send_json({
             "type": "lobby",
-            "data": self.rooms_with_participant,
+            "result": self.rooms_with_participant,
         })
 
     async def disconnect(self, code):
@@ -52,23 +53,31 @@ class LobbyConsumer(BaseLobbyConsumer):
 
         # 유저 정보가 잘못 될 경우 처리
         if user == "-1":
-            await self.send("INVALID USER ID")
-            return
+            return await self.send(socket_response(
+                is_success=False,
+                error="INVALID USER ID"
+            ))
 
         # 방 정보가 잘못될 경우 처리
         if command != RoomCommand.CREATE and room_id == "-1":
-            await self.send("INVALID ROOM ID")
-            return
+            return await self.send(socket_response(
+                is_success=False,
+                error="INVALID ROOM ID"
+            ))
 
         if command == RoomCommand.ENTER and self.redis.hget("rooms", room_id) is None:
-            await self.send("INVALID ROOM ID")
-            return
+            return await self.send(socket_response(
+                is_success=False,
+                error="INVALID ROOM ID"
+            ))
 
         # 방 생성 정보가 잘못될 경우
         if command == RoomCommand.CREATE:
             if user in self.redis.hkeys("rooms:participants"):
-                await self.send("ALREADY CREATED")
-                return
+                return await self.send(socket_response(
+                    is_success=False,
+                    error="ALREADY CREATED"
+                ))
 
             new_room = Room.create_room(
                 host=user_id,
@@ -91,7 +100,13 @@ class LobbyConsumer(BaseLobbyConsumer):
                 )
 
             room: Room = Room.from_dict(**eval(self.redis.hget("rooms", room_id)))
-            await self.send_json(room.to_dict())
+            await self.send_json(socket_response(
+                is_success=True,
+                data={
+                    "type": "room",
+                    "result": room.to_dict(),
+                },
+            ))
 
             return await self.channel_layer.group_add(
                 f"room_{room_id}",
@@ -100,8 +115,10 @@ class LobbyConsumer(BaseLobbyConsumer):
 
         elif command == RoomCommand.ENTER:
             if str(user_id) in self.redis.hkeys("rooms:participants"):
-                await self.send("ALREADY ENTERED")
-                return
+                return await self.send(socket_response(
+                    is_success=False,
+                    error="ALREADY ENTERED"
+                ))
 
             room: Room = Room.from_dict(**eval(self.redis.hget("rooms", room_id)))
             room.enter(user_id)
@@ -109,15 +126,23 @@ class LobbyConsumer(BaseLobbyConsumer):
             self.redis.hset("rooms:participants", user_id, room_id)
             self.redis.hset("rooms", room_id, str(room.to_dict()))
             self.redis.hset("lobby:watch:participants", user_id, room_id)
-            await self.send_json(room.to_dict())
+            await self.send_json(socket_response(
+                is_success=True,
+                data={
+                    "type": "room",
+                    "result": room.to_dict(),
+                },
+            ))
 
             # TODO: 인원수가 4명이 될 경우 게임 자동 시작
             # if len(room.get('participants')) == 4:
 
         elif command == RoomCommand.EXIT:
             if str(user_id) not in self.redis.hkeys(f"rooms:participants"):
-                await self.send("NOT ENTERED")
-                return
+                return await self.send(socket_response(
+                    is_success=False,
+                    error="NOT ENTERED"
+                ))
 
             room: Room = Room.from_dict(**eval(self.redis.hget("rooms", room_id)))
             room.exit(user_id)
@@ -135,8 +160,10 @@ class LobbyConsumer(BaseLobbyConsumer):
                 )
 
         else:
-            await self.send("UNDEFINED COMMAND")
-            return
+            return await self.send(socket_response(
+                is_success=False,
+                error="INVALID COMMAND"
+            ))
 
         if command == RoomCommand.CREATE or command == RoomCommand.ENTER or command == RoomCommand.EXIT:
             await self.send_message_to_lobby()
@@ -173,10 +200,13 @@ class LobbyConsumer(BaseLobbyConsumer):
             "lobby",
             {
                 "type": "message",
-                "message": {
-                    "type": "lobby",
-                    "data": self.rooms_with_participant,
-                }
+                "message": socket_response(
+                    is_success=True,
+                    data={
+                        "type": "lobby",
+                        "result": self.rooms_with_participant,
+                    },
+                )
             }
         )
 
@@ -186,10 +216,13 @@ class LobbyConsumer(BaseLobbyConsumer):
             f"room_{room_id}",
             {
                 "type": "message",
-                "message": {
-                    "type": "room",
-                    "data": room.to_dict(),
-                },
+                "message": socket_response(
+                    is_success=True,
+                    data={
+                        "type": "room",
+                        "result": room.to_dict(),
+                    },
+                )
             }
         )
 
