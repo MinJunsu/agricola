@@ -36,10 +36,13 @@ class LobbyConsumer(BaseLobbyConsumer):
         )
 
         await self.accept()
-        await self.send_json({
-            "type": "lobby",
-            "result": self.rooms_with_participant,
-        })
+        await self.send_json(socket_response(
+            is_success=True,
+            data={
+                "type": "lobby",
+                "result": self.rooms_with_participant,
+            }
+        ))
 
     async def disconnect(self, code):
         await self.channel_layer.group_discard(
