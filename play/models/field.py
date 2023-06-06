@@ -38,12 +38,12 @@ class Field(Base):
             is_in=FieldResource.initialize_player().to_dict()
         )
         # FIXME: 테스트 환경을 위해 임시로 5마리의 양을 배치
-        room3 = cls(
-            field_type=FieldType.CAGE,
-            position=5,
-            is_in=FieldResource(sheep=5).to_dict()
-        )
-        return [room1, room2, room3]
+        # room3 = cls(
+        #     field_type=FieldType.CAGE,
+        #     position=5,
+        #     is_in=FieldResource(sheep=5).to_dict()
+        # )
+        return [room1, room2]
 
     def move(self, arrival: 'Field', animal: str, count: int) -> None:
         # TODO: 이동이 가능한지에 대한 예외 처리

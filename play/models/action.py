@@ -28,7 +28,6 @@ class Action(Base):
             additional: Any = None,
     ):
         player: Player = players[turn]
-
         # 데이터 저장을 위해 라운드 카드를 사용한 경우 라운드 카드 변수를 저장한다.
         round_card: RoundCard | None = None
         if "BASE" in card_number or "ROUND" in card_number:
@@ -38,7 +37,7 @@ class Action(Base):
                 raise CantUseCardException
 
         card_command = cls.get_command(card_number)
-
+        
         # 플레이어가 라운드 카드를 선택한 경우 라운드 카드에 플레이어에 대한 정보를 넣어준다.
         if round_card:
             round_card.set("player", turn)
@@ -114,8 +113,7 @@ class Action(Base):
             cls.require(player=player, resource='food', amount=cost)
 
             # 6. 플레이어에 선택한 직업 카드의 is_use 속성을 True로 변경한다.
-            card.use(round_card=round_card)
-            return True
+            return card.use(round_card=round_card)
 
         elif card_type == "SUB":
             pass
@@ -166,7 +164,7 @@ class Action(Base):
 
         # TODO: 예외 처리 추가
         # TODO: 동물이 아닌 자원을 이동시킬 수는 없다.
-        
+
         # 아래 4가지 변수들의 input 값이 정상적인지 확인
         animal = additional.get("animal", None)
         count = additional.get("count", None)
