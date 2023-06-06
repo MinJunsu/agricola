@@ -106,13 +106,24 @@ CHANNEL_LAYERS = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'HOST': '34.125.140.24',
+        'HOST': 'localhost',
         'PORT': 5432,
-        'NAME': 'agricola',
-        'USER': 'agricola',
-        'PASSWORD': 'agricola',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'HOST': '34.125.140.24',
+#         'PORT': 5432,
+#         'NAME': 'agricola',
+#         'USER': 'agricola',
+#         'PASSWORD': 'agricola',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
