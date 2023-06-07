@@ -215,9 +215,71 @@ class Action(Base):
         # 플레이어 필드에 밭 추가
         fields[additional].change_field_type(FieldType.FARM)
 
-        # 행동칸이 밭일구기 이후 추가 빵굽기를 하는 경우
-        if round_card.get("card_number") == "BASE_10":
-            return True
+        # TODO: 행동칸이 밭일구기 이후 추가 빵굽기를 하는 경우
 
-        elif round_card.get("card_number") == "ACTION_12":
-            return False
+        return True
+
+    """
+    방 만들기
+    """
+
+    @classmethod
+    def build_room(
+            cls,
+            player: Player,
+            additional: dict,
+    ):
+        # Additional Type
+        # additional: [1, 2, 3],
+        fields: List[Field] = player.get("fields")
+
+        # field가 이미 존재하는 경우 예외처리
+        for i in additional:
+            if fields[i].get("field_type") != FieldType.EMPTY:
+                raise Exception("이미 사용중인 농지입니다.")
+
+        # 방이 이미 최대 개수인 경우 에러처리
+        if len(list(filter(lambda x: x.get("field_type") == FieldType.ROOM, fields))) == 5:
+            raise Exception("방을 더 이상 만들 수 없습니다.")
+
+        # 플레이어 필드에 방 추가
+        for i in additional:
+            fields[i].change_field_type(FieldType.ROOM)
+
+        return True
+
+    """
+    씨 뿌리기
+    """
+
+    @classmethod
+    def sow(
+            cls,
+            player: Player,
+            additional: dict,
+    ):
+        # Additional Type
+        # additional: {
+        #     "position": 1,
+        #     "seed": "grain",
+        # }
+        position: int = additional.get("position")
+        seed: str = additional.get("seed")
+
+        fields: List[Field] = player.get("fields")
+
+        # field가 밭이 아닌 경우 예외처리
+        if fields[position].get("field_type") != FieldType.FARM:
+            raise Exception("밭이 아닙니다.")
+
+        # 사용중인 밭인 경우 예외처리
+        if fields[position].get("is_in").get("grain") != 0 or fields[position].get("is_in").get("vegetable") != 0:
+            raise Exception("이미 사용중인 밭입니다.")
+
+        # 씨 뿌리기
+        if seed == "grain":
+            fields[position].add_resource("grain", 3)
+        elif seed == "vegetable":
+            fields[position].add_resource("vegetable", 2)
+
+        return True

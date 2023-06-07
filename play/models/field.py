@@ -71,7 +71,11 @@ class Field(Base):
             raise Exception("이미 사용중인 농지입니다.")
 
         self._field_type = field_type
-        
+
+        return None
+
+    def add_resource(self, resource: str, count: int) -> None:
+        self._is_in.set(resource, self._is_in.get(resource) + count)
         return None
 
     def to_dict(self) -> dict:

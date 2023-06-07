@@ -1,5 +1,5 @@
 insert into cards_card (id, card_number, card_type, name, score, command)
-values (1, 'ACTION_01', 'action', '곡식 활용', 0, 'minus("vegi", prop 1) 또는 minus("grain", prop 2)')
+values (1, 'ACTION_01', 'action', '곡식 활용', 0, 'cls.sow(player, additional)')
 ON CONFLICT(card_number) DO NOTHING;
 insert into cards_card (id, card_number, card_type, name, score, command)
 values (2, 'ACTION_02', 'action', '울타리', 0, 'minus("wood", prop 1), cls.plus(player, "fence", prop 2), 설치(프론트값)')
