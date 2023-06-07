@@ -329,7 +329,7 @@ INITIAL_ROUND_CARDS = {
     ],
 }
 
-INITIAL_PRI_CARDS = {
+INITIAL_PRI_CARDS = [
     {
         'card_number': "PRI_FAC_01",
         'owner': None,
@@ -362,7 +362,7 @@ INITIAL_PRI_CARDS = {
         'card_number': "PRI_FAC_08",
         'owner': None,
     }
-}
+]
 
 NO_USER = -1
 
