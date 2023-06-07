@@ -4,7 +4,7 @@ from core.const import RESOURCE_CONVERT_FUNCTION
 from core.functions import find_object_or_raise_exception
 from core.models import Base
 from core.redis import connection
-from play.enum import CommandType, FieldType
+from play.enum import CommandType, FieldType, HouseType
 from play.exception import CantUseCardException
 from play.models.card import Card
 from play.models.field import Field
@@ -281,5 +281,25 @@ class Action(Base):
             fields[position].add_resource("grain", 3)
         elif seed == "vegetable":
             fields[position].add_resource("vegetable", 2)
+
+        return True
+
+    """
+    집 고치기
+    """
+
+    @classmethod
+    def upgrade_house(
+            cls,
+            player: Player,
+    ):
+        # Action Type
+        house_type = player.get("house_type")
+        if house_type == HouseType.WOOD_HOUSE:
+            player.get("house_type").set(HouseType.CLAY_HOUSE)
+        elif house_type == HouseType.CLAY_HOUSE:
+            player.get("house_type").set(HouseType.STONE_HOUSE)
+        elif house_type == HouseType.STONE_HOUSE:
+            raise Exception("이미 최고급 집입니다.")
 
         return True
