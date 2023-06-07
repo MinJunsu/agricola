@@ -7,7 +7,9 @@ class Card(models.Model):
     card_type = models.CharField(max_length=10)
     name = models.CharField(max_length=255)
     score = models.IntegerField()
-    command = models.CharField(max_length=200)
+    cost = models.CharField(max_length=400, null=True)
+    condition = models.CharField(max_length=400, null=True)
+    command = models.CharField(max_length=200, null=True)
 
     def __str__(self) -> str:
         return self.card_number.upper()

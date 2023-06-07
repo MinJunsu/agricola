@@ -23,7 +23,8 @@ async def main():
     effects = CardEffect.objects.all().values('card_number', 'effect', 'command')
     for effect in effects:
         redis.hset(f'cards:{effect["card_number"]}', effect["effect"], effect["command"])
-    redis.hset('commands', mapping={card['card_number']: card['command'] for card in cards})
+    redis.hset('commands',
+               mapping={card['card_number']: card['command'] for card in cards if card['command'] is not None})
     redis.hset('cards', mapping={card['card_number']: str({
         'card_number': card['card_number'],
         'name': card['name'],
