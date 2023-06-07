@@ -64,11 +64,6 @@ class Player(Base):
     def harvest(self):
         pass
 
-    def create_farm(self, position: List[int]) -> bool:
-        farm = Field(filed_type=FieldType.FARM, position=position, is_in={})
-        self._fields.append(farm)
-        return True
-
     def change_field_is_in(self, position: List[int], resource: str, count: int) -> bool:
         field = list(filter(lambda x: x.position == position, self._fields))[-1]
         if field.get("field_type") == FieldType.FARM:

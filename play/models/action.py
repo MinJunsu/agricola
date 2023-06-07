@@ -4,7 +4,7 @@ from core.const import RESOURCE_CONVERT_FUNCTION
 from core.functions import find_object_or_raise_exception
 from core.models import Base
 from core.redis import connection
-from play.enum import CommandType
+from play.enum import CommandType, FieldType, HouseType
 from play.exception import CantUseCardException
 from play.models.card import Card
 from play.models.field import Field
@@ -36,7 +36,7 @@ class Action(Base):
 
             if round_card.get("player") is not None:
                 raise CantUseCardException
-
+        cls.require(), cls.condition_check(), cls.submit_card()
         card_command = cls.get_command(card_number)
 
         # 플레이어가 라운드 카드를 선택한 경우 라운드 카드에 플레이어에 대한 정보를 넣어준다.
@@ -114,17 +114,36 @@ class Action(Base):
             # 5. 플레이어가 직업 카드를 내기 위해 소모되는 자원이 있는지 확인한다. (require)
             cls.require(player=player, resource='food', amount=cost)
 
-            # 6. 플레이어에 선택한 직업 카드의 is_use 속성을 True로 변경한다.
-            return card.use(used_round=used_round, player=player)
+            # 6. 플레이어에 선택한 직업 카드의 is_use 속성을 True로 변경하고, 카드 효과를 실행한다.
+            return card.use(round_card=round_card)
 
         elif card_type == "SUB":
-            pass
+            # 1. 특정한 보조설비 카드를 가져온다.
+            card: Card = find_object_or_raise_exception(array=player.get("cards"), key="card_number", value=card_number)
+
+            # 2. 보조설비의 조건을 확인한다.
+            card_condition = cls.get_condition(card_number)
+
+            # 3. 플레이어가 조건을 만족하는 지 확인한다.
+            if eval(card_condition):
+                # 4. 보조설비의 비용을 확인한다.
+                eval(cls.redis.hget("cost", card_number))
+
+            # 5. 플레이어가 보조설비를 내기 위해 소모되는 자원이 있는 지 확인한다. (require)
+            "위에서 처리된다"
+
+            # 6. 플레이어가 선택한 보조 설비 카드의 is_use 속성을 True로 변경하고, 카드 효과를 실행한다.
+            return card.use(round_card=round_card)
 
         return False
 
     @classmethod
     def get_command(cls, card_number: str) -> str:
         return cls.redis.hget("commands", card_number)
+
+    @classmethod
+    def get_condition(cls, card_number: str) -> str:
+        return cls.redis.hget("condition", card_number)
 
     @classmethod
     def convert_resource(
@@ -165,16 +184,143 @@ class Action(Base):
         fields: List[Field] = player.get("fields")
 
         # TODO: 예외 처리 추가
-        # TODO: 동물이 아닌 자원을 이동시킬 수는 없다.
+        # TODO: 울타리 안에 들어갈 수 있는 최대 동물 수를 초과할 수 없다.
 
         # 아래 4가지 변수들의 input 값이 정상적인지 확인
-        animal = additional.get("animal", None)
-        count = additional.get("count", None)
-        departure = additional.get("departure", None)
-        arrival = additional.get("arrival", None)
+        animal: str = additional.get("animal", None)
+        count: int = additional.get("count", None)
+        departure: int = additional.get("departure", None)
+        arrival: int = additional.get("arrival", None)
+
+        if animal is None or count is None or departure is None or arrival is None:
+            raise Exception("입력값이 잘못되었습니다.")
 
         departure_field: Field = find_object_or_raise_exception(array=fields, key="position", value=departure)
         arrival_field: Field = find_object_or_raise_exception(array=fields, key="position", value=arrival)
 
+        # 동물이 아닌 자원을 이동시킬 수는 없다.
+        if additional.get("animal") != "sheep" or "boar" or "cattle":
+            raise Exception("동물이 아닌 자원을 이동시킬 수는 없습니다.")
+
+        # 출발지와 목적지가 울타리가 아닐 수 없다.
+        if player.get("fields")[departure - 1].get("field_type") != FieldType.CAGE or \
+                player.get("fields")[arrival - 1].get("field_type") != FieldType.CAGE:
+            raise Exception("선택한 농지가 울타리가 아닙니다.")
+
+        if departure_field.get("animal").get(animal) < count:
+            raise Exception("출발지에 해당하는 동물이 충분하지 않습니다.")
+
         departure_field.move(arrival=arrival_field, animal=animal, count=count)
+
         return False
+
+    """
+    밭 일구기
+    """
+
+    @classmethod
+    def plow_field(
+            cls,
+            player: Player,
+            round_card: RoundCard,
+            additional: int
+    ):
+        # Additional Type
+        # additional: position: int
+        fields: List[Field] = player.get("fields")
+
+        # field가 이미 존재하는 경우 예외처리
+        if fields[additional].get("field_type") != FieldType.EMPTY:
+            raise Exception("이미 사용중인 농지입니다.")
+
+        # 플레이어 필드에 밭 추가
+        fields[additional].change_field_type(FieldType.FARM)
+
+        # TODO: 행동칸이 밭일구기 이후 추가 빵굽기를 하는 경우
+
+        return True
+
+    """
+    방 만들기
+    """
+
+    @classmethod
+    def build_room(
+            cls,
+            player: Player,
+            additional: dict,
+    ):
+        # Additional Type
+        # additional: [1, 2, 3],
+        fields: List[Field] = player.get("fields")
+
+        # field가 이미 존재하는 경우 예외처리
+        for i in additional:
+            if fields[i].get("field_type") != FieldType.EMPTY:
+                raise Exception("이미 사용중인 농지입니다.")
+
+        # 방이 이미 최대 개수인 경우 에러처리
+        if len(list(filter(lambda x: x.get("field_type") == FieldType.ROOM, fields))) == 5:
+            raise Exception("방을 더 이상 만들 수 없습니다.")
+
+        # 플레이어 필드에 방 추가
+        for i in additional:
+            fields[i].change_field_type(FieldType.ROOM)
+
+        return True
+
+    """
+    씨 뿌리기
+    """
+
+    @classmethod
+    def sow(
+            cls,
+            player: Player,
+            additional: dict,
+    ):
+        # Additional Type
+        # additional: {
+        #     "position": 1,
+        #     "seed": "grain",
+        # }
+        position: int = additional.get("position")
+        seed: str = additional.get("seed")
+
+        fields: List[Field] = player.get("fields")
+
+        # field가 밭이 아닌 경우 예외처리
+        if fields[position].get("field_type") != FieldType.FARM:
+            raise Exception("밭이 아닙니다.")
+
+        # 사용중인 밭인 경우 예외처리
+        if fields[position].get("is_in").get("grain") != 0 or fields[position].get("is_in").get("vegetable") != 0:
+            raise Exception("이미 사용중인 밭입니다.")
+
+        # 씨 뿌리기
+        if seed == "grain":
+            fields[position].add_resource("grain", 3)
+        elif seed == "vegetable":
+            fields[position].add_resource("vegetable", 2)
+
+        return True
+
+    """
+    집 고치기
+    """
+
+    @classmethod
+    def upgrade_house(
+            cls,
+            player: Player,
+    ):
+        # Action Type
+        house_type = player.get("house_type")
+        if house_type == HouseType.WOOD_HOUSE:
+            player.get("house_type").set(HouseType.CLAY_HOUSE)
+        elif house_type == HouseType.CLAY_HOUSE:
+            player.get("house_type").set(HouseType.STONE_HOUSE)
+        elif house_type == HouseType.STONE_HOUSE:
+            raise Exception("이미 최고급 집입니다.")
+
+        return True
