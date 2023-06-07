@@ -1,24 +1,20 @@
 import asyncio
 import json
-import os
+from unittest import TestCase
 
-from asgiref.sync import sync_to_async
-from django.test import LiveServerTestCase
-
-from cards.models import Card
 from core.redis import connection
 from play.models.game import Game
 
 
-class BaseTestCase(LiveServerTestCase):
+class BaseTestCase(TestCase):
     def setUp(self):
         asyncio.run(self.main())
         pass
 
     async def main(self):
-        os.environ["DJANGO_ALLOW_ASYNC_UNSAFE"] = 'true'
         self.redis = connection()
-        cards = map(lambda x: x['fields'], json.load(open("./cards.json", "r")))
+        with open("./cards.json", "r") as f:
+            cards = map(lambda x: x['fields'], json.load(f))
         # redis DB 전체 초기화
         self.redis.flushdb()
 
@@ -33,7 +29,3 @@ class BaseTestCase(LiveServerTestCase):
 
         self.game = await Game.initialize(["1", "2", "3", "4"])
         self.redis.set("game_3", str(self.game.to_dict()))
-
-    @sync_to_async
-    def get_cards(self, option):
-        return Card.objects.all().values(*option)

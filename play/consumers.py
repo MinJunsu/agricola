@@ -2,6 +2,7 @@ from channels.generic.websocket import AsyncJsonWebsocketConsumer
 from deepdiff import DeepDiff
 
 from core.redis import connection
+from core.response import socket_response
 from play.exception import IsNotPlayerTurnException, CantUseCardException
 from play.models.game import Game
 
@@ -27,7 +28,13 @@ class GameConsumer(AsyncJsonWebsocketConsumer):
 
         await self.accept()
 
-        await self.send_json(eval(data))
+        await self.send_json(socket_response(
+            is_success=True,
+            data={
+                "type": "sync",
+                "result": eval(data)
+            }
+        ))
 
     async def disconnect(self, code):
         await self.channel_layer.group_discard(
@@ -35,11 +42,6 @@ class GameConsumer(AsyncJsonWebsocketConsumer):
             self.channel_name
         )
 
-    # {
-    #     "type": "action",
-    #     "player": 0,
-    #     "number": "EARN_001"
-    # }
     async def receive_json(self, content, **kwargs):
         data = self.redis.get(f"game_{self.id}")
 
@@ -48,20 +50,21 @@ class GameConsumer(AsyncJsonWebsocketConsumer):
             played_data = game.play(content)
 
         except IsNotPlayerTurnException as e:
-            return await self.send_json({
-                "error": str(e)
-            })
+            return await self.send_json(socket_response(
+                is_success=False,
+                error=str(e)
+            ))
 
         except CantUseCardException as e:
-            return await self.send_json({
-                "error": str(e)
-            })
+            return await self.send_json(socket_response(
+                is_success=False,
+                error=str(e)
+            ))
 
         change = []
 
         # 이전 데이터와 달라진 데이터를 조회하기 위한 처리 (DeepDiff)
         deep_diff = DeepDiff(eval(data), played_data)
-        print(deep_diff)
         values = deep_diff.get("values_changed", {})
         types = deep_diff.get("type_changes", {})
 
@@ -81,7 +84,13 @@ class GameConsumer(AsyncJsonWebsocketConsumer):
             self.group_name,
             {
                 'type': 'game_message',
-                'message': change
+                'message': socket_response(
+                    is_success=True,
+                    data={
+                        "type": "change",
+                        "result": change
+                    }
+                )
             }
         )
 
