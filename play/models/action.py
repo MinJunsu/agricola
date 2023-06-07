@@ -90,7 +90,7 @@ class Action(Base):
             used_round: int,
             card_number: str
     ) -> bool:
-        # card_type = "JOB" | "SUB"
+        # card_type = "JOB" | "SUB | "PRI"
         # Additional Type
         # additional: "JOB_05"
         if card_type == "JOB":
