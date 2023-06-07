@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('cards', '0003_cardeffect'),
+        ('cards', '0004_alter_cardeffect_effect'),
     ]
 
     operations = [
         migrations.AlterField(
             model_name='cardeffect',
-            name='effect',
-            field=models.CharField(max_length=20),
+            name='command',
+            field=models.CharField(max_length=300),
         ),
     ]
