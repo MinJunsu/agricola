@@ -1,4 +1,8 @@
+from typing import List
+
+from core.const import LAST_ROUND
 from core.models import Base
+from play.models.round_card import RoundCard
 
 
 class Card(Base):
@@ -35,37 +39,16 @@ class Card(Base):
 
     def run(
             self,
-            player: 'play.models.card.Card',
-            card_number
+            player,
+            card_number: str,
+            round_cards: List[RoundCard],
+            now_round: int
     ):
         # 양의 친구 구현체 self.aa(round=[2, 5, 8, 10], resource={'sheep': 1})
-        # 소규모 농부 self.in_round_start(player, 'len(list(filter(lambda p: p.get("field_type") == FieldType.ROOM, player.get("fields")))) == 2', {'wood': 1})
-
+        # self.add_effect_on_round_cards(
+        #     turn, round_cards, now_round, {'vegetable': 1}, "addtional"
+        # )
         pass
-
-    # 라운드가 시작 될 경우 간단한 조건(condition)으로 결과를 처리하는 함수
-    def in_round_start(
-            self,
-            player,
-            condition: str,
-            resources: dict,
-    ) -> None:
-        if eval(condition):
-            for resource, count in resources.items():
-                player.get("resource").set(resource, player.get("resource").get(resource) + count)
-        return
-
-    # 특정한 행동을 할 경우 실행되는 함수
-    @staticmethod
-    def in_action(
-            player,
-            condition: bool,
-            resources: dict,
-    ) -> None:
-        if condition:
-            for resource, count in resources.items():
-                player.get("resource").set(resource, player.get("resource").get(resource) + count)
-        return
 
     # 조건에 맞는 경우 자원을 가지고 오는 함수
     @staticmethod
@@ -79,6 +62,27 @@ class Card(Base):
                 player.get("resource").set(resource, player.get("resource").get(resource) + count)
         return
 
+    @classmethod
+    def add_effect_on_round_cards(
+            cls,
+            turn: int,
+            round_cards: List[RoundCard],
+            now_round: int,
+            resources: dict,
+            method: str,
+            count: int = 0,
+            additional: List = None,
+            condition: bool = True
+    ) -> None:
+        if condition:
+            effected_round = cls.calculate_round(
+                method=method, now_round=now_round,
+                count=count, addtional=additional
+            )
+            [round_cards[r].add_addtional_action(player_id=turn, resources=resources) for r in effected_round]
+
+        pass
+
     # 조건에 상관 없이 자원을 가지고 오는 함수
     @staticmethod
     def take_resource(
@@ -89,11 +93,26 @@ class Card(Base):
             player.get("resource").set(resource, player.get("resource").get(resource) + count)
         return
 
-    # 카드를 내려놓은 즉시 실행할 함수
-    def immediately(
-            self,
-            player,
-            condition: str,
-            resources: dict
-    ) -> None:
-        return
+    # 현재 기준으로 라운드 갯수를 정하는 함수
+    @staticmethod
+    def calculate_round(
+            method: str,
+            now_round: int,
+            count: int = 0,
+            addtional: List = None
+    ) -> List:
+        # 거대 농장, 하인
+        if method == "remain":
+            return list(range(now_round + 1, LAST_ROUND + 1))
+        # 벽 건축가, 청어 냄비, 도토리 바구니, 딸기포, 연못 오두막
+        elif method == "next":
+            return list(range(now_round + 1, now_round + count + 1))
+        # 대형 온실, 양의 친구
+        elif method == "additional":
+            return list(set(list(map(lambda x: x + now_round, addtional))) & set(list(range(15))))
+        # 손수레
+        elif method == "farming":
+            return [5, 8, 10, 12, 14]
+        # 울창한 숲
+        elif method == "even":
+            return list(set(list(range(now_round + 1, LAST_ROUND + 1))) & set(list(range(0, 15, 2))))
