@@ -4,7 +4,7 @@ from core.const import RESOURCE_CONVERT_FUNCTION
 from core.functions import find_object_or_raise_exception
 from core.models import Base
 from core.redis import connection
-from play.enum import CommandType
+from play.enum import CommandType, FieldType
 from play.exception import CantUseCardException
 from play.models.card import Card
 from play.models.field import Field
@@ -37,7 +37,7 @@ class Action(Base):
                 raise CantUseCardException
 
         card_command = cls.get_command(card_number)
-        
+
         # 플레이어가 라운드 카드를 선택한 경우 라운드 카드에 플레이어에 대한 정보를 넣어준다.
         if round_card:
             round_card.set("player", turn)
@@ -163,16 +163,61 @@ class Action(Base):
         fields: List[Field] = player.get("fields")
 
         # TODO: 예외 처리 추가
-        # TODO: 동물이 아닌 자원을 이동시킬 수는 없다.
+        # TODO: 울타리 안에 들어갈 수 있는 최대 동물 수를 초과할 수 없다.
 
         # 아래 4가지 변수들의 input 값이 정상적인지 확인
-        animal = additional.get("animal", None)
-        count = additional.get("count", None)
-        departure = additional.get("departure", None)
-        arrival = additional.get("arrival", None)
+        animal: str = additional.get("animal", None)
+        count: int = additional.get("count", None)
+        departure: int = additional.get("departure", None)
+        arrival: int = additional.get("arrival", None)
+
+        if animal is None or count is None or departure is None or arrival is None:
+            raise Exception("입력값이 잘못되었습니다.")
 
         departure_field: Field = find_object_or_raise_exception(array=fields, key="position", value=departure)
         arrival_field: Field = find_object_or_raise_exception(array=fields, key="position", value=arrival)
 
+        # 동물이 아닌 자원을 이동시킬 수는 없다.
+        if additional.get("animal") != "sheep" or "boar" or "cattle":
+            raise Exception("동물이 아닌 자원을 이동시킬 수는 없습니다.")
+
+        # 출발지와 목적지가 울타리가 아닐 수 없다.
+        if player.get("fields")[departure - 1].get("field_type") != FieldType.CAGE or \
+                player.get("fields")[arrival - 1].get("field_type") != FieldType.CAGE:
+            raise Exception("선택한 농지가 울타리가 아닙니다.")
+
+        if departure_field.get("animal").get(animal) < count:
+            raise Exception("출발지에 해당하는 동물이 충분하지 않습니다.")
+
         departure_field.move(arrival=arrival_field, animal=animal, count=count)
+
         return False
+
+    """
+    밭 일구기
+    """
+
+    @classmethod
+    def plow_field(
+            cls,
+            player: Player,
+            round_card: RoundCard,
+            additional: int
+    ):
+        # Additional Type
+        # additional: position: int
+        fields: List[Field] = player.get("fields")
+
+        # field가 이미 존재하는 경우 예외처리
+        if fields[additional].get("field_type") != FieldType.EMPTY:
+            raise Exception("이미 사용중인 농지입니다.")
+
+        # 플레이어 필드에 밭 추가
+        fields[additional].change_field_type(FieldType.FARM)
+
+        # 행동칸이 밭일구기 이후 추가 빵굽기를 하는 경우
+        if round_card.get("card_number") == "BASE_10":
+            return True
+
+        elif round_card.get("card_number") == "ACTION_12":
+            return False

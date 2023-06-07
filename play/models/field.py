@@ -23,27 +23,25 @@ class Field(Base):
     ):
         self._field_type = field_type
         self._position = position
-        self._is_in = FieldResource.from_dict(**is_in) or FieldResource()
+        self._is_in = FieldResource.from_dict(**is_in) if is_in else FieldResource()
 
     @classmethod
     def initialize(cls) -> 'List[Field]':
-        room1 = cls(
-            field_type=FieldType.ROOM,
-            position=6,
-            is_in=FieldResource.initialize_player().to_dict()
-        )
-        room2 = cls(
-            field_type=FieldType.ROOM,
-            position=11,
-            is_in=FieldResource.initialize_player().to_dict()
-        )
+        fields = []
+        for i in range(1, 16):
+            if (i == 6) or (i == 11):
+                fields.append(
+                    cls(field_type=FieldType.ROOM, position=i, is_in=FieldResource.initialize_player().to_dict()))
+            else:
+                fields.append(cls(field_type=FieldType.EMPTY, position=i, is_in=FieldResource().to_dict()))
+
         # FIXME: 테스트 환경을 위해 임시로 5마리의 양을 배치
         # room3 = cls(
         #     field_type=FieldType.CAGE,
         #     position=5,
         #     is_in=FieldResource(sheep=5).to_dict()
         # )
-        return [room1, room2]
+        return fields
 
     def move(self, arrival: 'Field', animal: str, count: int) -> None:
         # TODO: 이동이 가능한지에 대한 예외 처리
@@ -66,6 +64,14 @@ class Field(Base):
 
         # # exception 처리를 위한 transaction 처리 - deepcopy 적용
         # self._is_in = FieldResource.from_dict(**departure.to_dict())
+        return None
+
+    def change_field_type(self, field_type: FieldType) -> None:
+        if self._field_type != FieldType.EMPTY:
+            raise Exception("이미 사용중인 농지입니다.")
+
+        self._field_type = field_type
+        
         return None
 
     def to_dict(self) -> dict:
