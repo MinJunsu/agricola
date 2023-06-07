@@ -2,6 +2,7 @@ from channels.generic.websocket import AsyncJsonWebsocketConsumer
 from deepdiff import DeepDiff
 
 from core.redis import connection
+from core.response import socket_response
 from play.exception import IsNotPlayerTurnException, CantUseCardException
 from play.models.game import Game
 
@@ -27,7 +28,13 @@ class GameConsumer(AsyncJsonWebsocketConsumer):
 
         await self.accept()
 
-        await self.send_json(eval(data))
+        await self.send_json(socket_response(
+            is_success=True,
+            data={
+                "type": "sync",
+                "result": eval(data)
+            }
+        ))
 
     async def disconnect(self, code):
         await self.channel_layer.group_discard(
@@ -43,14 +50,16 @@ class GameConsumer(AsyncJsonWebsocketConsumer):
             played_data = game.play(content)
 
         except IsNotPlayerTurnException as e:
-            return await self.send_json({
-                "error": str(e)
-            })
+            return await self.send_json(socket_response(
+                is_success=False,
+                error=str(e)
+            ))
 
         except CantUseCardException as e:
-            return await self.send_json({
-                "error": str(e)
-            })
+            return await self.send_json(socket_response(
+                is_success=False,
+                error=str(e)
+            ))
 
         change = []
 
@@ -75,7 +84,13 @@ class GameConsumer(AsyncJsonWebsocketConsumer):
             self.group_name,
             {
                 'type': 'game_message',
-                'message': change
+                'message': socket_response(
+                    is_success=True,
+                    data={
+                        "type": "change",
+                        "result": change
+                    }
+                )
             }
         )
 
