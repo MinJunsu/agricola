@@ -11,3 +11,9 @@ class Card(models.Model):
 
     def __str__(self) -> str:
         return self.card_number.upper()
+
+
+class CardEffect(models.Model):
+    card_number = models.CharField(max_length=16)
+    effect = models.CharField(max_length=10)
+    command = models.CharField(max_length=200)
