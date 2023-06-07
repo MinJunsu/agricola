@@ -2,6 +2,7 @@ from enum import Enum
 
 
 class FieldType(Enum):
+    EMPTY = "empty"
     ROOM = "room"
     FARM = "farm"
     CAGE = "cage"
