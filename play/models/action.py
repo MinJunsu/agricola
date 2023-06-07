@@ -28,7 +28,6 @@ class Action(Base):
             additional: Any = None,
     ):
         player: Player = players[turn]
-
         # 데이터 저장을 위해 라운드 카드를 사용한 경우 라운드 카드 변수를 저장한다.
         round_card: RoundCard | None = None
         if "BASE" in card_number or "ROUND" in card_number:
@@ -36,9 +35,9 @@ class Action(Base):
 
             if round_card.get("player") is not None:
                 raise CantUseCardException
-
+        cls.require(), cls.condition_check(), cls.submit_card()
         card_command = cls.get_command(card_number)
-
+        
         # 플레이어가 라운드 카드를 선택한 경우 라운드 카드에 플레이어에 대한 정보를 넣어준다.
         if round_card:
             round_card.set("player", turn)
@@ -113,18 +112,37 @@ class Action(Base):
             # 5. 플레이어가 직업 카드를 내기 위해 소모되는 자원이 있는지 확인한다. (require)
             cls.require(player=player, resource='food', amount=cost)
 
-            # 6. 플레이어에 선택한 직업 카드의 is_use 속성을 True로 변경한다.
-            card.use(round_card=round_card)
-            return True
+            # 6. 플레이어에 선택한 직업 카드의 is_use 속성을 True로 변경하고, 카드 효과를 실행한다.
+            return card.use(round_card=round_card)
 
         elif card_type == "SUB":
-            pass
-
+            # 1. 특정한 보조설비 카드를 가져온다.
+            card: Card = find_object_or_raise_exception(array=player.get("cards"), key="card_number", value=card_number)
+            
+            # 2. 보조설비의 조건을 확인한다.
+            card_condition = cls.get_condition(card_number)
+            
+            # 3. 플레이어가 조건을 만족하는 지 확인한다.
+            if eval(card_condition):
+            
+            # 4. 보조설비의 비용을 확인한다.
+                eval(cls.redis.hget("cost", card_number))
+            
+            # 5. 플레이어가 보조설비를 내기 위해 소모되는 자원이 있는 지 확인한다. (require)
+            "위에서 처리된다"
+            
+            #6. 플레이어가 선택한 보조 설비 카드의 is_use 속성을 True로 변경하고, 카드 효과를 실행한다.
+            return card.use(round_card=round_card)
+            
         return False
 
     @classmethod
     def get_command(cls, card_number: str) -> str:
         return cls.redis.hget("commands", card_number)
+    
+    @classmethod
+    def get_condition(cls, card_number: str) -> str:
+        return cls.redis.hget("condition", card_number)
 
     @classmethod
     def convert_resource(
@@ -166,7 +184,7 @@ class Action(Base):
 
         # TODO: 예외 처리 추가
         # TODO: 동물이 아닌 자원을 이동시킬 수는 없다.
-        
+
         # 아래 4가지 변수들의 input 값이 정상적인지 확인
         animal = additional.get("animal", None)
         count = additional.get("count", None)

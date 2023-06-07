@@ -27,7 +27,9 @@ class RoundCard(Base):
         self._is_stacked = is_stacked
         self._count = count
         self._resource = resource
-        self._additional_action = additional_action
+        self._additional_action = additional_action if additional_action else {
+            '0': {}, '1': {}, '2': {}, '3': {}
+        }
         self._player = player
 
     @classmethod
@@ -49,3 +51,18 @@ class RoundCard(Base):
 
     def create_cage(self, player, position):
         pass
+
+    def add_addtional_action(
+            self,
+            player_id: int,
+            resources: dict
+    ) -> None:
+        player_action = self._additional_action[str(player_id)]
+        if player_action:
+            for resource, count in resources.items():
+                exists = player_action.get(resource, None)
+                if exists:
+                    player_action[resource] = exists + count
+                else:
+                    player_action[resource] = count
+        return

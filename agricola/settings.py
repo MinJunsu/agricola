@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django.contrib.sites',
 
     # Django Third Party Apps
     'daphne',
@@ -52,6 +51,7 @@ INSTALLED_APPS = [
     'play.apps.PlayConfig',
     'cards.apps.CardsConfig',
     'games.apps.GamesConfig',
+    'lobby.apps.LobbyConfig'
 ]
 
 AUTH_USER_MODEL = 'accounts.User'
@@ -103,14 +103,25 @@ CHANNEL_LAYERS = {
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'HOST': 'localhost',
+#         'PORT': 5432,
+#         'NAME': 'sql',
+#         'USER': 'sql',
+#         'PASSWORD': 'sql',
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'HOST': '34.125.140.24',
-        'PORT': 5432,
-        'NAME': 'agricola',
-        'USER': 'agricola',
-        'PASSWORD': 'agricola',
+        'HOST': 'localhost',
+        'PORT': 5433,
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
     }
 }
 

@@ -1,0 +1,34 @@
+{
+  "큰낫일꾼": {
+    "immediately": "self.take_resource(player, {'grain': 1})",
+    "추가": "추가개발"
+  },
+  "나무꾼": {
+    "action": "self.take_resource_in_condition(player, 'card_number == \"BASE_03\"', {'wood': 1})"
+  },
+  "마술사": {
+    "action": "self.take_resource_in_condition(player, 'card_number == \"BASE_02\"', {'wood': 1, 'grain': 1})"
+  },
+  "채소장소": {
+    "action": "self.take_resource_in_condition(player, 'card_number == \"BASE_01\"', {'vegetable', 1})"
+  },
+  "창고관리인": {
+    "action": "self.take_resource_in_condition(player, 'card_number == \"BASE_01\"', {'grain': 1})"
+  },
+  "지질학자": {
+    "action": "self.take_resource_in_condition(player, \"card_number == 'BASE_01' or card_number == 'BASE_02'\", {'clay': 1})"
+  },
+  "사제": {
+    "immediately": {
+      "function": "self.take_resource_in_condition",
+      "condition": "player.get('house_type') == HouseType.CLAY_HOUSE and len(list(filter(lambda p: p.get('field_type') == FieldType.ROOM, player.get('fields')))) == 2",
+      "resources": "{'clay': 3, 'reed': 2, 'stone': 2}"
+    }
+  },
+  "돼지 사육사": {
+    "immediately": "self.take_resource(player, {\"boar\": 1})"
+  },
+  "집사": {
+    "immediately": "self.take_resource(player, {'wood': (int(15 - now_round) / 3) + 1})"
+  }
+}

@@ -103,10 +103,11 @@ class Game(Base):
         return command, card_number, player, additional
 
     def play(self, command: dict) -> dict:
-        # 기본 값 설정
+        # 기본 값 설정 (is_done, command 파싱, 플레이어 행동 수)
         is_done: bool = False
         command, card_number, player, additional = self.parse_command(command)
         command = CommandType(command)
+        worked = len(list(filter(lambda p: p.get('player') is not None, self.action_cards)))
 
         # 턴에 맞지 않는 플레이어가 행동을 하려고 할 때 에러를 발생시킴.
         if player != self._turn:
@@ -121,7 +122,7 @@ class Game(Base):
         )
 
         # 게임의 정보를 바탕으로 게임의 턴을 변경
-        self.change_turn_and_round_and_phase(is_done=is_done)
+        self.change_turn_and_round_and_phase(is_done=is_done, total_worked=worked)
 
         # 만약 선을 번경하는 카드를 낸 경우 게임의 선을 변경
         if card_number == FIRST_CHANGE_CARD_NUMBER:
@@ -143,15 +144,19 @@ class Game(Base):
                 card.get('resource')[resource] += card.get('count')
                 self._common_resources.set(resource, common_resource_count - card.get('count'))
 
-    def change_turn_and_round_and_phase(self, is_done: bool) -> None:
+    def change_turn_and_round_and_phase(
+            self,
+            is_done: bool,
+            total_worked: int
+    ) -> None:
         # 만약, 턴이 끝나지 않은 상태로 온다면 아무것도 하지 않음.
         if not is_done:
             return
 
-        total_family = reduce(lambda acc, player: acc + player.get('resource').get('family'), self._players, 0)
-        total_worked = len(list(filter(lambda p: p.get('player') is not None, self.action_cards)))
+        player_family = reduce(lambda acc, player: acc + player.get('resource').get('family'), self._players, 0)
 
-        while total_family != total_worked:
+        # while total_family != total_worked:
+        for _ in range(10):
             # 우선 턴을 진행 시키고, 이 플레이어가 턴을 진행할 수 있는지 확인한다.
             self._turn += 1
 
