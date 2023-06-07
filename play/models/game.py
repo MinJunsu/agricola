@@ -103,10 +103,13 @@ class Game(Base):
         return command, card_number, player, additional
 
     def play(self, command: dict) -> dict:
-        # 기본 값 설정
+        # 기본 값 설정 (is_done, command 파싱, 플레이어 행동 수)
         is_done: bool = False
         command, card_number, player, additional = self.parse_command(command)
         command = CommandType(command)
+        worked = len(list(filter(lambda p: p.get('player') is not None, self.action_cards)))
+
+        # 직업 카드 및 보조 설비 카드에서 제공하는 특정한 이펙트를 적용시킴.
 
         # 턴에 맞지 않는 플레이어가 행동을 하려고 할 때 에러를 발생시킴.
         if player != self._turn:
@@ -117,11 +120,11 @@ class Game(Base):
         is_done = Action.run(
             command=command, card_number=card_number, players=self._players,
             round_cards=self.action_cards, turn=self._turn, common_resource=self._common_resources,
-            additional=additional
+            additional=additional, used_round=self._round
         )
 
         # 게임의 정보를 바탕으로 게임의 턴을 변경
-        self.change_turn_and_round_and_phase(is_done=is_done)
+        self.change_turn_and_round_and_phase(is_done=is_done, total_worked=worked)
 
         # 만약 선을 번경하는 카드를 낸 경우 게임의 선을 변경
         if card_number == FIRST_CHANGE_CARD_NUMBER:
@@ -130,7 +133,7 @@ class Game(Base):
         return self.to_dict()
 
     def increment_resource(self) -> None:
-        opend_round_cards = self._round_cards[:self._round]
+        opend_round_cards = self._round_cards[:self._round + 1]
         stacked_cards = filter(lambda c: c.get('is_stacked'), [*self._base_cards, *opend_round_cards])
         for card in stacked_cards:
             # 리소스 dict 으로부터 특정한 리소스 키를 가져옴.
@@ -143,16 +146,18 @@ class Game(Base):
                 card.get('resource')[resource] += card.get('count')
                 self._common_resources.set(resource, common_resource_count - card.get('count'))
 
-    def change_turn_and_round_and_phase(self, is_done: bool) -> None:
+    def change_turn_and_round_and_phase(
+            self,
+            is_done: bool,
+            total_worked: int
+    ) -> None:
         # 만약, 턴이 끝나지 않은 상태로 온다면 아무것도 하지 않음.
         if not is_done:
             return
 
         total_family = reduce(lambda acc, player: acc + player.get('resource').get('family'), self._players, 0)
-        total_worked = len(list(filter(lambda p: p.get('player') is not None, self.action_cards)))
 
-        # while total_family != total_worked:
-        for _ in range(10):
+        while total_family != total_worked + 1:
             # 우선 턴을 진행 시키고, 이 플레이어가 턴을 진행할 수 있는지 확인한다.
             self._turn += 1
 
@@ -169,10 +174,13 @@ class Game(Base):
                 return
 
         # 만약, 게임 판에 존재하는 모든 플레이어가 가족 구성원들을 사용했다면, 바로 다음 라운드로 변경하는 로직을 진행한다.
-        # 라운드 변경 시 페이즈 변경 처리
+        # TODO: 라운드 변경 시 페이즈 변경 처리
         self._round = self._round + 1
         self._turn = self._first
-        # 만약, 모든 사람이 할 수 있는 턴이 끝난 상태인지
+
+        # 누적 행동칸 자원 증가 처리 & 유저 행동칸 이동 처리 초기화
+        self.increment_resource()
+        [action.set('player', None) for action in self.action_cards]
         return
 
     @staticmethod

@@ -1,0 +1,83 @@
+[
+  {
+    "model": "cards.cardeffect",
+    "pk": 1,
+    "fields": {
+      "card_number": "JOB_34",
+      "effect": "action",
+      "command": "self.take_resource_in_condition(player, \"card_number == 'BASE_01' or card_number == 'BASE_02' or card_number == 'BASE_13'\", {'wood': 1})"
+    }
+  },
+  {
+    "model": "cards.cardeffect",
+    "pk": 2,
+    "fields": {
+      "card_number": "JOB_37",
+      "effect": "action",
+      "command": "self.take_resource_in_condition(player, \"card_number == 'BASE_06'\", {'wood': 1, 'grain': 1})"
+    }
+  },
+  {
+    "model": "cards.cardeffect",
+    "pk": 3,
+    "fields": {
+      "card_number": "JOB_18",
+      "effect": "action",
+      "command": "self.take_resource_in_condition(player, \"card_number == 'BASE_09'\", {'vegetable', 1})"
+    }
+  },
+  {
+    "model": "cards.cardeffect",
+    "pk": 4,
+    "fields": {
+      "card_number": "JOB_25",
+      "effect": "action",
+      "command": "self.take_resource_in_condition(player, \"card_number == 'BASE_03'\", {'grain': 1})"
+    }
+  },
+  {
+    "model": "cards.cardeffect",
+    "pk": 5,
+    "fields": {
+      "card_number": "JOB_30",
+      "effect": "action",
+      "command": "self.take_resource_in_condition(player, \"card_number == 'BASE_13' or card_number == 'BASE_15' or card_number == 'BASE_14'\", {'clay': 1})"
+    }
+  },
+  {
+    "model": "cards.cardeffect",
+    "pk": 6,
+    "fields": {
+      "card_number": "JOB_13",
+      "effect": "immediately",
+      "command": "self.take_resource_in_condition(player, \"player.get('house_type') == HouseType.CLAY_HOUSE and len(list(filter(lambda p: p.get('field_type') == FieldType.ROOM, player.get('fields')))) == 2\", {'clay': 3, 'reed': 2, 'stone': 2})"
+    }
+  },
+  {
+    "model": "cards.cardeffect",
+    "pk": 7,
+    "fields": {
+      "card_number": "JOB_21",
+      "effect": "action",
+      "command": "self.take_resource_in_condition(player, \"card_number == 'BASE_10' or card_number == 'BASE_09' or card_number == 'ACTION_01'\", {'wood': 1})"
+    }
+  },
+  {
+    "model": "cards.cardeffect",
+    "pk": 8,
+    "fields": {
+      "card_number": "JOB_12",
+      "effect": "action",
+      "command": "self.take_resource(player, {'sheep': 2})"
+    }
+  },
+  {
+    "model": "cards.cardeffect",
+    "pk": 9,
+    "fields": {
+      "card_number": "JOB_36",
+      "effect": "immediately",
+      "command": "self.take_resource_in_condition(player, \"player.get('house_type') == HouseType.CLAY_HOUSE and card_number == 'BASE_07' or card_number == 'ACTION_14' or card_number == 'ACTION_06'\",{'food': 3})"
+    }
+  }
+]
