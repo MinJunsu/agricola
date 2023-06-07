@@ -109,20 +109,20 @@ CHANNEL_LAYERS = {
 #         'ENGINE': 'django.db.backends.postgresql_psycopg2',
 #         'HOST': 'localhost',
 #         'PORT': 5432,
-#         'NAME': 'postgres',
-#         'USER': 'postgres',
-#         'PASSWORD': 'postgres',
+#         'NAME': 'sql',
+#         'USER': 'sql',
+#         'PASSWORD': 'sql',
 #     }
 # }
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'HOST': '34.125.140.24',
+        'HOST': 'localhost',
         'PORT': 5432,
-        'NAME': 'agricola',
-        'USER': 'agricola',
-        'PASSWORD': 'agricola',
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'postgres',
     }
 }
 
