@@ -15,5 +15,5 @@ class Card(models.Model):
 
 class CardEffect(models.Model):
     card_number = models.CharField(max_length=16)
-    effect = models.CharField(max_length=10)
-    command = models.CharField(max_length=200)
+    effect = models.CharField(max_length=20)
+    command = models.CharField(max_length=300)

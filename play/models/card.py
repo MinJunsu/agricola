@@ -2,6 +2,7 @@ from typing import List
 
 from core.const import LAST_ROUND
 from core.models import Base
+from core.redis import connection
 from play.models.round_card import RoundCard
 
 
@@ -18,7 +19,7 @@ class Card(Base):
             card_number: str,
             name: str,
             score: int,
-            used_round: int,
+            used_round: int | None = None,
             is_use: bool = False,
             is_done: bool = False
     ):
@@ -27,14 +28,20 @@ class Card(Base):
         self._score = score
         self._is_use = is_use
         self._is_done = True
+        self._used_round = used_round
 
     # 플레이어가 들고 있는 카드를 사용함과 동시에 라운드 카드에 특정한 이펙트를 추가해준다.
     def use(
             self,
-            used_round: int
+            used_round: int,
+            player
     ) -> bool:
         self._is_use = True
         self._used_round = used_round
+        redis = connection()
+        if "immediately" in redis.hkeys(f'cards:{self._card_number}'):
+            command = redis.hget(f'cards:{self._card_number}', 'immediately')
+            eval(command)
         return True
 
     def run(
@@ -44,16 +51,17 @@ class Card(Base):
             round_cards: List[RoundCard],
             now_round: int
     ):
-        # 양의 친구 구현체 self.aa(round=[2, 5, 8, 10], resource={'sheep': 1})
-        # self.add_effect_on_round_cards(
-        #     turn, round_cards, now_round, {'vegetable': 1}, "addtional"
-        # )
-        pass
+        redis = connection()
+        if "action" in redis.hkeys(f'cards:{self._card_number}'):
+            command = redis.hget(f'cards:{self._card_number}', 'action')
+            eval(command)
+        return None
 
     # 조건에 맞는 경우 자원을 가지고 오는 함수
     @staticmethod
     def take_resource_in_condition(
             player,
+            card_number: str,
             condition: str,
             resources: dict,
     ) -> None:

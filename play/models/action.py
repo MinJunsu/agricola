@@ -24,6 +24,7 @@ class Action(Base):
             players: List[Player],
             round_cards: List[RoundCard],
             turn: int,
+            used_round: int,
             common_resource: Resource,
             additional: Any = None,
     ):
@@ -37,7 +38,7 @@ class Action(Base):
                 raise CantUseCardException
 
         card_command = cls.get_command(card_number)
-        
+
         # 플레이어가 라운드 카드를 선택한 경우 라운드 카드에 플레이어에 대한 정보를 넣어준다.
         if round_card:
             round_card.set("player", turn)
@@ -86,6 +87,7 @@ class Action(Base):
             player: Player,
             round_card: RoundCard,
             card_type: str,
+            used_round: int,
             card_number: str
     ) -> bool:
         # card_type = "JOB" | "SUB"
@@ -113,7 +115,7 @@ class Action(Base):
             cls.require(player=player, resource='food', amount=cost)
 
             # 6. 플레이어에 선택한 직업 카드의 is_use 속성을 True로 변경한다.
-            return card.use(round_card=round_card)
+            return card.use(used_round=used_round, player=player)
 
         elif card_type == "SUB":
             pass
