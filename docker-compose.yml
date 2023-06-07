@@ -4,13 +4,11 @@ services:
   postgres:
     image: postgres:12.0-alpine
     volumes:
-      - ../data/db:/var/lib/postgresql/data
-      - ./sql/init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
-      - ./sql/init_card.sql:/docker-entrypoint-initdb.d/init_card.sql
+      - ./sql:/docker-entrypoint-initdb.d
     environment:
-      - POSTGRES_DB=sql
-      - POSTGRES_USER=sql
-      - POSTGRES_PASSWORD=sql
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
     ports:
       - "5432:5432"
 
