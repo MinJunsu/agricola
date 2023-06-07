@@ -151,7 +151,8 @@ class Game(Base):
         total_family = reduce(lambda acc, player: acc + player.get('resource').get('family'), self._players, 0)
         total_worked = len(list(filter(lambda p: p.get('player') is not None, self.action_cards)))
 
-        while total_family != total_worked:
+        # while total_family != total_worked:
+        for _ in range(10):
             # 우선 턴을 진행 시키고, 이 플레이어가 턴을 진행할 수 있는지 확인한다.
             self._turn += 1
 
