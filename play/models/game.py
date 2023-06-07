@@ -65,10 +65,6 @@ class Game(Base):
     def action_cards(self) -> List[RoundCard]:
         return self._base_cards + self._round_cards
 
-    def get_action_card_by_card_number(self, card_number: str) -> RoundCard | None:
-        cards = list(filter(lambda card: card.get('card_number') == card_number, self.action_cards))
-        return cards[0] if cards else None
-
     # TODO: initialize 실행 시 플레이어에 대한 정보를 어느정도 넣어줄지에 대해서 수정하기
     @classmethod
     async def initialize(cls, players: List[str]) -> 'Game':
@@ -109,6 +105,7 @@ class Game(Base):
         command = CommandType(command)
         worked = len(list(filter(lambda p: p.get('player') is not None, self.action_cards)))
 
+        # TODO
         # 직업 카드 및 보조 설비 카드에서 제공하는 특정한 이펙트를 적용시킴.
 
         # 턴에 맞지 않는 플레이어가 행동을 하려고 할 때 에러를 발생시킴.
@@ -116,19 +113,18 @@ class Game(Base):
             raise IsNotPlayerTurnException
 
         # 플레이어의 행동 명령을 받아서 처리한다.
-        round_card = self.get_action_card_by_card_number(card_number)
         is_done = Action.run(
             command=command, card_number=card_number, players=self._players,
             round_cards=self.action_cards, turn=self._turn, common_resource=self._common_resources,
             additional=additional, used_round=self._round
         )
 
-        # 게임의 정보를 바탕으로 게임의 턴을 변경
-        self.change_turn_and_round_and_phase(is_done=is_done, total_worked=worked)
-
         # 만약 선을 번경하는 카드를 낸 경우 게임의 선을 변경
         if card_number == FIRST_CHANGE_CARD_NUMBER:
             self._first = self._turn
+
+        # 게임의 정보를 바탕으로 게임의 턴을 변경
+        self.change_turn_and_round_and_phase(is_done=is_done, total_worked=worked)
 
         return self.to_dict()
 

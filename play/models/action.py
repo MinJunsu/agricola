@@ -31,12 +31,12 @@ class Action(Base):
         player: Player = players[turn]
         # 데이터 저장을 위해 라운드 카드를 사용한 경우 라운드 카드 변수를 저장한다.
         round_card: RoundCard | None = None
-        if "BASE" in card_number or "ROUND" in card_number:
+        if "BASE" in card_number or "ACTION" in card_number:
             round_card = find_object_or_raise_exception(round_cards, "card_number", card_number)
 
             if round_card.get("player") is not None:
                 raise CantUseCardException
-        cls.require(), cls.condition_check(), cls.submit_card()
+
         card_command = cls.get_command(card_number)
 
         # 플레이어가 라운드 카드를 선택한 경우 라운드 카드에 플레이어에 대한 정보를 넣어준다.
@@ -115,7 +115,7 @@ class Action(Base):
             cls.require(player=player, resource='food', amount=cost)
 
             # 6. 플레이어에 선택한 직업 카드의 is_use 속성을 True로 변경하고, 카드 효과를 실행한다.
-            return card.use(round_card=round_card)
+            return card.use(used_round=used_round, player=player)
 
         elif card_type == "SUB":
             # 1. 특정한 보조설비 카드를 가져온다.
@@ -133,7 +133,7 @@ class Action(Base):
             "위에서 처리된다"
 
             # 6. 플레이어가 선택한 보조 설비 카드의 is_use 속성을 True로 변경하고, 카드 효과를 실행한다.
-            return card.use(round_card=round_card)
+            return card.use(used_round=used_round, player=player)
 
         return False
 
