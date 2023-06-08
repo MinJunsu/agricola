@@ -1,5 +1,12 @@
 from play.enum import HouseType
 
+# TODO: 동물 시장 -> 배치가 아직 안됨. -> FIN
+# TODO: 펜스 개발 -> FIN
+# TODO: 농장 확장 -> 자원 변경
+# TODO: 외양간 짓기
+# TODO: 빵굽기
+# TODO: 보조설비 / 주요설비
+
 RESOURCE_SCORE_BOARD = {
     'grain': {
         0: -1,

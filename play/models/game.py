@@ -158,7 +158,8 @@ class Game(Base):
 
     def increment_resource(self) -> None:
         # FIXME: 라운드 카드 누적 행동칸 처리 시 수정
-        opend_round_cards = self._round_cards[:self._round + 1]
+        opend_round_cards = self._round_cards
+        # opend_round_cards = self._round_cards[:self._round + 1]
         stacked_cards = filter(lambda c: c.get('is_stacked'), [*self._base_cards, *opend_round_cards])
         for card in stacked_cards:
             # 리소스 dict 으로부터 특정한 리소스 키를 가져옴.

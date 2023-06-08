@@ -33,7 +33,7 @@ class Player(Base):
     _effects: List[None]
     _fields: List[Field]
     _house_type: HouseType
-    _fences: dict
+    _fences: dict | None
 
     def __init__(
             self,
@@ -48,7 +48,7 @@ class Player(Base):
         self._resource = Resource.from_dict(**resource) if resource else Resource.initialize_player_resource()
         self._fields = [Field.from_dict(**field) for field in fields] if fields else Field.initialize()
         self._house_type = house_type
-        self._fences = fences if fences else {}
+        self._fences = fences if fences else None
         self._cards = [Card.from_dict(**card) for card in cards] if cards else []
 
     # 플레이어 행동 처리 (카드 드로우, 카드 사용, 자원 사용 등)

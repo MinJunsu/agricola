@@ -14,16 +14,19 @@ class Field(Base):
     _field_type: FieldType
     _position: int
     _is_in: FieldResource
+    _is_barn: bool
 
     def __init__(
             self,
             field_type: FieldType,
             position: int,
             is_in: dict | None = None,
+            is_barn: bool = True
     ):
         self._field_type = field_type
         self._position = position
         self._is_in = FieldResource.from_dict(**is_in) if is_in else FieldResource()
+        self._is_barn = is_barn
 
     @classmethod
     def initialize(cls) -> 'List[Field]':

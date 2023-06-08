@@ -1,3 +1,4 @@
+from functools import reduce
 from typing import List, Any
 
 from core.const import RESOURCE_CONVERT_FUNCTION, ROOM_UPGRADE_FUNCTION
@@ -16,12 +17,6 @@ from play.models.round_card import RoundCard
 class Action(Base):
     redis = connection()
 
-    # TODO: 동물 시장 -> 배치가 아직 안됨.
-    # TODO: 펜스 개발
-    # TODO: 농장 확장 -> 자원 변경
-    # TODO: 외양간 짓기
-    # TODO: 빵굽기
-    # TODO: 보조설비 / 주요설비
     @classmethod
     def run(
             cls,
@@ -86,6 +81,48 @@ class Action(Base):
             is_dones.append(cls.plus(player, resource, amount))
             round_card.get("resource")[resource] = 0
         return all(is_dones)
+
+    @classmethod
+    def use_animal_round_card_resources(
+            cls,
+            player: Player,
+            round_card: RoundCard,
+            additional: dict
+    ):
+        # BASE_05, BASE_11
+        # {
+        #     'command': 'additional',
+        #     'card_number': 'card_03',
+        #     'player': 0,
+        #     'additional': {
+        #         'position': 3
+        #     }
+        # }
+        position: int = additional.get('position', None)
+
+        if position is None:
+            raise Exception('동물을 배치할 위치를 보내주어야 합니다.')
+
+        # 플레이어 자원 변경을 에러 처리를 위한 트랜잭션 처리
+        player_clone = Player.from_dict(**player.to_dict())
+
+        field: Field = player_clone.get('fields')[position]
+
+        if not (field.get('field_type') == FieldType.CAGE or field.get('is_barn')):
+            raise Exception('동물을 배치할 수 있는 공간이 아닙니다.')
+
+        # TODO: 동물 배치 개수를 확인하여 가능한지 여부를 확인한다.
+
+        for resource, amount in round_card.get('resource').items():
+            remain = field.get('is_in').get(resource)
+            field.get('is_in').set(resource, remain + amount)
+
+        cls.use_round_card_resources(player=player_clone, round_card=round_card)
+
+        # 플레이어 자원 변경 트랜잭션 처리 종료
+        player.set('resource', player_clone.get('resource'))
+        player.set('fields', player_clone.get('fields'))
+        return True
 
     # 플레이어가 직업 카드를 제출? 선택? 한다.
     @classmethod
@@ -392,6 +429,7 @@ class Action(Base):
         # }
         positions = additional.get('positions', None)
         barn_position = additional.get("barn_position", None)
+
         if positions is not None:
             fields: List[Field] = player.get("fields")
 
@@ -526,12 +564,14 @@ class Action(Base):
         #     "card_number": "ACTION_02",
         #     "player": 0,
         #     "additional": {
-        #         0: [1, 2, 4],
-        #         1: [2, 3, 4]
+        #         "fences": {
+        #             0: [1, 2, 4],
+        #             1: [2, 3, 4]
+        #         }
         #     }
         # }
-        card_number: str = additional.get("card_number")
-        # TODO: 울타리 치기 additional is not None
+        card_number: str = additional.get("card_number", None)
+        fences: dict = additional.get("fences", None)
 
         house_type = player.get("house_type")
         player_room_count = len(list(filter(lambda f: f.get('field_type') == FieldType.ROOM, player.get('fields'))))
@@ -566,12 +606,40 @@ class Action(Base):
                 additional=additional,
             )
 
+        if fences is not None:
+            cls.create_fence(player=player, additional={
+                "fences": fences
+            })
         return True
 
     @classmethod
-    def create_fence(cls):
+    def create_fence(
+            cls,
+            player: Player,
+            additional: dict
+    ):
+        # 펜스 로직 처리
         # {
-        #     0: [1, 2, 4],
-        #     1: [2, 3, 4]
+        #     "command": "additional",
+        #     "card_number": "ACTION_02",
+        #     "player": 0,
+        #     "additional": {
+        #         "fences": {
+        #             0: [1, 2, 4],
+        #             1: [2, 3, 4]
+        #         }
+        #     }
         # }
-        pass
+        FENCE_LIMIT = 15
+        fences: dict = additional.get('fences', None)
+        if fences is None:
+            raise Exception("펜스 정보를 제대로 입력하지 않았습니다.")
+
+        count = reduce(lambda acc, x: acc + len(x[1]), fences.items(), 0)
+        if count > FENCE_LIMIT:
+            raise Exception(f"펜스는 최대 {FENCE_LIMIT}개 까지만 칠 수 있습니다.")
+
+        # TODO: fences 정보를 바탕으로 데이터 검증 및 수정
+        player.set('fences', fences)
+        player.get('resource').set('fence', count)
+        return True
