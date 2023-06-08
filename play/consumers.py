@@ -70,7 +70,6 @@ class GameConsumer(AsyncJsonWebsocketConsumer):
 
         # 이전 데이터와 달라진 데이터를 조회하기 위한 처리 (DeepDiff)
         deep_diff = DeepDiff(eval(data), played_data)
-        print(deep_diff)
         values = deep_diff.get("values_changed", {})
         types = deep_diff.get("type_changes", {})
         iterable_remove = deep_diff.get("iterable_item_removed", {})
@@ -93,8 +92,6 @@ class GameConsumer(AsyncJsonWebsocketConsumer):
                         "key": new_key,
                         "value": eval("played_data" + new_key)
                     })
-                    
-        change = list(set(change))
 
         self.redis.set(f"game_{self.id}", str(played_data))
 
