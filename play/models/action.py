@@ -271,9 +271,37 @@ class Action(Base):
     def plow_field(
             cls,
             player: Player,
+            common_resource: Resource,
             round_card: RoundCard,
-            position: int
+            additional: dict
     ):
+        # 밭 농사 카드
+        # CARD_03
+        # 만약, 밭 농사 카드에서 그리고/또는 행동을 하지 않을 경우
+        # {
+        #     'command': 'additional',
+        #     'card_number': 'card_03',
+        #     'additional': {
+        #         'position': 3
+        #     }
+        # }
+        # 만약 그리고/또는 행동을 할 경우
+        # {
+        #     'command': 'additional',
+        #     'card_number': 'card_03',
+        #     'additional': {
+        #         'position': 3,
+        #         'sow_position': 3,
+        #         'seed': 'grain'
+        #     }
+        # }
+        position = additional.get('position', None)
+        sow_position = additional.get("sow_position", None)
+        seed = additional.get("seed", None)
+
+        if position is None:
+            return
+
         # Additional Type
         # additional: position: int
         fields: List[Field] = player.get("fields")
@@ -285,8 +313,16 @@ class Action(Base):
         # 플레이어 필드에 밭 추가
         fields[position].change_field_type(FieldType.FARM)
 
-        # TODO: 행동칸이 밭일구기 이후 추가 빵굽기를 하는 경우
-        
+        if sow_position is not None:
+            cls.sow(
+                player=player,
+                common_resource=common_resource,
+                additional={
+                    'sow_position': sow_position,
+                    'seed': seed
+                }
+            )
+
         return True
 
     """
