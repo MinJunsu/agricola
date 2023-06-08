@@ -16,6 +16,12 @@ from play.models.round_card import RoundCard
 class Action(Base):
     redis = connection()
 
+    # TODO: 동물 시장 -> 배치가 아직 안됨.
+    # TODO: 펜스 개발
+    # TODO: 농장 확장 -> 자원 변경
+    # TODO: 외양간 짓기
+    # TODO: 빵굽기
+    # TODO: 보조설비 / 주요설비
     @classmethod
     def run(
             cls,
@@ -348,7 +354,7 @@ class Action(Base):
                 player=player,
                 common_resource=common_resource,
                 additional={
-                    'sow_position': sow_position,
+                    'position': sow_position,
                     'seed': seed
                 }
             )
@@ -561,3 +567,11 @@ class Action(Base):
             )
 
         return True
+
+    @classmethod
+    def create_fence(cls):
+        # {
+        #     0: [1, 2, 4],
+        #     1: [2, 3, 4]
+        # }
+        pass
