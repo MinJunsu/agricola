@@ -329,6 +329,41 @@ INITIAL_ROUND_CARDS = {
     ],
 }
 
+INITIAL_PRI_CARDS = [
+    {
+        'card_number': "PRI_FAC_01",
+        'owner': None,
+    },
+    {
+        'card_number': "PRI_FAC_02",
+        'owner': None,
+    },
+    {
+        'card_number': "PRI_FAC_03",
+        'owner': None,
+    },
+    {
+        'card_number': "PRI_FAC_04",
+        'owner': None,
+    },
+    {
+        'card_number': "PRI_FAC_05",
+        'owner': None,
+    },
+    {
+        'card_number': "PRI_FAC_06",
+        'owner': None,
+    },
+    {
+        'card_number': "PRI_FAC_07",
+        'owner': None,
+    },
+    {
+        'card_number': "PRI_FAC_08",
+        'owner': None,
+    }
+]
+
 NO_USER = -1
 
 RESOURCE_CONVERT_FUNCTION = {

@@ -13,6 +13,7 @@ from play.exception import IsNotPlayerTurnException
 from play.models.action import Action
 from play.models.card import Card
 from play.models.player import Player
+from play.models.primary_card import PrimaryCard
 from play.models.resource import Resource
 from play.models.round_card import RoundCard
 
@@ -31,6 +32,7 @@ class Game(Base):
     _players: List[Player]
     _base_cards: List[RoundCard]
     _round_cards: List[RoundCard]
+    _primary_cards: List[PrimaryCard]
     _common_resources: Resource
 
     def __init__(
@@ -44,6 +46,7 @@ class Game(Base):
             actions: List[dict] = None,
             base_cards: List[dict] = None,
             round_cards: List[dict] = None,
+            primary_cards: List[dict] = None,
     ):
         # 게임 정보 초기화
         self._first = first
@@ -58,6 +61,9 @@ class Game(Base):
         self._round_cards = [
             RoundCard.from_dict(**round_card) for round_card in round_cards
         ] if round_cards else RoundCard.initialize_round_cards()
+        self._primary_cards = [
+            PrimaryCard.from_dict(**primary_card) for primary_card in primary_cards
+        ] if primary_cards else PrimaryCard.initialize_primary_cards()
         self._common_resources = Resource.from_dict(
             **common_resources) if common_resources else Resource.initialize_common_resource()
 
