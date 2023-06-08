@@ -29,7 +29,7 @@ class Field(Base):
     def initialize(cls) -> 'List[Field]':
         fields = []
         for i in range(1, 16):
-            if (i == 6) or (i == 11):
+            if (i == 14) or (i == 15):
                 fields.append(
                     cls(field_type=FieldType.ROOM, position=i, is_in=FieldResource.initialize_player().to_dict()))
             else:

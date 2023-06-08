@@ -1,5 +1,5 @@
-import random
 from functools import reduce
+from random import shuffle
 from typing import List
 
 from asgiref.sync import sync_to_async
@@ -78,8 +78,10 @@ class Game(Base):
         cards = redis.hvals('cards')
         job_cards = list(filter(lambda card: "JOB" in card, cards))
         sub_cards = list(filter(lambda card: "SUB_FAC" in card, cards))
-        random.shuffle(job_cards)
-        random.shuffle(sub_cards)
+        shuffle(job_cards)
+        shuffle(sub_cards)
+        # job_cards = list(filter(lambda card: "JOB_01" in card, cards)) * 28
+        # sub_cards = list(filter(lambda card: "SUB_FAC" in card, cards))
 
         instance = cls()
         players_instance = [Player(name=player) for player in players]
@@ -118,11 +120,32 @@ class Game(Base):
         if player != self._turn:
             raise IsNotPlayerTurnException
 
+        # 플레이어에 존재하는 라운드 카드들에 적용하는 카드 이펙트들을 적용한다.
+        for p in self._players:
+            used_cards = filter(lambda c: c.get('is_used'), p.get('cards'))
+            [c.run(
+                player=p,
+                turn=self._turn,
+                round_card_number=card_number,
+                round_cards=self._round_cards,
+                card_number=c.get('card_number'),
+                now_round=self._round
+            ) for c in used_cards]
+
+        # 라운드 카드에 존재하는 카드 이펙트들을 전체적으로 적용한다.
+        # for r in self._round_cards:
+        #     for resource, count in r.get('additional_action')[str(player)].items():
+        #         if count != 0:
+        #             self._players[player].get('resource').set(
+        #                 resource, self._players[player].get('resource').get(resource) + count
+        #             )
+        #             r.get('additional_action')[str(player)][resource] = 0
+
         # 플레이어의 행동 명령을 받아서 처리한다.
         is_done = Action.run(
             command=command, card_number=card_number, players=self._players,
-            round_cards=self.action_cards, turn=self._turn, common_resource=self._common_resources,
-            additional=additional, used_round=self._round
+            action_cards=self.action_cards, turn=self._turn, common_resource=self._common_resources,
+            additional=additional, used_round=self._round, round_cards=self._round_cards
         )
 
         # 만약 선을 번경하는 카드를 낸 경우 게임의 선을 변경

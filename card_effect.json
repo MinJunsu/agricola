@@ -4,7 +4,7 @@
     "pk": 1,
     "fields": {
       "card_number": "JOB_34",
-      "effect": "action",
+      "effect": "ACTION",
       "command": "self.take_resource_in_condition(player, \"card_number == 'BASE_01' or card_number == 'BASE_02' or card_number == 'BASE_13'\", {'wood': 1})"
     }
   },
@@ -13,7 +13,7 @@
     "pk": 2,
     "fields": {
       "card_number": "JOB_37",
-      "effect": "action",
+      "effect": "ACTION",
       "command": "self.take_resource_in_condition(player, \"card_number == 'BASE_06'\", {'wood': 1, 'grain': 1})"
     }
   },
@@ -22,7 +22,7 @@
     "pk": 3,
     "fields": {
       "card_number": "JOB_18",
-      "effect": "action",
+      "effect": "ACTION",
       "command": "self.take_resource_in_condition(player, \"card_number == 'BASE_09'\", {'vegetable', 1})"
     }
   },
@@ -31,7 +31,7 @@
     "pk": 4,
     "fields": {
       "card_number": "JOB_25",
-      "effect": "action",
+      "effect": "ACTION",
       "command": "self.take_resource_in_condition(player, \"card_number == 'BASE_03'\", {'grain': 1})"
     }
   },
@@ -40,7 +40,7 @@
     "pk": 5,
     "fields": {
       "card_number": "JOB_30",
-      "effect": "action",
+      "effect": "ACTION",
       "command": "self.take_resource_in_condition(player, \"card_number == 'BASE_13' or card_number == 'BASE_15' or card_number == 'BASE_14'\", {'clay': 1})"
     }
   },
@@ -49,7 +49,7 @@
     "pk": 6,
     "fields": {
       "card_number": "JOB_13",
-      "effect": "immediately",
+      "effect": "IMMEDIATELY",
       "command": "self.take_resource_in_condition(player, \"player.get('house_type') == HouseType.CLAY_HOUSE and len(list(filter(lambda p: p.get('field_type') == FieldType.ROOM, player.get('fields')))) == 2\", {'clay': 3, 'reed': 2, 'stone': 2})"
     }
   },
@@ -58,7 +58,7 @@
     "pk": 7,
     "fields": {
       "card_number": "JOB_21",
-      "effect": "action",
+      "effect": "ACTION",
       "command": "self.take_resource_in_condition(player, \"card_number == 'BASE_10' or card_number == 'BASE_09' or card_number == 'ACTION_01'\", {'wood': 1})"
     }
   },
@@ -67,7 +67,7 @@
     "pk": 8,
     "fields": {
       "card_number": "JOB_12",
-      "effect": "action",
+      "effect": "ACTION",
       "command": "self.take_resource(player, {'sheep': 2})"
     }
   },
@@ -76,8 +76,107 @@
     "pk": 9,
     "fields": {
       "card_number": "JOB_36",
-      "effect": "immediately",
+      "effect": "IMMEDIATELY",
       "command": "self.take_resource_in_condition(player, \"player.get('house_type') == HouseType.CLAY_HOUSE and card_number == 'BASE_07' or card_number == 'ACTION_14' or card_number == 'ACTION_06'\",{'food': 3})"
+    }
+  },
+  {
+    "model": "cards.cardeffect",
+    "pk": 10,
+    "fields": {
+      "card_number": "SUB_FAC_02",
+      "effect": "IMMEDIATELY",
+      "command": "cls.add_effect_on_round_cards(turn, round_cards, now_round, {'vegetable' : 1}, 'additional', 0, [4, 7, 9])"
+    }
+  },
+  {
+    "model": "cards.cardeffect",
+    "pk": 11,
+    "fields": {
+      "card_number": "JOB_01",
+      "effect": "IMMEDIATELY",
+      "command": "cls.add_effect_on_round_cards(turn, round_cards, now_round, {'sheep' : 1}, 'additional', 0, [2, 5, 8, 10])"
+    }
+  },
+  {
+    "model": "cards.cardeffect",
+    "pk": 12,
+    "fields": {
+      "card_number": "SUB_FAC_04",
+      "effect": "IMMEDIATELY",
+      "command": "cls.add_effect_on_round_cards(turn, round_cards, now_round, {'grain' : 1}, 'farming')"
+    }
+  },
+  {
+    "model": "cards.cardeffect",
+    "pk": 13,
+    "fields": {
+      "card_number": "SUB_FAC_07",
+      "effect": "IMMEDIATELY",
+      "command": "cls.add_effect_on_round_cards(turn, round_cards, now_round, {'wood' : 1}, 'even'))"
+    }
+  },
+  {
+    "model": "cards.cardeffect",
+    "pk": 14,
+    "fields": {
+      "card_number": "SUB_FAC_36",
+      "effect": "IMMEDIATELY",
+      "command": "cls.add_effect_on_round_cards(turn, round_cards, now_round, {'food' : 2}, 'remain')"
+    }
+  },
+  {
+    "model": "cards.cardeffect",
+    "pk": 15,
+    "fields": {
+      "card_number": "SUB_FAC_10",
+      "effect": "addtional",
+      "command": "cls.add_effect_on_round_cards(turn, round_cards, now_round, {'food' : 1}, 'next')"
+    }
+  },
+  {
+    "model": "cards.cardeffect",
+    "pk": 16,
+    "fields": {
+      "card_number": "SUB_FAC_03",
+      "effect": "IMMEDIATELY",
+      "command": "cls.add_effect_on_round_cards(turn, round_cards, now_round, {'food' : 1}, 'next')"
+    }
+  },
+  {
+    "model": "cards.cardeffect",
+    "pk": 17,
+    "fields": {
+      "card_number": "SUB_FAC_05",
+      "effect": "IMMEDIATELY",
+      "command": "cls.add_effect_on_round_cards(turn, round_cards, now_round, {'food' : 1}, 'next')"
+    }
+  },
+  {
+    "model": "cards.cardeffect",
+    "pk": 18,
+    "fields": {
+      "card_number": "SUB_FAC_08",
+      "effect": "IMMEDIATELY",
+      "command": "cls.add_effect_on_round_cards(turn, round_cards, now_round, {'boar' : 1}, 'next')"
+    }
+  },
+  {
+    "model": "cards.cardeffect",
+    "pk": 19,
+    "fields": {
+      "card_number": "JOB_03",
+      "effect": "addtional",
+      "command": "cls.add_effect_on_round_cards(turn, round_cards, now_round, {'food' : 1}, 'next')"
+    }
+  },
+  {
+    "model": "cards.cardeffect",
+    "pk": 20,
+    "fields": {
+      "card_number": "SUB_FAC_09",
+      "effect": "addtional",
+      "command": "None"
     }
   }
 ]

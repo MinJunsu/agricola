@@ -4,6 +4,7 @@ from typing import List
 from core.const import INITIAL_BASE_CARDS
 from core.const import INITIAL_ROUND_CARDS
 from core.models import Base
+from play.models.additional_resource import AdditionalResource
 
 
 class RoundCard(Base):
@@ -28,7 +29,8 @@ class RoundCard(Base):
         self._count = count
         self._resource = resource
         self._additional_action = additional_action if additional_action else {
-            '0': {}, '1': {}, '2': {}, '3': {}
+            '0': AdditionalResource().to_dict(), '1': AdditionalResource().to_dict(),
+            '2': AdditionalResource().to_dict(), '3': AdditionalResource().to_dict()
         }
         self._player = player
 
@@ -58,11 +60,11 @@ class RoundCard(Base):
             resources: dict
     ) -> None:
         player_action = self._additional_action[str(player_id)]
-        if player_action:
-            for resource, count in resources.items():
-                exists = player_action.get(resource, None)
-                if exists:
-                    player_action[resource] = exists + count
-                else:
-                    player_action[resource] = count
+        for resource, count in resources.items():
+            exists = player_action.get(resource, None)
+            if exists:
+                player_action[resource] = exists + count
+            else:
+                player_action[resource] = count
+        # if player_action:
         return

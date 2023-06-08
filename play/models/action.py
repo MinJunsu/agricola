@@ -22,6 +22,7 @@ class Action(Base):
             command: CommandType,
             card_number: str,
             players: List[Player],
+            action_cards: List[RoundCard],
             round_cards: List[RoundCard],
             turn: int,
             used_round: int,
@@ -32,7 +33,7 @@ class Action(Base):
         # 데이터 저장을 위해 라운드 카드를 사용한 경우 라운드 카드 변수를 저장한다.
         round_card: RoundCard | None = None
         if "BASE" in card_number or "ACTION" in card_number:
-            round_card = find_object_or_raise_exception(round_cards, "card_number", card_number)
+            round_card = find_object_or_raise_exception(action_cards, "card_number", card_number)
 
             if round_card.get("player") is not None:
                 raise CantUseCardException
@@ -85,21 +86,24 @@ class Action(Base):
     def submit_card(
             cls,
             player: Player,
+            round_cards: List[RoundCard],
             round_card: RoundCard,
             card_type: str,
+            turn: int,
             used_round: int,
             card_number: str
     ) -> bool:
         # card_type = "JOB" | "SUB | "PRI"
         # Additional Type
         # additional: "JOB_05"
+        card: Card | None = None
         if card_type == "JOB":
             # 1. 특정한 직업 카드를 가져온다.
             card: Card = find_object_or_raise_exception(array=player.get("cards"), key="card_number", value=card_number)
 
             # 2. 플레이어가 현재 몇장의 카드를 가지고 있는지 확인한다.
             card_count = len(list(filter(
-                lambda c: "JOB" in c.get("card_number") and c.get("is_use"),
+                lambda c: "JOB" in c.get("card_number") and c.get("is_used"),
                 player.get("cards")
             )))
 
@@ -115,7 +119,6 @@ class Action(Base):
             cls.require(player=player, resource='food', amount=cost)
 
             # 6. 플레이어에 선택한 직업 카드의 is_use 속성을 True로 변경하고, 카드 효과를 실행한다.
-            return card.use(used_round=used_round, player=player)
 
         elif card_type == "SUB":
             # 1. 특정한 보조설비 카드를 가져온다.
@@ -135,9 +138,14 @@ class Action(Base):
             # "위에서 처리된다"
 
             # 6. 플레이어가 선택한 보조 설비 카드의 is_use 속성을 True로 변경하고, 카드 효과를 실행한다.
-            return card.use(used_round=used_round, player=player)
-
-        return False
+        return card.use(
+            player=player,
+            turn=turn,
+            round_card_number=round_card.get('card_number'),
+            card_number=card_number,
+            round_cards=round_cards,
+            now_round=used_round,
+        )
 
     @classmethod
     def get_command(cls, card_number: str) -> str:
