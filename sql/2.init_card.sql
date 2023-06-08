@@ -1,25 +1,15 @@
 insert into cards_card (id, card_number, card_type, name, score, cost, condition, command)
 values (1, 'ACTION_01', 'action', '곡식 활용', 0, null, null, 'cls.sow(player, additional)');
 insert into cards_card (id, card_number, card_type, name, score, cost, condition, command)
-values (4, 'ACTION_04', 'action', '양시장', 0, null, null, 'cls.use_round_card_resources(player, round_card)');
-insert into cards_card (id, card_number, card_type, name, score, cost, condition, command)
 values (5, 'ACTION_05', 'action', '서부 채석장', 0, null, null, 'cls.use_round_card_resources(player, round_card)');
 insert into cards_card (id, card_number, card_type, name, score, cost, condition, command)
 values (6, 'ACTION_06', 'action', '집 개조', 0, null, null, 'cls.upgrade_house(player)');
-insert into cards_card (id, card_number, card_type, name, score, cost, condition, command)
-values (8, 'ACTION_08', 'action', '돼지 시장', 0, null, null, 'cls.use_round_card_resources(player, round_card)');
 insert into cards_card (id, card_number, card_type, name, score, cost, condition, command)
 values (9, 'ACTION_09', 'action', '채소 종자', 0, null, null, 'cls.use_round_card_resources(player, round_card)');
 insert into cards_card (id, card_number, card_type, name, score, cost, condition, command)
 values (10, 'ACTION_10', 'action', '동부 채석장', 0, null, null, 'cls.use_round_card_resources(player, round_card)');
 insert into cards_card (id, card_number, card_type, name, score, cost, condition, command)
-values (11, 'ACTION_11', 'action', '소 시장', 0, null, null, 'cls.use_round_card_resources(player, round_card)');
-insert into cards_card (id, card_number, card_type, name, score, cost, condition, command)
-values (12, 'ACTION_12', 'action', '밭 농사', 0, null, null, 'cls.plow_field(player, round_card, additional)');
-insert into cards_card (id, card_number, card_type, name, score, cost, condition, command)
 values (14, 'ACTION_14', 'action', '농장 개조', 0, null, null, 'cls.upgrade_house(player)');
-insert into cards_card (id, card_number, card_type, name, score, cost, condition, command)
-values (2, 'ACTION_02', 'action', '울타리', 0, null, null, null);
 insert into cards_card (id, card_number, card_type, name, score, cost, condition, command)
 values (3, 'ACTION_03', 'action', '주요 설비', 0, null, null, null);
 insert into cards_card (id, card_number, card_type, name, score, cost, condition, command)
@@ -176,6 +166,11 @@ values (106, 'BASE_03', 'BASE', '자원 시장', 0, null, null, 'cls.use_round_c
 insert into cards_card (id, card_number, card_type, name, score, cost, condition, command)
 values (107, 'BASE_04', 'BASE', '점토 채굴장', 0, null, null, 'cls.use_round_card_resources(player, round_card)');
 insert into cards_card (id, card_number, card_type, name, score, cost, condition, command)
+values (2, 'ACTION_02', 'action', '울타리', 0, null, null, 'cls.create_fence(player, additional)');
+insert into cards_card (id, card_number, card_type, name, score, cost, condition, command)
+values (11, 'ACTION_11', 'action', '소 시장', 0, null, null,
+        'cls.use_animal_round_card_resources(player, round_card, additional)');
+insert into cards_card (id, card_number, card_type, name, score, cost, condition, command)
 values (109, 'BASE_06', 'BASE', '유랑극단', 0, null, null, 'cls.use_round_card_resources(player, round_card)');
 insert into cards_card (id, card_number, card_type, name, score, cost, condition, command)
 values (110, 'BASE_07', 'BASE', '농장 확장', 0, null, null, 'cls.build_room(player, additional)');
@@ -254,7 +249,16 @@ values (7, 'ACTION_07', 'action', '기본 가족 늘리기', 0, null, null,
         'cls.increment_family_number(False, player, round_card, used_round)');
 insert into cards_card (id, card_number, card_type, name, score, cost, condition, command)
 values (114, 'BASE_11', 'BASE', '교습', 0, null, null,
-        'cls.submit_card(player, cards_card, round_card, "JOB", turn, used_round, additional)');
+        'cls.submit_card(player, round_cards, round_card, "JOB", turn, used_round, additional)');
 insert into cards_card (id, card_number, card_type, name, score, cost, condition, command)
 values (108, 'BASE_05', 'BASE', '교습', 0, null, null,
-        'cls.submit_card(player, cards_card, round_card, "JOB", turn, used_round, additional)');
+        'cls.submit_card(player, round_cards, round_card, "JOB", turn, used_round, additional)');
+insert into cards_card (id, card_number, card_type, name, score, cost, condition, command)
+values (12, 'ACTION_12', 'action', '밭 농사', 0, null, null,
+        'cls.plow_field(player, common_resource, round_card, additional)');
+insert into cards_card (id, card_number, card_type, name, score, cost, condition, command)
+values (8, 'ACTION_08', 'action', '돼지 시장', 0, null, null,
+        'cls.use_animal_round_card_resources(player, round_card, additional)');
+insert into cards_card (id, card_number, card_type, name, score, cost, condition, command)
+values (4, 'ACTION_04', 'action', '양시장', 0, null, null,
+        'cls.use_animal_round_card_resources(player, round_card, additional)');
