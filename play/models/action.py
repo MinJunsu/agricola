@@ -1,7 +1,7 @@
 from functools import reduce
 from typing import List, Any
 
-from core.const import RESOURCE_CONVERT_FUNCTION, ROOM_UPGRADE_FUNCTION
+from core.const import RESOURCE_CONVERT_FUNCTION, ROOM_UPGRADE_FUNCTION, ROOM_CREATE_FUNCTION
 from core.functions import find_object_or_raise_exception
 from core.models import Base
 from core.redis import connection
@@ -28,6 +28,7 @@ class Action(Base):
             turn: int,
             used_round: int,
             common_resource: Resource,
+            primary_cards: List[Card],
             additional: Any = None,
     ):
         player: Player = players[turn]
@@ -129,6 +130,7 @@ class Action(Base):
     def submit_card(
             cls,
             player: Player,
+            primary_cards: List[Card],
             round_cards: List[RoundCard],
             round_card: RoundCard,
             card_type: str,
@@ -175,24 +177,37 @@ class Action(Base):
 
             # 6. 플레이어에 선택한 직업 카드의 is_use 속성을 True로 변경하고, 카드 효과를 실행한다.
 
-        elif card_type == "SUB":
+        elif card_type == "FAC":
+            primary_card = None
             # 1. 특정한 보조설비 카드를 가져온다.
-            card: Card = find_object_or_raise_exception(array=player.get("cards"), key="card_number", value=card_number)
+            if "PRI" in card_number:
+                primary_card = find_object_or_raise_exception(
+                    array=primary_cards, key="card_number",
+                    value=card_number
+                )
 
+                if primary_card.get('owner') is not None:
+                    raise Exception("이미 다른 플레이어가 소유하고 있는 주요 설비 카드입니다.")
+            else:
+                card: Card = find_object_or_raise_exception(
+                    array=player.get("cards"), key="card_number",
+                    value=card_number
+                )
             # 2. 보조설비의 조건을 확인한다.
-            card_condition = cls.get_condition(card_number)
-            # print(card_condition)
-            # print(cls.get_cost(card_number))
+            condition = cls.get_condition(card_number)
 
-            # 3. 플레이어가 조건을 만족하는 지 확인한다.
-            # if eval(card_condition):
-            #     # 4. 보조설비의 비용을 확인한다.
-            #     eval(cls.get_cost(card_number))
+            # 3. 보조설비의 비용을 확인한다.
+            cost = cls.get_cost(card_number)
 
+            # 4. 플레이어가 조건을 만족하는 지 확인한다.
             # 5. 플레이어가 보조설비를 내기 위해 소모되는 자원이 있는 지 확인한다. (require)
-            # "위에서 처리된다"
+            if eval(condition):
+                eval(cost)
 
-            # 6. 플레이어가 선택한 보조 설비 카드의 is_use 속성을 True로 변경하고, 카드 효과를 실행한다.
+            if primary_card:
+                primary_card.set('owner', turn)
+                return True
+
         return card.use(
             player=player,
             turn=turn,
@@ -242,12 +257,19 @@ class Action(Base):
             cls,
             is_quick: bool,
             player: Player,
+            turn: int,
+            primary_cards: List[Card],
+            round_cards: List[RoundCard],
             round_card: RoundCard,
             used_round: int,
-            additional: str | None = None
+            additional: dict = None
     ):
         # Additional Type
         # additional: "JOB_05"
+        card_number = additional.get("card_number", None)
+
+        if not is_quick and card_number is None:
+            raise Exception("보조 설비를 무조건 제출해야합니다.")
 
         player_rooms = filter(lambda p: p.get('field_type') == FieldType.ROOM, player.get('fields'))
         # 급한 가족 늘리기가 아니라면
@@ -271,13 +293,12 @@ class Action(Base):
         cls.plus(player, 'family', 1)
 
         # 만약 급한 가족 늘리기 행동이었다면 보조 설비 카드 추가해주기
-        # if not is_quick:
-        #     if not additional:
-        #         raise Exception('보조 설비 가트를 내주세요.')
-        #     cls.submit_card(
-        #         player=player, round_card=round_card, card_type='SUB',
-        #         used_round=used_round, card_number=additional
-        #     )
+        if not is_quick:
+            cls.submit_card(
+                player=player, turn=turn, round_card=round_card, card_type='FAC',
+                round_cards=round_cards, used_round=used_round, additional=additional,
+                primary_cards=primary_cards
+            )
         return True
 
     # fileds 중 arrival의 position과 자원을 입력받아 새로 선택한 departures의 position에 옮기는 함수
@@ -431,7 +452,8 @@ class Action(Base):
         barn_position = additional.get("barn_position", None)
 
         if positions is not None:
-            fields: List[Field] = player.get("fields")
+            player_clone = Player.from_dict(**player.to_dict())
+            fields: List[Field] = player_clone.get("fields")
 
             # 방이 이미 최대 개수인 경우 에러처리
             if len(list(filter(lambda x: x.get("field_type") == FieldType.ROOM, fields))) == 5:
@@ -442,15 +464,22 @@ class Action(Base):
                 if fields[index].get("field_type") != FieldType.EMPTY:
                     raise Exception("이미 사용중인 농지입니다.")
 
-            # TODO: player 트랜잭션 넣어서 자원 수정 처리 require 먼저
+            resources = ROOM_CREATE_FUNCTION[player.get('house_type')]
+            for resource, amount in resources.items():
+                cls.require(player_clone, resource, amount * len(positions))
 
             # 플레이어 필드에 방 추가
             for index in positions:
                 fields[index].change_field_type(FieldType.ROOM)
 
-        # TODO: 플레이어 필드에 헛간 추가
+            # player 트랜잭션 처리
+            player.set('fields', player_clone.get("fields"))
+            player.set("resource", player_clone.get("resource"))
+
         if barn_position is not None:
-            pass
+            cls.create_barn(player=player, additional={
+                'position': barn_position
+            })
 
         return True
 
@@ -494,12 +523,18 @@ class Action(Base):
         #         'is_bake': True
         #     }
         # }
-        position: int = additional.get("position")
-        seed: str = additional.get("seed")
+        position: int = additional.get("position", None)
+        seed: str = additional.get("seed", None)
         seed_count = 2 if seed == 'grain' else 1
         is_bake: bool = additional.get("is_bake", False)
 
-        if position is not None:
+        if position is not None and seed is None:
+            raise Exception("씨앗 정보가 제공되지 않았습니다.")
+
+        if position is None and seed is not None:
+            raise Exception("위치 정보가 제공되지 않았습니다.")
+
+        if position is not None and seed is not None:
             fields: List[Field] = player.get("fields")
 
             # field가 밭이 아닌 경우 예외처리
@@ -520,7 +555,7 @@ class Action(Base):
             elif seed == "vegetable":
                 fields[position].add_resource("vegetable", 1 + remain_common_resource)
 
-        # 빵 굽기
+        # TODO: 빵 굽기
         if is_bake is True:
             print("빵 만들기")
             pass
@@ -535,6 +570,7 @@ class Action(Base):
     def upgrade_house(
             cls,
             player: Player,
+            primary_cards: List[Card],
             round_cards: List[RoundCard],
             round_card: RoundCard,
             turn: int,
@@ -602,8 +638,9 @@ class Action(Base):
                 round_card=round_card,
                 round_cards=round_cards,
                 used_round=used_round,
-                card_type="SUB",
+                card_type="FAC",
                 additional=additional,
+                primary_cards=primary_cards
             )
 
         if fences is not None:
@@ -642,4 +679,30 @@ class Action(Base):
         # TODO: fences 정보를 바탕으로 데이터 검증 및 수정
         player.set('fences', fences)
         player.get('resource').set('fence', count)
+        return True
+
+    @classmethod
+    def create_barn(
+            cls,
+            player: Player,
+            additional: dict
+    ):
+        position: int = additional.get("position", None)
+
+        if position is None:
+            raise Exception("어디에 설치할지 알려주세요.")
+
+        # 플레이어 자원 수정을 위한 트랜잭션 처리
+        player_clone = Player.from_dict(**player.to_dict())
+
+        if player_clone.get("fields")[position].get("is_barn"):
+            raise Exception("이미 외양간이 설치되어있습니다.")
+
+        cls.require(player_clone, 'wood', 2)
+        player_clone.get("fields")[position].set("is_barn", True)
+        print(player_clone.to_dict())
+
+        # 플레이어 자원 수정을 위한 트랜잭션 처리
+        player.set("fields", player_clone.get("fields"))
+        player.set("resource", player_clone.get("resource"))
         return True

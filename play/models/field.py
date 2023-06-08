@@ -21,7 +21,7 @@ class Field(Base):
             field_type: FieldType,
             position: int,
             is_in: dict | None = None,
-            is_barn: bool = True
+            is_barn: bool = False
     ):
         self._field_type = field_type
         self._position = position
@@ -86,6 +86,7 @@ class Field(Base):
             "field_type": self._field_type.value,
             "position": self._position,
             "is_in": self._is_in.to_dict(),
+            "is_barn": self._is_barn
         }
 
     @classmethod

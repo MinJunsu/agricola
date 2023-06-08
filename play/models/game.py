@@ -135,7 +135,8 @@ class Game(Base):
         is_done = Action.run(
             command=command, card_number=card_number, players=self._players,
             action_cards=self.action_cards, turn=self._turn, common_resource=self._common_resources,
-            additional=additional, used_round=self._round, round_cards=self._round_cards
+            additional=additional, used_round=self._round, round_cards=self._round_cards,
+            primary_cards=self._primary_cards
         )
 
         # 만약 선을 번경하는 카드를 낸 경우 게임의 선을 변경
