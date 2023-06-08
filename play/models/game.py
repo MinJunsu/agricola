@@ -247,7 +247,7 @@ class Game(Base):
                 player.get("resource").set("food", player.get("resource").get("food") - cost)
             # 가족 먹여살리기 단계 - 음식이 부족한 경우
             else:
-                player.get("resource").set("beg", player.get("resource").get("beg")
+                player.get("resource").set("begging", player.get("resource").get("begging")
                                            + (cost - player.get("resource").get("food")))
                 player.get("resource").set("food", 0)
 
