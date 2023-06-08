@@ -1,3 +1,5 @@
+from play.enum import HouseType
+
 RESOURCE_SCORE_BOARD = {
     'grain': {
         0: -1,
@@ -82,6 +84,18 @@ INITIAL_PLAYER_RESOURCE = {
     'cattle': 13,
     'food': 76,
     "family": 2,
+    "room": 2
+}
+
+ROOM_UPGRADE_FUNCTION = {
+    HouseType.WOOD_HOUSE: {
+        'reed': 1,
+        'clay': 1
+    },
+    HouseType.CLAY_HOUSE: {
+        'reed': 1,
+        'stone': 1,
+    }
 }
 
 # INITIAL_PLAYER_RESOURCE = {

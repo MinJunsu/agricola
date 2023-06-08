@@ -1,6 +1,6 @@
 from typing import List, Any
 
-from core.const import RESOURCE_CONVERT_FUNCTION
+from core.const import RESOURCE_CONVERT_FUNCTION, ROOM_UPGRADE_FUNCTION
 from core.functions import find_object_or_raise_exception
 from core.models import Base
 from core.redis import connection
@@ -206,7 +206,7 @@ class Action(Base):
         cls.plus(player, 'family', 1)
 
         # 만약 급한 가족 늘리기 행동이었다면 보조 설비 카드 추가해주기
-        # if is_quick:
+        # if not is_quick:
         #     if not additional:
         #         raise Exception('보조 설비 가트를 내주세요.')
         #     cls.submit_card(
@@ -272,21 +272,21 @@ class Action(Base):
             cls,
             player: Player,
             round_card: RoundCard,
-            additional: int
+            position: int
     ):
         # Additional Type
         # additional: position: int
         fields: List[Field] = player.get("fields")
 
         # field가 이미 존재하는 경우 예외처리
-        if fields[additional].get("field_type") != FieldType.EMPTY:
+        if fields[position].get("field_type") != FieldType.EMPTY:
             raise Exception("이미 사용중인 농지입니다.")
 
         # 플레이어 필드에 밭 추가
-        fields[additional].change_field_type(FieldType.FARM)
+        fields[position].change_field_type(FieldType.FARM)
 
         # TODO: 행동칸이 밭일구기 이후 추가 빵굽기를 하는 경우
-
+        
         return True
 
     """
@@ -297,24 +297,26 @@ class Action(Base):
     def build_room(
             cls,
             player: Player,
-            additional: dict,
+            additional: List,
     ):
         # Additional Type
         # additional: [1, 2, 3],
         fields: List[Field] = player.get("fields")
 
-        # field가 이미 존재하는 경우 예외처리
-        for i in additional:
-            if fields[i].get("field_type") != FieldType.EMPTY:
-                raise Exception("이미 사용중인 농지입니다.")
-
         # 방이 이미 최대 개수인 경우 에러처리
         if len(list(filter(lambda x: x.get("field_type") == FieldType.ROOM, fields))) == 5:
             raise Exception("방을 더 이상 만들 수 없습니다.")
 
+        # field가 이미 존재하는 경우 예외처리
+        for index in additional:
+            if fields[index].get("field_type") != FieldType.EMPTY:
+                raise Exception("이미 사용중인 농지입니다.")
+
+        # TODO: player 트랜잭션 넣어서 자원 수정 처리 require 먼저
+
         # 플레이어 필드에 방 추가
-        for i in additional:
-            fields[i].change_field_type(FieldType.ROOM)
+        for index in additional:
+            fields[index].change_field_type(FieldType.ROOM)
 
         return True
 
@@ -326,6 +328,7 @@ class Action(Base):
     def sow(
             cls,
             player: Player,
+            common_resource: Resource,
             additional: dict,
     ):
         # Additional Type
@@ -335,6 +338,7 @@ class Action(Base):
         # }
         position: int = additional.get("position")
         seed: str = additional.get("seed")
+        seed_count = 2 if seed == 'grain' else 1
 
         fields: List[Field] = player.get("fields")
 
@@ -346,11 +350,15 @@ class Action(Base):
         if fields[position].get("is_in").get("grain") != 0 or fields[position].get("is_in").get("vegetable") != 0:
             raise Exception("이미 사용중인 밭입니다.")
 
+        remain_common_resource = min(common_resource.get(seed), seed_count)
+        cls.require(player, seed, 1)
+        common_resource.set(seed, common_resource.get(seed) - remain_common_resource)
+
         # 씨 뿌리기
         if seed == "grain":
-            fields[position].add_resource("grain", 3)
+            fields[position].add_resource("grain", 1 + remain_common_resource)
         elif seed == "vegetable":
-            fields[position].add_resource("vegetable", 2)
+            fields[position].add_resource("vegetable", 1 + remain_common_resource)
 
         return True
 
@@ -365,11 +373,25 @@ class Action(Base):
     ):
         # Action Type
         house_type = player.get("house_type")
-        if house_type == HouseType.WOOD_HOUSE:
-            player.get("house_type").set(HouseType.CLAY_HOUSE)
-        elif house_type == HouseType.CLAY_HOUSE:
-            player.get("house_type").set(HouseType.STONE_HOUSE)
-        elif house_type == HouseType.STONE_HOUSE:
+        player_room_count = len(list(filter(lambda f: f.get('field_type') == FieldType.ROOM, player.get('fields'))))
+
+        # 다양한 require 함수를 사용하기 위한 transaction 처리
+        player_clone = Player.from_dict(**player.to_dict())
+
+        resources = ROOM_UPGRADE_FUNCTION.get(house_type, None)
+
+        if resources is None:
             raise Exception("이미 최고급 집입니다.")
+
+        for resource, count in resources.items():
+            cls.require(player_clone, resource, count * player_room_count)
+
+        player.set('resource', player_clone.get('resource'))
+
+        if house_type == HouseType.WOOD_HOUSE:
+            player.set("house_type", HouseType.CLAY_HOUSE)
+
+        elif house_type == HouseType.CLAY_HOUSE:
+            player.set("house_type", HouseType.STONE_HOUSE)
 
         return True
