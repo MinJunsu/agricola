@@ -491,7 +491,9 @@ class Action(Base):
     def upgrade_house(
             cls,
             player: Player,
+            round_cards: List[RoundCard],
             round_card: RoundCard,
+            turn: int,
             used_round: int,
             additional: dict,
     ):
@@ -550,7 +552,9 @@ class Action(Base):
         if card_number is not None:
             cls.submit_card(
                 player=player,
+                turn=turn,
                 round_card=round_card,
+                round_cards=round_cards,
                 used_round=used_round,
                 card_type="SUB",
                 additional=additional,
