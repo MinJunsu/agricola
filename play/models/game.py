@@ -1,12 +1,14 @@
 from functools import reduce
 from typing import List
 
+from asgiref.sync import sync_to_async
+
 from core.const import FIRST_CHANGE_CARD_NUMBER, LAST_TURN
 from core.const import NO_USER
 from core.functions import find_object_or_raise_exception
 from core.models import Base
 from core.redis import connection
-from play.enum import CommandType
+from play.enum import CommandType, FieldType
 from play.exception import IsNotPlayerTurnException
 from play.models.action import Action
 from play.models.card import Card
@@ -37,7 +39,7 @@ class Game(Base):
             self,
             first: int = 0,
             turn: int = 0,
-            round: int = 0,
+            round: int = 4,
             phase: int = 0,
             common_resources: dict = None,
             players: List[dict] = None,
@@ -211,6 +213,10 @@ class Game(Base):
 
         # 만약, 게임 판에 존재하는 모든 플레이어가 가족 구성원들을 사용했다면, 바로 다음 라운드로 변경하는 로직을 진행한다.
         # TODO: 라운드 변경 시 페이즈 변경 처리
+        harvest_round = [4, 7, 9, 11, 13, 14]
+        if self._round in harvest_round:
+            self.harvest()
+
         self._round = self._round + 1
         self._turn = self._first
 
@@ -218,3 +224,41 @@ class Game(Base):
         self.increment_resource()
         [action.set('player', None) for action in self.action_cards]
         return
+
+    @staticmethod
+    @sync_to_async
+    def get_cards(card_type: str):
+        from cards.models import Card
+        return list(Card.objects.filter(card_type=card_type).values_list('card_number', flat=True))
+
+    def harvest(self) -> None:
+        for player in self._players:
+            fields = player.get("fields")
+            # 농장 단계
+            for field in fields:
+                in_resource = field.get_resource()
+                if field.get("field_type") == FieldType.FARM and field.get("is_in").get(in_resource) > 0:
+                    field.get("is_in").set(in_resource, field.get("is_in").get(in_resource) - 1)
+                    player.get("resource").set(in_resource, player.get("resource").get(in_resource) + 1)
+
+            # 가족 먹여살리기 단계 - 음식 지불
+            cost = player.get("resource").get("family") * 2
+            if player.get("resource").get("food") > cost:
+                player.get("resource").set("food", player.get("resource").get("food") - cost)
+            # 가족 먹여살리기 단계 - 음식이 부족한 경우
+            else:
+                player.get("resource").set("beg", player.get("resource").get("beg")
+                                           + (cost - player.get("resource").get("food")))
+                player.get("resource").set("food", 0)
+
+            # 번식 단계
+            animals = ['sheep', 'boar', 'cattle']
+            for animal in animals:
+                # 플레이어 리소스에 추가
+                if player.get("resource").get(animal) > 1:
+                    player.get("resource").set(animal, player.get("resource").get(animal) + 1)
+                    # 플레이어 필드에 추가
+                    for field in fields:
+                        if field.get_resource() == animal:
+                            field.add_resource(animal, 1)
+                            break
