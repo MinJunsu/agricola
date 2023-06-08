@@ -10,6 +10,7 @@ from play.exception import CantUseCardException
 from play.models.card import Card
 from play.models.field import Field
 from play.models.player import Player
+from play.models.primary_card import PrimaryCard
 from play.models.resource import Resource
 from play.models.round_card import RoundCard
 
@@ -28,14 +29,18 @@ class Action(Base):
             turn: int,
             used_round: int,
             common_resource: Resource,
-            primary_cards: List[Card],
+            primary_cards: List[PrimaryCard],
             additional: Any = None,
     ):
+
         player: Player = players[turn]
         # 데이터 저장을 위해 라운드 카드를 사용한 경우 라운드 카드 변수를 저장한다.
         round_card: RoundCard | None = None
         if "BASE" in card_number or "ACTION" in card_number:
             round_card = find_object_or_raise_exception(action_cards, "card_number", card_number)
+            # FIXME: TEST를 위한 오픈되지 않은 카드 사용 가능
+            # if round_cards.index(round_card) >= used_round:
+            #     raise Exception("오픈되지 않은 카드는 사용할 수 없습니다.")
 
             if round_card.get("player") is not None:
                 raise CantUseCardException
@@ -130,7 +135,7 @@ class Action(Base):
     def submit_card(
             cls,
             player: Player,
-            primary_cards: List[Card],
+            primary_cards: List[PrimaryCard],
             round_cards: List[RoundCard],
             round_card: RoundCard,
             card_type: str,
@@ -258,7 +263,7 @@ class Action(Base):
             is_quick: bool,
             player: Player,
             turn: int,
-            primary_cards: List[Card],
+            primary_cards: List[PrimaryCard],
             round_cards: List[RoundCard],
             round_card: RoundCard,
             used_round: int,

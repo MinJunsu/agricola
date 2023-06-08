@@ -1,7 +1,6 @@
 from play.enum import HouseType
 
 # TODO: 빵굽기
-# TODO: 보조설비 / 주요설비
 
 RESOURCE_SCORE_BOARD = {
     'grain': {
