@@ -86,13 +86,25 @@ class Action(Base):
             cls,
             player: Player,
             round_card: RoundCard,
-            card_type: str,
             used_round: int,
-            card_number: str
+            card_type: str,
+            additional: dict,
     ) -> bool:
         # card_type = "JOB" | "SUB | "PRI"
         # Additional Type
         # additional: "JOB_05"
+        # 교습
+        # BASE_05, BASE_11
+        # {
+        #     'command': 'additional',
+        #     'card_number': 'card_03',
+        #     'player': 0,
+        #     'additional': {
+        #         card_number: str
+        #     }
+        # }
+        card_number = additional.get("card_number")
+
         if card_type == "JOB":
             # 1. 특정한 직업 카드를 가져온다.
             card: Card = find_object_or_raise_exception(array=player.get("cards"), key="card_number", value=card_number)
@@ -158,8 +170,10 @@ class Action(Base):
             command: CommandType,
             card_number: str,
             common_resource: Resource,
-            resources: dict
+            additional: dict
     ):
+        resources = additional.get("resources")
+
         # TODO: 플레이어가 card_number에 해당하는 카드를 들고 있는지 확인
         TARGET = "food"
         for resource, count in resources.items():
@@ -275,43 +289,51 @@ class Action(Base):
             round_card: RoundCard,
             additional: dict
     ):
-        # 밭 농사 카드
-        # CARD_03
-        # 만약, 밭 농사 카드에서 그리고/또는 행동을 하지 않을 경우
+        # 밭 일구기
         # {
-        #     'command': 'additional',
-        #     'card_number': 'card_03',
-        #     'additional': {
-        #         'position': 3
+        #     "command": "additional",
+        #     "card_number": "ACTION_12",
+        #     "player": 0,
+        #     "additional": {
+        #         "position": 3
         #     }
         # }
-        # 만약 그리고/또는 행동을 할 경우
+        # 씨 뿌리기
         # {
-        #     'command': 'additional',
-        #     'card_number': 'card_03',
-        #     'additional': {
-        #         'position': 3,
-        #         'sow_position': 3,
-        #         'seed': 'grain'
+        #     "command": "additional",
+        #     "card_number": "ACTION_12",
+        #     "player": 0,
+        #     "additional": {
+        #         "sow_position": 3,
+        #         "seed": 'grain'
+        #     }
+        # }
+        # 밭 일구기 & 씨 뿌리기
+        # {
+        #     "command": "additional",
+        #     "card_number": "ACTION_12",
+        #     "player": 0,
+        #     "additional": {
+        #         "position": 3
+        #         "sow_position": 3,
+        #         "seed": 'grain'
         #     }
         # }
         position = additional.get('position', None)
         sow_position = additional.get("sow_position", None)
         seed = additional.get("seed", None)
 
-        if position is None:
-            return
+        if position is not None:
+            # Additional Type
+            # additional: position: int
+            fields: List[Field] = player.get("fields")
 
-        # Additional Type
-        # additional: position: int
-        fields: List[Field] = player.get("fields")
+            # field가 이미 존재하는 경우 예외처리
+            if fields[position].get("field_type") != FieldType.EMPTY:
+                raise Exception("이미 사용중인 농지입니다.")
 
-        # field가 이미 존재하는 경우 예외처리
-        if fields[position].get("field_type") != FieldType.EMPTY:
-            raise Exception("이미 사용중인 농지입니다.")
-
-        # 플레이어 필드에 밭 추가
-        fields[position].change_field_type(FieldType.FARM)
+            # 플레이어 필드에 밭 추가
+            fields[position].change_field_type(FieldType.FARM)
 
         if sow_position is not None:
             cls.sow(
@@ -333,26 +355,50 @@ class Action(Base):
     def build_room(
             cls,
             player: Player,
-            additional: List,
+            additional: dict,
     ):
-        # Additional Type
-        # additional: [1, 2, 3],
-        fields: List[Field] = player.get("fields")
+        # 농장 확장 카드
+        # ACTION_12
+        # 만약, 농장 확장 행동칸에서 그리고/또는 행동을 하지 않을 경우
+        # {
+        #     'command': 'additional',
+        #     'card_number': 'ACTION_12',
+        #     'additional': {
+        #         'positions': [1, 2, 3]
+        #     }
+        # }
+        # 만약 그리고/또는 행동을 할 경우
+        # {
+        #     'command': 'additional',
+        #     'card_number': 'ACTION_12',
+        #     'additional': {
+        #         'positions': [1, 2, 3],
+        #         'barn_position': 3
+        #     }
+        # }
+        positions = additional.get('positions', None)
+        barn_position = additional.get("barn_position", None)
+        if positions is not None:
+            fields: List[Field] = player.get("fields")
 
-        # 방이 이미 최대 개수인 경우 에러처리
-        if len(list(filter(lambda x: x.get("field_type") == FieldType.ROOM, fields))) == 5:
-            raise Exception("방을 더 이상 만들 수 없습니다.")
+            # 방이 이미 최대 개수인 경우 에러처리
+            if len(list(filter(lambda x: x.get("field_type") == FieldType.ROOM, fields))) == 5:
+                raise Exception("방을 더 이상 만들 수 없습니다.")
 
-        # field가 이미 존재하는 경우 예외처리
-        for index in additional:
-            if fields[index].get("field_type") != FieldType.EMPTY:
-                raise Exception("이미 사용중인 농지입니다.")
+            # field가 이미 존재하는 경우 예외처리
+            for index in positions:
+                if fields[index].get("field_type") != FieldType.EMPTY:
+                    raise Exception("이미 사용중인 농지입니다.")
 
-        # TODO: player 트랜잭션 넣어서 자원 수정 처리 require 먼저
+            # TODO: player 트랜잭션 넣어서 자원 수정 처리 require 먼저
 
-        # 플레이어 필드에 방 추가
-        for index in additional:
-            fields[index].change_field_type(FieldType.ROOM)
+            # 플레이어 필드에 방 추가
+            for index in positions:
+                fields[index].change_field_type(FieldType.ROOM)
+
+        # TODO: 플레이어 필드에 헛간 추가
+        if barn_position is not None:
+            pass
 
         return True
 
@@ -367,34 +413,65 @@ class Action(Base):
             common_resource: Resource,
             additional: dict,
     ):
-        # Additional Type
-        # additional: {
-        #     "position": 1,
-        #     "seed": "grain",
+        # 곡식 활용 카드
+        # ACTION_01
+        # 씨 뿌리기
+        # {
+        #     'command': 'additional',
+        #     'card_number': 'ACTION_12',
+        #     'additional': {
+        #         'positions': 1,
+        #         'seed': 'grain'
+        #     }
+        # }
+        # 빵굽기
+        # {
+        #     'command': 'additional',
+        #     'card_number': 'ACTION_12',
+        #     'additional': {
+        #         'is_bake': True
+        #     }
+        # }
+        # 씨 뿌리기 & 빵굽기
+        # {
+        #     'command': 'additional',
+        #     'card_number': 'ACTION_12',
+        #     'additional': {
+        #         'positions': 1,
+        #         'seed': 'grain',
+        #         'is_bake': True
+        #     }
         # }
         position: int = additional.get("position")
         seed: str = additional.get("seed")
         seed_count = 2 if seed == 'grain' else 1
+        is_bake: bool = additional.get("is_bake", False)
 
-        fields: List[Field] = player.get("fields")
+        if position is not None:
+            fields: List[Field] = player.get("fields")
 
-        # field가 밭이 아닌 경우 예외처리
-        if fields[position].get("field_type") != FieldType.FARM:
-            raise Exception("밭이 아닙니다.")
+            # field가 밭이 아닌 경우 예외처리
+            if fields[position].get("field_type") != FieldType.FARM:
+                raise Exception("밭이 아닙니다.")
 
-        # 사용중인 밭인 경우 예외처리
-        if fields[position].get("is_in").get("grain") != 0 or fields[position].get("is_in").get("vegetable") != 0:
-            raise Exception("이미 사용중인 밭입니다.")
+            # 사용중인 밭인 경우 예외처리
+            if fields[position].get("is_in").get("grain") != 0 or fields[position].get("is_in").get("vegetable") != 0:
+                raise Exception("이미 사용중인 밭입니다.")
 
-        remain_common_resource = min(common_resource.get(seed), seed_count)
-        cls.require(player, seed, 1)
-        common_resource.set(seed, common_resource.get(seed) - remain_common_resource)
+            remain_common_resource = min(common_resource.get(seed), seed_count)
+            cls.require(player, seed, 1)
+            common_resource.set(seed, common_resource.get(seed) - remain_common_resource)
 
-        # 씨 뿌리기
-        if seed == "grain":
-            fields[position].add_resource("grain", 1 + remain_common_resource)
-        elif seed == "vegetable":
-            fields[position].add_resource("vegetable", 1 + remain_common_resource)
+            # 씨 뿌리기
+            if seed == "grain":
+                fields[position].add_resource("grain", 1 + remain_common_resource)
+            elif seed == "vegetable":
+                fields[position].add_resource("vegetable", 1 + remain_common_resource)
+
+        # 빵 굽기
+        if is_bake is True:
+            print("빵 만들기")
+            pass
 
         return True
 
@@ -406,8 +483,40 @@ class Action(Base):
     def upgrade_house(
             cls,
             player: Player,
+            round_card: RoundCard,
+            used_round: int,
+            additional: dict,
     ):
-        # Action Type
+        # 집 개조
+        # ACTION_06
+        #
+        # {
+        #     "command": "action",
+        #     "card_number": "ACTION_06",
+        #     "player": 0
+        # }
+        # 집 한 번 고치기 & 주요설비/보조설비
+        # {
+        #    "command":"additional",
+        #    "card_number":"ACTION_06",
+        #    "player": 0,
+        #    "additional": {
+        #        "card_number": "SUB_FAC_01",
+        #     }
+        # }
+        # 집 한 번 고치기 & 울타리 치기
+        # {
+        #     "command": "additional",
+        #     "card_number": "ACTION_02",
+        #     "player": 0,
+        #     "additional": {
+        #         0: [1, 2, 4],
+        #         1: [2, 3, 4]
+        #     }
+        # }
+        card_number: str = additional.get("card_number")
+        # TODO: 울타리 치기 additional is not None
+
         house_type = player.get("house_type")
         player_room_count = len(list(filter(lambda f: f.get('field_type') == FieldType.ROOM, player.get('fields'))))
 
@@ -429,5 +538,14 @@ class Action(Base):
 
         elif house_type == HouseType.CLAY_HOUSE:
             player.set("house_type", HouseType.STONE_HOUSE)
+
+        if card_number is not None:
+            cls.submit_card(
+                player=player,
+                round_card=round_card,
+                used_round=used_round,
+                card_type="SUB",
+                additional=additional,
+            )
 
         return True
