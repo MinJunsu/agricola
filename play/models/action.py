@@ -676,7 +676,9 @@ class Action(Base):
         if count > FENCE_LIMIT:
             raise Exception(f"펜스는 최대 {FENCE_LIMIT}개 까지만 칠 수 있습니다.")
 
-        # TODO: fences 정보를 바탕으로 데이터 검증 및 수정
+        for index, _ in fences.items():
+            player.get("fields")[int(index)].set("field_type", FieldType.CAGE)
+
         player.set('fences', fences)
         player.get('resource').set('fence', count)
         return True
@@ -700,7 +702,6 @@ class Action(Base):
 
         cls.require(player_clone, 'wood', 2)
         player_clone.get("fields")[position].set("is_barn", True)
-        print(player_clone.to_dict())
 
         # 플레이어 자원 수정을 위한 트랜잭션 처리
         player.set("fields", player_clone.get("fields"))
