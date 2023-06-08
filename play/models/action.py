@@ -166,6 +166,49 @@ class Action(Base):
             cls.plus(player, TARGET, count * ratio)
         return True
 
+    @classmethod
+    def increment_family_number(
+            cls,
+            is_quick: bool,
+            player: Player,
+            round_card: RoundCard,
+            used_round: int,
+            additional: str | None = None
+    ):
+        # Additional Type
+        # additional: "JOB_05"
+
+        player_rooms = filter(lambda p: p.get('field_type') == FieldType.ROOM, player.get('fields'))
+        # 급한 가족 늘리기가 아니라면
+        if not is_quick:
+            try:
+                # 플레이어 방에서 빈 방을 찾는다.
+                empty_room = next(filter(lambda p: p.get('is_in').get('family') == 0, player_rooms))
+            except StopIteration:
+                raise Exception("플레이어에게 빈 방이 존재하지 않습니다.")
+
+        else:
+            try:
+                # 플레이어 방에서 빈 방을 찾는다.
+                empty_room = next(filter(lambda p: p.get('is_in').get('family') == 0, player_rooms))
+            except StopIteration:
+                player_rooms = filter(lambda p: p.get('field_type') == FieldType.ROOM, player.get('fields'))
+                empty_room = next(player_rooms)
+
+        # 빈 방이 존재한다면 빈 방에 가족 구성원 하나를 추가해준다.
+        empty_room.get('is_in').set('family', empty_room.get('is_in').get('family') + 1)
+        cls.plus(player, 'family', 1)
+
+        # 만약 급한 가족 늘리기 행동이었다면 보조 설비 카드 추가해주기
+        # if is_quick:
+        #     if not additional:
+        #         raise Exception('보조 설비 가트를 내주세요.')
+        #     cls.submit_card(
+        #         player=player, round_card=round_card, card_type='SUB',
+        #         used_round=used_round, card_number=additional
+        #     )
+        return True
+
     # fileds 중 arrival의 position과 자원을 입력받아 새로 선택한 departures의 position에 옮기는 함수
     # client 입력값 (arrival, departures, count)
     @classmethod

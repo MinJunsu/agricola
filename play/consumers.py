@@ -60,6 +60,11 @@ class GameConsumer(AsyncJsonWebsocketConsumer):
                 is_success=False,
                 error=str(e)
             ))
+        except Exception as e:
+            return await self.send_json(socket_response(
+                is_success=False,
+                error=str(e)
+            ))
 
         change = []
 
