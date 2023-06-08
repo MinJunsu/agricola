@@ -23,10 +23,6 @@ values (2, 'ACTION_02', 'action', '울타리', 0, null, null, null);
 insert into cards_card (id, card_number, card_type, name, score, command, condition, cost)
 values (3, 'ACTION_03', 'action', '주요 설비', 0, null, null, null);
 insert into cards_card (id, card_number, card_type, name, score, command, condition, cost)
-values (7, 'ACTION_07', 'action', '기본 가족 늘리기', 0, null, null, null);
-insert into cards_card (id, card_number, card_type, name, score, command, condition, cost)
-values (13, 'ACTION_13', 'action', '급한 가족 늘리기', 0, null, null, null);
-insert into cards_card (id, card_number, card_type, name, score, command, condition, cost)
 values (15, 'JOB_01', 'job', '양의 친구', 0, null, null, null);
 insert into cards_card (id, card_number, card_type, name, score, command, condition, cost)
 values (16, 'JOB_02', 'job', '목사', 0, null, null, null);
@@ -176,6 +172,9 @@ insert into cards_card (id, card_number, card_type, name, score, command, condit
 values (81, 'SUB_FAC_17', 'sub_fac', '목수의 객실', 0, null, 'True',
         'cls.require(player, ''wood'', 1), cls.require(player, ''stone'', 1)');
 insert into cards_card (id, card_number, card_type, name, score, command, condition, cost)
+values (13, 'ACTION_13', 'action', '급한 가족 늘리기', 0,
+        'cls.increment_family_number(True, player, round_card, used_round, additional)', null, null);
+insert into cards_card (id, card_number, card_type, name, score, command, condition, cost)
 values (104, 'BASE_01', 'BASE', '덤불', 0, 'cls.use_round_card_resources(player, round_card)', null, null);
 insert into cards_card (id, card_number, card_type, name, score, command, condition, cost)
 values (105, 'BASE_02', 'BASE', '수풀', 0, 'cls.use_round_card_resources(player, round_card)', null, null);
@@ -259,10 +258,15 @@ values (102, 'SUB_FAC_38', 'sub_fac', '삼포식 농법', 0, null,
 insert into cards_card (id, card_number, card_type, name, score, command, condition, cost)
 values (103, 'SUB_FAC_39', 'sub_fac', '물통', 0, null, 'True', 'cls.require(player, ''clay'', 1)');
 insert into cards_card (id, card_number, card_type, name, score, command, condition, cost)
-values (111, 'BASE_08', 'BASE', '회합 장소', 0, null, null, null);
-insert into cards_card (id, card_number, card_type, name, score, command, condition, cost)
 values (108, 'BASE_05', 'BASE', '교습', 0, 'cls.submit_card(player, round_card, "JOB", used_round, additional)', null,
         null);
 insert into cards_card (id, card_number, card_type, name, score, command, condition, cost)
 values (114, 'BASE_11', 'BASE', '교습', 0, 'cls.submit_card(player, round_card, "JOB", used_round, additional)', null,
         null);
+insert into cards_card (id, card_number, card_type, name, score, command, condition, cost)
+values (111, 'BASE_08', 'BASE', '회합 장소', 0,
+        'True if command == CommandType.ACTION else cls.submit_card(player, round_card, "SUB", used_round, additional) ',
+        null, null);
+insert into cards_card (id, card_number, card_type, name, score, command, condition, cost)
+values (7, 'ACTION_07', 'action', '기본 가족 늘리기', 0, 'cls.increment_family_number(False, player, round_card, used_round)',
+        null, null);

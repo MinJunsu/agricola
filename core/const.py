@@ -70,23 +70,24 @@ INITIAL_COMMON_RESOURCE = {
 }
 
 # FIXME: 테스트 환경을 위해 임시로 자원 수정
-# INITIAL_PLAYER_RESOURCE = {
-#     'wood': 30,
-#     'clay': 24,
-#     'reed': 14,
-#     'stone': 16,
-#     'grain': 24,
-#     'vegetable': 16,
-#     'sheep': 18,
-#     'boar': 15,
-#     'cattle': 13,
-#     'food': 76,
-# }
-
 INITIAL_PLAYER_RESOURCE = {
+    'wood': 30,
+    'clay': 24,
+    'reed': 14,
+    'stone': 16,
+    'grain': 24,
+    'vegetable': 16,
+    'sheep': 18,
+    'boar': 15,
+    'cattle': 13,
+    'food': 76,
     "family": 2,
-    "room": 2,
 }
+
+# INITIAL_PLAYER_RESOURCE = {
+#     "family": 2,
+#     "room": 2,
+# }
 
 LAST_TURN = 3
 LAST_ROUND = 14

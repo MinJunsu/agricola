@@ -135,6 +135,7 @@ class Game(Base):
         return self.to_dict()
 
     def increment_resource(self) -> None:
+        # FIXME: 라운드 카드 누적 행동칸 처리 시 수정
         opend_round_cards = self._round_cards[:self._round + 1]
         stacked_cards = filter(lambda c: c.get('is_stacked'), [*self._base_cards, *opend_round_cards])
         for card in stacked_cards:
@@ -160,6 +161,7 @@ class Game(Base):
         total_family = reduce(lambda acc, player: acc + player.get('resource').get('family'), self._players, 0)
 
         while total_family != total_worked + 1:
+            # for _ in range(10):
             # 우선 턴을 진행 시키고, 이 플레이어가 턴을 진행할 수 있는지 확인한다.
             self._turn += 1
 
@@ -171,6 +173,9 @@ class Game(Base):
             player_family = self._players[self._turn].get("resource").get("family")
             # 플레이어가 말판에 이동 시킨 가족 구성원 수 (일한 가족 구성원 수)
             player_worked = len(list(filter(lambda p: p.get('player') == self._turn, self.action_cards)))
+
+            print(player_family)
+            print(player_worked)
 
             if player_family > player_worked:
                 return

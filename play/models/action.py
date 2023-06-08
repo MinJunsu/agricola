@@ -123,14 +123,16 @@ class Action(Base):
 
             # 2. 보조설비의 조건을 확인한다.
             card_condition = cls.get_condition(card_number)
+            # print(card_condition)
+            # print(cls.get_cost(card_number))
 
             # 3. 플레이어가 조건을 만족하는 지 확인한다.
-            if eval(card_condition):
-                # 4. 보조설비의 비용을 확인한다.
-                eval(cls.redis.hget("cost", card_number))
+            # if eval(card_condition):
+            #     # 4. 보조설비의 비용을 확인한다.
+            #     eval(cls.get_cost(card_number))
 
             # 5. 플레이어가 보조설비를 내기 위해 소모되는 자원이 있는 지 확인한다. (require)
-            "위에서 처리된다"
+            # "위에서 처리된다"
 
             # 6. 플레이어가 선택한 보조 설비 카드의 is_use 속성을 True로 변경하고, 카드 효과를 실행한다.
             return card.use(used_round=used_round, player=player)
@@ -144,6 +146,10 @@ class Action(Base):
     @classmethod
     def get_condition(cls, card_number: str) -> str:
         return cls.redis.hget("condition", card_number)
+
+    @classmethod
+    def get_cost(cls, card_number: str) -> str:
+        return cls.redis.hget("costs", card_number)
 
     @classmethod
     def convert_resource(
