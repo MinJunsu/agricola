@@ -60,17 +60,16 @@ class GameConsumer(AsyncJsonWebsocketConsumer):
                 is_success=False,
                 error=str(e)
             ))
-        except Exception as e:
-            return await self.send_json(socket_response(
-                is_success=False,
-                error=str(e)
-            ))
+        # except Exception as e:
+        #     return await self.send_json(socket_response(
+        #         is_success=False,
+        #         error=str(e)
+        #     ))
 
         change = []
 
         # 이전 데이터와 달라진 데이터를 조회하기 위한 처리 (DeepDiff)
         deep_diff = DeepDiff(eval(data), played_data)
-        print(deep_diff)
         values = deep_diff.get("values_changed", {})
         types = deep_diff.get("type_changes", {})
 

@@ -1,5 +1,4 @@
 from functools import reduce
-from random import shuffle
 from typing import List
 
 from asgiref.sync import sync_to_async
@@ -76,12 +75,12 @@ class Game(Base):
     async def initialize(cls, players: List[str]) -> 'Game':
         redis = connection()
         cards = redis.hvals('cards')
-        job_cards = list(filter(lambda card: "JOB" in card, cards))
-        sub_cards = list(filter(lambda card: "SUB_FAC" in card, cards))
-        shuffle(job_cards)
-        shuffle(sub_cards)
-        # job_cards = list(filter(lambda card: "JOB_01" in card, cards)) * 28
+        # job_cards = list(filter(lambda card: "JOB" in card, cards))
         # sub_cards = list(filter(lambda card: "SUB_FAC" in card, cards))
+        # shuffle(job_cards)
+        # shuffle(sub_cards)
+        job_cards = list(filter(lambda card: "JOB_03" in card, cards)) * 28
+        sub_cards = list(filter(lambda card: "SUB_FAC" in card, cards))
 
         instance = cls()
         players_instance = [Player(name=player) for player in players]
@@ -132,15 +131,6 @@ class Game(Base):
                 now_round=self._round
             ) for c in used_cards]
 
-        # 라운드 카드에 존재하는 카드 이펙트들을 전체적으로 적용한다.
-        # for r in self._round_cards:
-        #     for resource, count in r.get('additional_action')[str(player)].items():
-        #         if count != 0:
-        #             self._players[player].get('resource').set(
-        #                 resource, self._players[player].get('resource').get(resource) + count
-        #             )
-        #             r.get('additional_action')[str(player)][resource] = 0
-
         # 플레이어의 행동 명령을 받아서 처리한다.
         is_done = Action.run(
             command=command, card_number=card_number, players=self._players,
@@ -154,6 +144,15 @@ class Game(Base):
 
         # 게임의 정보를 바탕으로 게임의 턴을 변경
         self.change_turn_and_round_and_phase(is_done=is_done, total_worked=worked)
+
+        # 라운드 카드에 존재하는 카드 이펙트들을 전체적으로 적용한다.
+        for player_index, resources in self._round_cards[self._round].get('additional_action').items():
+            for resource, count in resources.items():
+                if count != 0:
+                    self._players[int(player_index)].get('resource').set(
+                        resource, self._players[int(player_index)].get('resource').get(resource) + count
+                    )
+                    resources[resource] = 0
 
         return self.to_dict()
 

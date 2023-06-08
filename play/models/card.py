@@ -70,7 +70,7 @@ class Card(Base):
         if "action" in redis.hkeys(f'cards:{self._card_number}'):
             if self._card_number in redis.hkeys('cards:effects:action'):
                 command = redis.hget(f'cards:{self._card_number}', 'action')
-                condition = redis.hget('cards:effects:immediately', self._card_number)
+                condition = redis.hget('cards:effects:action', self._card_number)
                 if eval(condition):
                     eval(command)
         return None
