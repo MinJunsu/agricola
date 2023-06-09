@@ -578,7 +578,6 @@ class Action(Base):
                 raise Exception("이미 사용중인 밭입니다.")
 
             remain_common_resource = min(common_resource.get(seed), seed_count)
-            # TODO: require 처리 확인
             cls.require(player, common_resource, seed, 1)
             common_resource.set(seed, common_resource.get(seed) - remain_common_resource)
 
