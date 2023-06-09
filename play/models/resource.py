@@ -64,9 +64,9 @@ class Resource(Base):
     def initialize_player_resource(cls):
         return cls(**INITIAL_PLAYER_RESOURCE)
 
-    def calculate_score(self):
+    def calculate_score(self) -> dict:
         keys = RESOURCE_SCORE_BOARD.keys()
-        score = 0
+        dictionary = dict()
         for key in keys:
-            score += RESOURCE_SCORE_BOARD[key][min(self.get(key), 8)]
-        return score
+            dictionary[key] = RESOURCE_SCORE_BOARD[key][min(self.get(key), 8)]
+        return dictionary

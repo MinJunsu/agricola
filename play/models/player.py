@@ -117,8 +117,11 @@ class Player(Base):
         field_score = self.calculate_field_score()
         resource_score = self._resource.calculate_score()
 
-        total_score = card_score + field_score + resource_score
-        return total_score
+        # 점수 계산 로직
+        # reduce(lambda acc, x: acc + x[1], dic.items(), 0)
+
+        # total_score = card_score + field_score + resource_score
+        return 0
 
     def to_dict(self) -> dict:
         dictionary = super().to_dict()
