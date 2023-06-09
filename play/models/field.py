@@ -1,3 +1,4 @@
+from functools import reduce
 from typing import List
 
 from core.models import Base
@@ -32,11 +33,15 @@ class Field(Base):
     def initialize(cls) -> 'List[Field]':
         fields = []
         for i in range(1, 16):
-            if (i == 14) or (i == 15):
+            if i == 14 or i == 15:
                 fields.append(
                     cls(field_type=FieldType.ROOM, position=i, is_in=FieldResource.initialize_player().to_dict()))
+            if i == 11 or i == 12:
+                fields.append(
+                    cls(field_type=FieldType.CAGE, position=i, is_in=FieldResource().to_dict()))
             else:
-                fields.append(cls(field_type=FieldType.EMPTY, position=i, is_in=FieldResource().to_dict()))
+                fields.append(
+                    cls(field_type=FieldType.EMPTY, position=i, is_in=FieldResource().to_dict()))
 
         # FIXME: 테스트 환경을 위해 임시로 5마리의 양을 배치
         # room3 = cls(
@@ -80,6 +85,31 @@ class Field(Base):
     def add_resource(self, resource: str, count: int) -> None:
         self._is_in.set(resource, self._is_in.get(resource) + count)
         return None
+
+    # 가축들이 배치가 가능하다면 배치 후 True 리턴 아니면 False 리턴
+    def place_or_none(self, resource: str, amount: int) -> bool:
+        if self.is_available(resource, amount):
+            self._is_in.set(resource, amount + self._is_in.get(resource))
+            return True
+        return False
+
+    # 가축을 이 필드에 배치 가능한지 확인하는 로직
+    def is_available(self, resource: str, amount: int) -> bool:
+        if reduce(lambda acc, x: acc + (x[1] if x[0] != resource else 0), self._is_in.to_dict().items(), 0) > 0:
+            return False
+
+        if self._field_type == FieldType.CAGE:
+            if self._is_barn:
+                if amount + self._is_in.get(resource) <= 4:
+                    return True
+            else:
+                if amount + self._is_in.get(resource) <= 2:
+                    return True
+        elif self._field_type == FieldType.EMPTY:
+            if self._is_barn:
+                if amount + self._is_in.get(resource) <= 1:
+                    return True
+        return False
 
     def to_dict(self) -> dict:
         return {

@@ -11,6 +11,7 @@ from play.enum import CommandType, FieldType
 from play.exception import IsNotPlayerTurnException
 from play.models.action import Action
 from play.models.card import Card
+from play.models.field import Field
 from play.models.player import Player
 from play.models.primary_card import PrimaryCard
 from play.models.resource import Resource
@@ -38,7 +39,7 @@ class Game(Base):
             self,
             first: int = 0,
             turn: int = 0,
-            round: int = 4,
+            round: int = 3,
             phase: int = 0,
             common_resources: dict = None,
             players: List[dict] = None,
@@ -216,8 +217,7 @@ class Game(Base):
                 return
 
         # 만약, 게임 판에 존재하는 모든 플레이어가 가족 구성원들을 사용했다면, 바로 다음 라운드로 변경하는 로직을 진행한다.
-        # TODO: 라운드 변경 시 페이즈 변경 처리
-        harvest_round = [4, 7, 9, 11, 13, 14]
+        harvest_round = [3, 6, 8, 10, 12, 13]
         if self._round in harvest_round:
             self.harvest()
 
@@ -238,31 +238,47 @@ class Game(Base):
     def harvest(self) -> None:
         for player in self._players:
             fields = player.get("fields")
+            player_resource = player.get("resource")
             # 농장 단계
-            for field in fields:
-                in_resource = field.get_resource()
-                if field.get("field_type") == FieldType.FARM and field.get("is_in").get(in_resource) > 0:
-                    field.get("is_in").set(in_resource, field.get("is_in").get(in_resource) - 1)
-                    player.get("resource").set(in_resource, player.get("resource").get(in_resource) + 1)
+            for farm in filter(lambda f: f.get('field_type') == FieldType.FARM, fields):
+                resource = farm.get_resource()
+                amount = farm.get('is_in').get(resource)
+                if amount > 0:
+                    farm.get("is_in").set(resource, amount - 1)
+                    player.get("resource").set(resource, player_resource.get(resource) + 1)
 
             # 가족 먹여살리기 단계 - 음식 지불
-            cost = player.get("resource").get("family") * 2
-            if player.get("resource").get("food") > cost:
-                player.get("resource").set("food", player.get("resource").get("food") - cost)
+            player_food = player_resource.get('food')
+            player_family = player_resource.get('family')
+            cost = player_family * 2
+            if player_food > cost:
+                player_resource.set("food", player_food - cost)
+
             # 가족 먹여살리기 단계 - 음식이 부족한 경우
             else:
-                player.get("resource").set("begging", player.get("resource").get("begging")
-                                           + (cost - player.get("resource").get("food")))
-                player.get("resource").set("food", 0)
+                player_resource.set(
+                    "begging",
+                    player_resource.get("begging") + (cost - player_food)
+                )
+                player_resource.set("food", 0)
 
             # 번식 단계
-            animals = ['sheep', 'boar', 'cattle']
+            animals = ['cattle', 'boar', 'sheep']
+            MAX_BREED = 1
             for animal in animals:
-                # 플레이어 리소스에 추가
-                if player.get("resource").get(animal) > 1:
-                    player.get("resource").set(animal, player.get("resource").get(animal) + 1)
-                    # 플레이어 필드에 추가
-                    for field in fields:
-                        if field.get_resource() == animal:
-                            field.add_resource(animal, 1)
-                            break
+                # 1차 validation: 번식 가능한지 여부 확인
+                if player_resource.get(animal) < 2:
+                    continue
+
+                # 2차 validation: 번식 가능한 공간이 있는지 여부 확인
+                available = list(filter(
+                    lambda f: f.get('is_barn') or f.get('field_type') == FieldType.CAGE,
+                    player.get('fields')
+                ))
+                while available:
+                    # TODO: 좆같은 코드 바꿔야함
+                    field: Field = available[0]
+                    if field.place_or_none(animal, MAX_BREED):
+                        player_resource.set(animal, player_resource.get(animal) + MAX_BREED)
+                        break
+                    available = available[1:]

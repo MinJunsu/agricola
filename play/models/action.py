@@ -64,7 +64,7 @@ class Action(Base):
         if player.get("resource").get(resource) < amount:
             raise Exception("자원이 부족합니다.")
         player.get("resource").set(resource, player.get("resource").get(resource) - amount)
-        common_resource.get("resource").set(resource, common_resource.get("resource").get(resource) + amount)
+        common_resource.set(resource, common_resource.get(resource) + amount)
         return True
 
     # 플레이어에게 행동칸에 존재하는 자원을 추가한다.

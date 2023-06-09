@@ -85,7 +85,7 @@ INITIAL_PLAYER_RESOURCE = {
     'boar': 15,
     'cattle': 13,
     'food': 76,
-    "family": 2,
+    "family": 1,
     "room": 2
 }
 
@@ -274,7 +274,7 @@ INITIAL_ROUND_CARDS = {
         {
             'card_number': "ACTION_04",
             'is_stacked': True,
-            'count': 1,
+            'count': 2,
             'resource': {
                 'sheep': 0,
             }
