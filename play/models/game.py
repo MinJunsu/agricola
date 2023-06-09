@@ -5,7 +5,6 @@ from asgiref.sync import sync_to_async
 
 from core.const import FIRST_CHANGE_CARD_NUMBER, LAST_TURN
 from core.const import NO_USER
-from core.functions import find_object_or_raise_exception
 from core.models import Base
 from core.redis import connection
 from play.enum import CommandType, FieldType
@@ -119,10 +118,10 @@ class Game(Base):
 
         # FIXME: TEST 환경에서만 주석 처리
         # 오픈되지 않은 라운드 카드에 접근하려하면 에러를 발생시킴.
-        round_card = find_object_or_raise_exception(
-            array=self._round_cards,
-            key="card_number", value=card_number
-        )
+        # round_card = find_object_or_raise_exception(
+        #     array=self._round_cards,
+        #     key="card_number", value=card_number
+        # )
 
         # TODO: 라운드 카드 이펙트 적용과 행동 명령 처리 순서 확인 -> 이펙트 처리가 먼저라면 round_card 예외 처리 추가해주어야함.
         # 플레이어의 행동 명령을 받아서 처리한다.

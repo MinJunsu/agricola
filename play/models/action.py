@@ -57,12 +57,14 @@ class Action(Base):
     @staticmethod
     def require(
             player: Player,
+            common_resource: Resource,
             resource: str,
             amount: int
     ) -> bool:
         if player.get("resource").get(resource) < amount:
             raise Exception("자원이 부족합니다.")
         player.get("resource").set(resource, player.get("resource").get(resource) - amount)
+        common_resource.get("resource").set(resource, common_resource.get("resource").get(resource) + amount)
         return True
 
     # 플레이어에게 행동칸에 존재하는 자원을 추가한다.
@@ -118,8 +120,27 @@ class Action(Base):
             raise Exception('동물을 배치할 수 있는 공간이 아닙니다.')
 
         # TODO: 동물 배치 개수를 확인하여 가능한지 여부를 확인한다.
+        limit_animal_count = 0
+        if field.get("is_barn") and field.get("field_type") == FieldType.CAGE:
+            limit_animal_count = 4
+        elif field.get("field_type") == FieldType.CAGE:
+            limit_animal_count = 2
+        elif field.get("is_barn"):
+            limit_animal_count = 1
 
+        # 선택한 위치에 다른 동물이 존재하거나 동물 배치 개수를 초과한 경우
         for resource, amount in round_card.get('resource').items():
+            if (resource == "sheep" and (
+                    field.get("is_in").get("boar") > 0 or field.get("is_in").get("cattle") > 0)) or \
+                    (resource == "boar" and (
+                            field.get("is_in").get("sheep") > 0 or field.get("is_in").get("cattle") > 0)) or \
+                    (resource == "cattle" and (
+                            field.get("is_in").get("sheep") > 0 or field.get("is_in").get("boar") > 0)):
+                raise Exception('해당 위치에 다른 동물이 존재합니다.')
+
+            if field.get("is_in").get(resource) + amount > limit_animal_count:
+                raise Exception('동물 배치 개수를 초과하였습니다.')
+
             remain = field.get('is_in').get(resource)
             field.get('is_in').set(resource, remain + amount)
 
@@ -135,6 +156,7 @@ class Action(Base):
     def submit_card(
             cls,
             player: Player,
+            common_resource: Resource,
             primary_cards: List[PrimaryCard],
             round_cards: List[RoundCard],
             round_card: RoundCard,
@@ -178,7 +200,7 @@ class Action(Base):
             cost = 0 if card_count == 0 else 1 if round_card.get('card_number') == 'BASE_11' else 2
 
             # 5. 플레이어가 직업 카드를 내기 위해 소모되는 자원이 있는지 확인한다. (require)
-            cls.require(player=player, resource='food', amount=cost)
+            cls.require(player=player, common_resource=common_resource, resource='food', amount=cost)
 
             # 6. 플레이어에 선택한 직업 카드의 is_use 속성을 True로 변경하고, 카드 효과를 실행한다.
 
@@ -250,7 +272,7 @@ class Action(Base):
         for resource, count in resources.items():
             ratio = RESOURCE_CONVERT_FUNCTION[card_number][command.value][resource]
             # 1. validate 처리 (플레이어가 자원을 가져갈 수 있는지)
-            cls.require(player, resource, count)
+            cls.require(player, common_resource=common_resource, resource=resource, amount=count)
             if common_resource.get(TARGET) < count * ratio:
                 raise Exception("공용 자원이 부족합니다.")
             # 2. 자원 변경 처리
@@ -263,6 +285,7 @@ class Action(Base):
             is_quick: bool,
             player: Player,
             turn: int,
+            common_resource: Resource,
             primary_cards: List[PrimaryCard],
             round_cards: List[RoundCard],
             round_card: RoundCard,
@@ -300,9 +323,8 @@ class Action(Base):
         # 만약 급한 가족 늘리기 행동이었다면 보조 설비 카드 추가해주기
         if not is_quick:
             cls.submit_card(
-                player=player, turn=turn, round_card=round_card, card_type='FAC',
-                round_cards=round_cards, used_round=used_round, additional=additional,
-                primary_cards=primary_cards
+                player=player, turn=turn, common_resource=common_resource, round_card=round_card, card_type='FAC',
+                round_cards=round_cards, used_round=used_round, additional=additional, primary_cards=primary_cards
             )
         return True
 
@@ -328,29 +350,29 @@ class Action(Base):
 
         # 아래 4가지 변수들의 input 값이 정상적인지 확인
         animal: str = additional.get("animal", None)
-        count: int = additional.get("count", None)
-        departure: int = additional.get("departure", None)
-        arrival: int = additional.get("arrival", None)
+        position: List[int] = additional.get("position", None)
+        departure: int = position[0]
+        arrival: int = position[1]
 
-        if animal is None or count is None or departure is None or arrival is None:
+        if animal is None or departure is None or arrival is None:
             raise Exception("입력값이 잘못되었습니다.")
 
         departure_field: Field = find_object_or_raise_exception(array=fields, key="position", value=departure)
         arrival_field: Field = find_object_or_raise_exception(array=fields, key="position", value=arrival)
 
         # 동물이 아닌 자원을 이동시킬 수는 없다.
-        if additional.get("animal") != "sheep" or "boar" or "cattle":
-            raise Exception("동물이 아닌 자원을 이동시킬 수는 없습니다.")
+        # if additional.get("animal") != "sheep" or "boar" or "cattle":
+        #     raise Exception("동물이 아닌 자원을 이동시킬 수는 없습니다.")
 
         # 출발지와 목적지가 울타리가 아닐 수 없다.
         if player.get("fields")[departure - 1].get("field_type") != FieldType.CAGE or \
                 player.get("fields")[arrival - 1].get("field_type") != FieldType.CAGE:
             raise Exception("선택한 농지가 울타리가 아닙니다.")
 
-        if departure_field.get("animal").get(animal) < count:
+        if departure_field.get("animal").get(animal) < 1:
             raise Exception("출발지에 해당하는 동물이 충분하지 않습니다.")
 
-        departure_field.move(arrival=arrival_field, animal=animal, count=count)
+        departure_field.move(arrival=arrival_field, animal=animal, count=1)
 
         return False
 
@@ -363,7 +385,6 @@ class Action(Base):
             cls,
             player: Player,
             common_resource: Resource,
-            round_card: RoundCard,
             additional: dict
     ):
         # 밭 일구기
@@ -400,6 +421,8 @@ class Action(Base):
         sow_position = additional.get("sow_position", None)
         seed = additional.get("seed", None)
 
+        print(position, sow_position, seed)
+
         if position is not None:
             # Additional Type
             # additional: position: int
@@ -432,6 +455,7 @@ class Action(Base):
     def build_room(
             cls,
             player: Player,
+            common_resource: Resource,
             additional: dict,
     ):
         # 농장 확장 카드
@@ -471,7 +495,12 @@ class Action(Base):
 
             resources = ROOM_CREATE_FUNCTION[player.get('house_type')]
             for resource, amount in resources.items():
-                cls.require(player_clone, resource, amount * len(positions))
+                cls.require(
+                    player=player_clone,
+                    common_resource=common_resource,
+                    resource=resource,
+                    amount=amount * len(positions)
+                )
 
             # 플레이어 필드에 방 추가
             for index in positions:
@@ -482,7 +511,7 @@ class Action(Base):
             player.set("resource", player_clone.get("resource"))
 
         if barn_position is not None:
-            cls.create_barn(player=player, additional={
+            cls.create_barn(player=player, common_resource=common_resource, additional={
                 'position': barn_position
             })
 
@@ -551,8 +580,7 @@ class Action(Base):
                 raise Exception("이미 사용중인 밭입니다.")
 
             remain_common_resource = min(common_resource.get(seed), seed_count)
-            cls.require(player, seed, 1)
-            common_resource.set(seed, common_resource.get(seed) - remain_common_resource)
+            cls.require(player, common_resource, seed, 1)
 
             # 씨 뿌리기
             if seed == "grain":
@@ -575,7 +603,8 @@ class Action(Base):
     def upgrade_house(
             cls,
             player: Player,
-            primary_cards: List[Card],
+            common_resource: Resource,
+            primary_cards: List[PrimaryCard],
             round_cards: List[RoundCard],
             round_card: RoundCard,
             turn: int,
@@ -626,7 +655,12 @@ class Action(Base):
             raise Exception("이미 최고급 집입니다.")
 
         for resource, count in resources.items():
-            cls.require(player_clone, resource, count * player_room_count)
+            cls.require(
+                player=player_clone,
+                common_resource=common_resource,
+                resource=resource,
+                amount=(count * player_room_count)
+            )
 
         player.set('resource', player_clone.get('resource'))
 
@@ -640,6 +674,7 @@ class Action(Base):
             cls.submit_card(
                 player=player,
                 turn=turn,
+                common_resource=common_resource,
                 round_card=round_card,
                 round_cards=round_cards,
                 used_round=used_round,
@@ -692,6 +727,7 @@ class Action(Base):
     def create_barn(
             cls,
             player: Player,
+            common_resource: Resource,
             additional: dict
     ):
         position: int = additional.get("position", None)
@@ -705,7 +741,7 @@ class Action(Base):
         if player_clone.get("fields")[position].get("is_barn"):
             raise Exception("이미 외양간이 설치되어있습니다.")
 
-        cls.require(player_clone, 'wood', 2)
+        cls.require(player=player_clone, common_resource=common_resource, resource='wood', amount=2)
         player_clone.get("fields")[position].set("is_barn", True)
 
         # 플레이어 자원 수정을 위한 트랜잭션 처리
