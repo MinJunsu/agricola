@@ -417,7 +417,7 @@ class Action(Base):
                 player=player,
                 common_resource=common_resource,
                 additional={
-                    'position': sow_position,
+                    'sow_position': sow_position,
                     'seed': seed
                 }
             )
@@ -454,7 +454,7 @@ class Action(Base):
         #     }
         # }
         positions = additional.get('positions', None)
-        barn_position = additional.get("barn_position", None)
+        barn_position = additional.get("barn_positions", None)
 
         if positions is not None:
             player_clone = Player.from_dict(**player.to_dict())
@@ -483,7 +483,7 @@ class Action(Base):
 
         if barn_position is not None:
             cls.create_barn(player=player, additional={
-                'position': barn_position
+                'barn_positions': barn_position
             })
 
         return True
@@ -528,7 +528,7 @@ class Action(Base):
         #         'is_bake': True
         #     }
         # }
-        position: int = additional.get("position", None)
+        position: int = additional.get("sow_position", None)
         seed: str = additional.get("seed", None)
         seed_count = 2 if seed == 'grain' else 1
         is_bake: bool = additional.get("is_bake", False)
@@ -575,7 +575,7 @@ class Action(Base):
     def upgrade_house(
             cls,
             player: Player,
-            primary_cards: List[Card],
+            primary_cards: List[PrimaryCard],
             round_cards: List[RoundCard],
             round_card: RoundCard,
             turn: int,
@@ -694,19 +694,19 @@ class Action(Base):
             player: Player,
             additional: dict
     ):
-        position: int = additional.get("position", None)
+        positions: List[int] = additional.get("barn_positions", None)
 
-        if position is None:
+        if positions is None:
             raise Exception("어디에 설치할지 알려주세요.")
 
         # 플레이어 자원 수정을 위한 트랜잭션 처리
         player_clone = Player.from_dict(**player.to_dict())
 
-        if player_clone.get("fields")[position].get("is_barn"):
-            raise Exception("이미 외양간이 설치되어있습니다.")
-
-        cls.require(player_clone, 'wood', 2)
-        player_clone.get("fields")[position].set("is_barn", True)
+        for position in positions:
+            if player_clone.get("fields")[position].get("is_barn"):
+                raise Exception("이미 외양간이 설치되어있습니다.")
+            cls.require(player_clone, 'wood', 2)
+            player_clone.get("fields")[position].set("is_barn", True)
 
         # 플레이어 자원 수정을 위한 트랜잭션 처리
         player.set("fields", player_clone.get("fields"))

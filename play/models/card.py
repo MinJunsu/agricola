@@ -63,7 +63,8 @@ class Card(Base):
             round_card_number: str,
             card_number: str,
             round_cards: List[RoundCard],
-            now_round: int
+            now_round: int,
+            is_round_start: bool
     ):
         redis = connection()
 
@@ -71,6 +72,14 @@ class Card(Base):
             if self._card_number in redis.hkeys('cards:effects:action'):
                 command = redis.hget(f'cards:{self._card_number}', 'action')
                 condition = redis.hget('cards:effects:action', self._card_number)
+                if eval(condition):
+                    eval(command)
+
+        if is_round_start and "round" in redis.hkeys(f'cards:{self._card_number}'):
+            if self._card_number in redis.hkeys('cards:effects:round'):
+                command = redis.hget(f'cards:{self._card_number}', 'round')
+                condition = redis.hget('cards:effects:round', self._card_number)
+
                 if eval(condition):
                     eval(command)
         return None

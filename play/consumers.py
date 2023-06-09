@@ -44,7 +44,6 @@ class GameConsumer(AsyncJsonWebsocketConsumer):
 
     async def receive_json(self, content, **kwargs):
         data = self.redis.get(f"game_{self.id}")
-
         game = Game.from_dict(**eval(data))
         try:
             played_data = game.play(content)
@@ -60,11 +59,11 @@ class GameConsumer(AsyncJsonWebsocketConsumer):
                 is_success=False,
                 error=str(e)
             ))
-        except Exception as e:
-            return await self.send_json(socket_response(
-                is_success=False,
-                error=str(e)
-            ))
+        # except Exception as e:
+        #     return await self.send_json(socket_response(
+        #         is_success=False,
+        #         error=str(e)
+        #     ))
 
         change = []
 
