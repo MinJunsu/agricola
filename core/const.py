@@ -1,5 +1,7 @@
 from play.enum import HouseType
 
+# TODO: 빵굽기
+
 RESOURCE_SCORE_BOARD = {
     'grain': {
         0: -1,
@@ -95,6 +97,21 @@ ROOM_UPGRADE_FUNCTION = {
     HouseType.CLAY_HOUSE: {
         'reed': 1,
         'stone': 1,
+    }
+}
+
+ROOM_CREATE_FUNCTION = {
+    HouseType.WOOD_HOUSE: {
+        'wood': 5,
+        'reed': 2
+    },
+    HouseType.CLAY_HOUSE: {
+        'clay': 5,
+        'reed': 2,
+    },
+    HouseType.STONE_HOUSE: {
+        'stone': 5,
+        'reed': 2
     }
 }
 

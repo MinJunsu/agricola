@@ -7,7 +7,7 @@ from core.const import FIRST_CHANGE_CARD_NUMBER, LAST_TURN
 from core.const import NO_USER
 from core.models import Base
 from core.redis import connection
-from play.enum import CommandType
+from play.enum import CommandType, FieldType
 from play.exception import IsNotPlayerTurnException
 from play.models.action import Action
 from play.models.card import Card
@@ -38,7 +38,7 @@ class Game(Base):
             self,
             first: int = 0,
             turn: int = 0,
-            round: int = 0,
+            round: int = 4,
             phase: int = 0,
             common_resources: dict = None,
             players: List[dict] = None,
@@ -112,12 +112,25 @@ class Game(Base):
         command = CommandType(command)
         worked = len(list(filter(lambda p: p.get('player') is not None, self.action_cards)))
 
-        # TODO
-        # 직업 카드 및 보조 설비 카드에서 제공하는 특정한 이펙트를 적용시킴.
-
         # 턴에 맞지 않는 플레이어가 행동을 하려고 할 때 에러를 발생시킴.
         if player != self._turn:
             raise IsNotPlayerTurnException
+
+        # FIXME: TEST 환경에서만 주석 처리
+        # 오픈되지 않은 라운드 카드에 접근하려하면 에러를 발생시킴.
+        # round_card = find_object_or_raise_exception(
+        #     array=self._round_cards,
+        #     key="card_number", value=card_number
+        # )
+
+        # TODO: 라운드 카드 이펙트 적용과 행동 명령 처리 순서 확인 -> 이펙트 처리가 먼저라면 round_card 예외 처리 추가해주어야함.
+        # 플레이어의 행동 명령을 받아서 처리한다.
+        is_done = Action.run(
+            command=command, card_number=card_number, players=self._players,
+            action_cards=self.action_cards, turn=self._turn, common_resource=self._common_resources,
+            additional=additional, used_round=self._round, round_cards=self._round_cards,
+            primary_cards=self._primary_cards
+        )
 
         # 플레이어에 존재하는 라운드 카드들에 적용하는 카드 이펙트들을 적용한다.
         for p in self._players:
@@ -131,13 +144,6 @@ class Game(Base):
                 now_round=self._round
             ) for c in used_cards]
 
-        # 플레이어의 행동 명령을 받아서 처리한다.
-        is_done = Action.run(
-            command=command, card_number=card_number, players=self._players,
-            action_cards=self.action_cards, turn=self._turn, common_resource=self._common_resources,
-            additional=additional, used_round=self._round, round_cards=self._round_cards
-        )
-
         # 만약 선을 번경하는 카드를 낸 경우 게임의 선을 변경
         if card_number == FIRST_CHANGE_CARD_NUMBER:
             self._first = self._turn
@@ -145,6 +151,7 @@ class Game(Base):
         # 게임의 정보를 바탕으로 게임의 턴을 변경
         self.change_turn_and_round_and_phase(is_done=is_done, total_worked=worked)
 
+        # 직업 카드 및 보조 설비 카드에서 제공하는 특정한 이펙트를 적용시킴.
         # 라운드 카드에 존재하는 카드 이펙트들을 전체적으로 적용한다.
         for player_index, resources in self._round_cards[self._round].get('additional_action').items():
             for resource, count in resources.items():
@@ -158,7 +165,8 @@ class Game(Base):
 
     def increment_resource(self) -> None:
         # FIXME: 라운드 카드 누적 행동칸 처리 시 수정
-        opend_round_cards = self._round_cards[:self._round + 1]
+        opend_round_cards = self._round_cards
+        # opend_round_cards = self._round_cards[:self._round + 1]
         stacked_cards = filter(lambda c: c.get('is_stacked'), [*self._base_cards, *opend_round_cards])
         for card in stacked_cards:
             # 리소스 dict 으로부터 특정한 리소스 키를 가져옴.
@@ -204,6 +212,10 @@ class Game(Base):
 
         # 만약, 게임 판에 존재하는 모든 플레이어가 가족 구성원들을 사용했다면, 바로 다음 라운드로 변경하는 로직을 진행한다.
         # TODO: 라운드 변경 시 페이즈 변경 처리
+        harvest_round = [4, 7, 9, 11, 13, 14]
+        if self._round in harvest_round:
+            self.harvest()
+
         self._round = self._round + 1
         self._turn = self._first
 
@@ -217,3 +229,35 @@ class Game(Base):
     def get_cards(card_type: str):
         from cards.models import Card
         return list(Card.objects.filter(card_type=card_type).values_list('card_number', flat=True))
+
+    def harvest(self) -> None:
+        for player in self._players:
+            fields = player.get("fields")
+            # 농장 단계
+            for field in fields:
+                in_resource = field.get_resource()
+                if field.get("field_type") == FieldType.FARM and field.get("is_in").get(in_resource) > 0:
+                    field.get("is_in").set(in_resource, field.get("is_in").get(in_resource) - 1)
+                    player.get("resource").set(in_resource, player.get("resource").get(in_resource) + 1)
+
+            # 가족 먹여살리기 단계 - 음식 지불
+            cost = player.get("resource").get("family") * 2
+            if player.get("resource").get("food") > cost:
+                player.get("resource").set("food", player.get("resource").get("food") - cost)
+            # 가족 먹여살리기 단계 - 음식이 부족한 경우
+            else:
+                player.get("resource").set("begging", player.get("resource").get("begging")
+                                           + (cost - player.get("resource").get("food")))
+                player.get("resource").set("food", 0)
+
+            # 번식 단계
+            animals = ['sheep', 'boar', 'cattle']
+            for animal in animals:
+                # 플레이어 리소스에 추가
+                if player.get("resource").get(animal) > 1:
+                    player.get("resource").set(animal, player.get("resource").get(animal) + 1)
+                    # 플레이어 필드에 추가
+                    for field in fields:
+                        if field.get_resource() == animal:
+                            field.add_resource(animal, 1)
+                            break

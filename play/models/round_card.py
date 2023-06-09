@@ -51,9 +51,6 @@ class RoundCard(Base):
             round_cards.extend([cls(**card) for card in cards])
         return round_cards
 
-    def create_cage(self, player, position):
-        pass
-
     def add_addtional_action(
             self,
             player_id: int,

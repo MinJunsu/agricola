@@ -14,16 +14,19 @@ class Field(Base):
     _field_type: FieldType
     _position: int
     _is_in: FieldResource
+    _is_barn: bool
 
     def __init__(
             self,
             field_type: FieldType,
             position: int,
             is_in: dict | None = None,
+            is_barn: bool = False
     ):
         self._field_type = field_type
         self._position = position
         self._is_in = FieldResource.from_dict(**is_in) if is_in else FieldResource()
+        self._is_barn = is_barn
 
     @classmethod
     def initialize(cls) -> 'List[Field]':
@@ -83,6 +86,7 @@ class Field(Base):
             "field_type": self._field_type.value,
             "position": self._position,
             "is_in": self._is_in.to_dict(),
+            "is_barn": self._is_barn
         }
 
     @classmethod
@@ -90,3 +94,9 @@ class Field(Base):
         field_type = kwargs.pop("field_type")
         kwargs["field_type"] = FieldType(field_type)
         return super().from_dict(**kwargs)
+
+    def get_resource(self) -> str:
+        for resource, count in self._is_in.to_dict().items():
+            if count != 0:
+                return resource
+        return ""
