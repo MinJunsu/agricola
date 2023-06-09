@@ -61,6 +61,7 @@ class Player(Base):
             return done
         return not_done
 
+    # 수확단계 수행
     def harvest(self):
         pass
 

@@ -94,3 +94,9 @@ class Field(Base):
         field_type = kwargs.pop("field_type")
         kwargs["field_type"] = FieldType(field_type)
         return super().from_dict(**kwargs)
+
+    def get_resource(self) -> str:
+        for resource, count in self._is_in.to_dict().items():
+            if count != 0:
+                return resource
+        return ""
