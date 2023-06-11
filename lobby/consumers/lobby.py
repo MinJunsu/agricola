@@ -54,6 +54,8 @@ class LobbyConsumer(BaseLobbyConsumer):
     async def receive_json(self, content, **kwargs):
         command, user_id, room_id, options = await self.parse_command(content)
         user: str = str(user_id)
+        room: Room | None = None
+        is_start: bool = False
 
         # 유저 정보가 잘못 될 경우 처리
         if user == "-1":
@@ -139,30 +141,7 @@ class LobbyConsumer(BaseLobbyConsumer):
             if len(room.get('participants')) == 4:
                 new_game = await Game.initialize(room.get('participants'))
                 self.redis.set(f"game:{room.get('room_id')}", str(new_game.to_dict()))
-
-                await self.channel_layer.group_send(
-                    f"room_{room_id}",
-                    {
-                        "type": "message",
-                        "message": socket_response(
-                            is_success=True,
-                            data={
-                                "type": "start",
-                                "result": {
-                                    "rood_id": room.get('room_id'),
-                                    "participants": str(room.get('participants')),
-                                }
-                            }
-                        ),
-                    }
-                )
-
-                # 게임과 관련된 모든 정보 삭제
-                self.redis.hdel("rooms", room_id)
-                [self.redis.hdel("rooms:participants", user_id) for particitant in room.get('participants')]
-                [self.redis.hdel("lobby:watch:participants", user_id) for particitant in room.get('participants')]
-
-                return await self.send_message_to_lobby()
+                is_start = True
 
         elif command == RoomCommand.EXIT:
             if str(user_id) not in self.redis.hkeys(f"rooms:participants"):
@@ -197,6 +176,14 @@ class LobbyConsumer(BaseLobbyConsumer):
 
         if command == RoomCommand.ENTER or command == RoomCommand.EXIT:
             await self.send_message_to_room(room_id)
+
+        if is_start:
+            await self.send_message_to_gamestart(room)
+
+            # 게임과 관련된 모든 정보 삭제
+            self.redis.hdel("rooms", room_id)
+            [self.redis.hdel("rooms:participants", particitant) for particitant in room.get('participants')]
+            [self.redis.hdel("lobby:watch:participants", particitant) for particitant in room.get('participants')]
 
     @staticmethod
     async def parse_command(content: dict) -> tuple[RoomCommand, int, int, dict]:
@@ -234,6 +221,23 @@ class LobbyConsumer(BaseLobbyConsumer):
                         "result": self.rooms_with_participant,
                     },
                 )
+            }
+        )
+
+    async def send_message_to_gamestart(self, room: Room):
+        return await self.channel_layer.group_send(
+            f"room_{room.get('room_id')}",
+            {
+                "type": "message",
+                "message": socket_response(
+                    is_success=True,
+                    data={
+                        "type": "start",
+                        "result": {
+                            "participants": room.get('participants'),
+                        }
+                    }
+                ),
             }
         )
 
