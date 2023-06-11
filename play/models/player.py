@@ -1,31 +1,12 @@
 from functools import reduce
 from typing import List
-
 from core.const import FIELD_SCORE_BOARD
+
 from core.models import Base
 from play.enum import HouseType
 from play.models.card import Card
 from play.models.field import Field, FieldType
 from play.models.resource import Resource
-
-FIELD_SCORE_BOARD = {
-    'farm': {
-        0: -1,
-        1: -1,
-        2: 1,
-        3: 2,
-        4: 3,
-        5: 4,
-    },
-    'cage': {
-        0: -1,
-        1: 1,
-        2: 2,
-        3: 3,
-        4: 4,
-        5: 4,
-    },
-}
 
 
 class Player(Base):
@@ -42,14 +23,14 @@ class Player(Base):
             name: str = "",
             resource: dict = None,
             fields: List[dict] = None,
-            house_type: HouseType = HouseType.STONE_HOUSE,
+            house_type: HouseType = HouseType.WOOD_HOUSE,
             fences: dict = None,
             cards: List[dict] = None,
     ):
         self._name = name
         self._resource = Resource.from_dict(**resource) if resource else Resource.initialize_player_resource()
         self._fields = [Field.from_dict(**field) for field in fields] if fields else Field.initialize()
-        self._house_type = house_type
+        self._house_type = HouseType.CLAY_HOUSE
         self._fences = fences if fences else None
         self._cards = [Card.from_dict(**card) for card in cards] if cards else []
 
@@ -63,6 +44,10 @@ class Player(Base):
             return done
         return not_done
 
+    # 수확단계 수행
+    def harvest(self):
+        pass
+
     def change_field_is_in(self, position: List[int], resource: str, count: int) -> bool:
         field = list(filter(lambda x: x.position == position, self._fields))[-1]
         if field.get("field_type") == FieldType.FARM:
@@ -75,96 +60,64 @@ class Player(Base):
             elif resource == "vegetable":
                 field.get("is_in").set("vegetable", count)
             return True
-        return False
+
+        # elif field.get("field_type") == FieldType.CAGE:
 
     def calculate_card_score(self) -> dict:
-        return {
-            card.get("card_number"): card.get("score")
-            for card in self._cards if card.get("score") != 0 and card.get("is_used")
-        }
+        dictionary = dict()
+        for card in self._cards:
+            if card.get("score") != 0 and card.get("is_used"):
+                dict[card.get("card_number")] = card.get("score")
+        return dictionary
 
-    def calculate_field_score(self) -> int:
-        score = 0
+    def inform_player_field(self) -> dict:
         farm = 0
         cage = 0
-
-        for field in self._fields:
-            if field.field_type == FieldType.ROOM:
-                if self._roomtype == "clay":
-                    score += 1
-                elif self._roomtype == "stone":
-                    score += 2
-            elif field.field_type == FieldType.EMPTY:
-                if "cowshed" not in field.is_in:
-                    score -= 1
-            elif field.field_type == FieldType.CAGE:
-                if "cowshed" in field.is_in:
-                    score += 1
-                    cage += 1
-            elif field.field_type == FieldType.FARM:
-                farm += 1
-
-        keys = FIELD_SCORE_BOARD.keys()
-        for key in keys:
-            score += FIELD_SCORE_BOARD[key][min(self.get(key), 5)]
-
-        return score
-
-    def calculate_score(self) -> int:
-        card_score = self.calculate_card_score()
-        field_score = self.calculate_field_score()
-        resource_score = self._resource.calculate_score()
-
-        # 점수 계산 로직
-        # reduce(lambda acc, x: acc + x[1], dic.items(), 0)
-
-        # total_score = card_score + field_score + resource_score
         clay_room = 0
         stone_room = 0
         cage_barn = 0
         empty = 0
-        cage = 0
-        farm = 0
-
+                
         for field in self._fields:
-            if field.get('field_type') == FieldType.EMPTY:
+            if field.field_type == FieldType.EMPTY:
                 if not field.get("is_barn"):
                     empty += 1
-            elif field.get('field_type') == FieldType.CAGE:
+            elif field.field_type == FieldType.CAGE:
                 cage += 1
                 if field.get("is_barn"):
                     cage_barn += 1
-            elif field.get('field_type') == FieldType.FARM:
+            elif field.field_type == FieldType.FARM:
                 farm += 1
-            elif field.get('field_type') == FieldType.ROOM:
+            elif field.field_type == FieldType.ROOM:
                 if self._house_type == HouseType.CLAY_HOUSE:
                     clay_room += 1
                 elif self._house_type == HouseType.STONE_HOUSE:
                     stone_room += 1
 
-        dictionary = {'farm': farm, 'cage': cage, 'clay_room': clay_room, 'stone_room': stone_room,
-                      'cage_barn': cage_barn, 'empty': empty}
+        dictionary = {'farm': farm, 'cage': cage, 'clay_room': clay_room, 'stone_room': stone_room, 'cage_barn': cage_barn, 'empty': empty}
         return dictionary
-
+    
     def calculate_field_score(self) -> dict:
+
         dictionary = dict()
-        key_dic = self.inform_player_field()
+        key_dic = self.inform_player_field(self)
         keys = FIELD_SCORE_BOARD.keys()
         for key in keys:
-            dictionary[key] = FIELD_SCORE_BOARD[key][key_dic[key]]
-
+            dictionary[key] = FIELD_SCORE_BOARD[key][key_dic.get(key)]
+            
         return dictionary
 
     def calculate_score(self) -> dict:
-        card_score = self.calculate_card_score()
-        field_score = self.calculate_field_score()
-        resource_score = self.get("resource").calculate_score()
-
+        card_score = self.calculate_card_score(self)
+        field_score = self.calculate_field_score(self)
+        resource_score = self.get("resource").calculate_score(self)
+        
         sum_score = dict(**card_score, **field_score, **resource_score)
-
+        
         # 점수 계산 로직
         score = reduce(lambda acc, x: acc + x[1], sum_score.items(), 0)
         result = {**sum_score, 'sum': score}
+        print(result)
         return result
 
     def to_dict(self) -> dict:
