@@ -36,7 +36,7 @@ class Field(Base):
             if i == 14 or i == 15:
                 fields.append(
                     cls(field_type=FieldType.ROOM, position=i, is_in=FieldResource.initialize_player().to_dict()))
-            if i == 11 or i == 12:
+            elif i == 11 or i == 12:
                 fields.append(
                     cls(field_type=FieldType.CAGE, position=i, is_in=FieldResource().to_dict()))
             else:

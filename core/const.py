@@ -60,6 +60,32 @@ RESOURCE_SCORE_BOARD = {
     },
 }
 
+FIELD_SCORE_BOARD = {
+    'farm': {
+        0: -1,
+        1: -1,
+        2: 1,
+        3: 2,
+        4: 3,
+        5: 4,
+    },
+    'cage': {
+        0: -1,
+        1: 1,
+        2: 2,
+        3: 3,
+        4: 4,
+        5: 4,
+    }
+}
+
+FIELD_SCORE_BOARD['farm'].update({key: 4 for key in range(6, 16)})
+FIELD_SCORE_BOARD['cage'].update({key: 4 for key in range(6, 16)})
+FIELD_SCORE_BOARD['clay_room'] = {key: key for key in range(0, 16)}
+FIELD_SCORE_BOARD['stone_room'] = {key: key * 2 for key in range(0, 16)}
+FIELD_SCORE_BOARD['cage_barn'] = {key: key for key in range(0, 16)}
+FIELD_SCORE_BOARD['empty'] = {key: -key for key in range(0, 16)}
+
 INITIAL_COMMON_RESOURCE = {
     'wood': 30,
     'clay': 24,

@@ -1,5 +1,7 @@
+from functools import reduce
 from typing import List
 
+from core.const import FIELD_SCORE_BOARD
 from core.models import Base
 from play.enum import HouseType
 from play.models.card import Card
@@ -40,7 +42,7 @@ class Player(Base):
             name: str = "",
             resource: dict = None,
             fields: List[dict] = None,
-            house_type: HouseType = HouseType.WOOD_HOUSE,
+            house_type: HouseType = HouseType.STONE_HOUSE,
             fences: dict = None,
             cards: List[dict] = None,
     ):
@@ -61,10 +63,6 @@ class Player(Base):
             return done
         return not_done
 
-    # 수확단계 수행
-    def harvest(self):
-        pass
-
     def change_field_is_in(self, position: List[int], resource: str, count: int) -> bool:
         field = list(filter(lambda x: x.position == position, self._fields))[-1]
         if field.get("field_type") == FieldType.FARM:
@@ -77,14 +75,13 @@ class Player(Base):
             elif resource == "vegetable":
                 field.get("is_in").set("vegetable", count)
             return True
+        return False
 
-        # elif field.get("field_type") == FieldType.CAGE:
-
-    def calculate_card_score(self) -> int:
-        score = 0
-        for card in self._card:
-            score += card.score
-        return score
+    def calculate_card_score(self) -> dict:
+        return {
+            card.get("card_number"): card.get("score")
+            for card in self._cards if card.get("score") != 0 and card.get("is_used")
+        }
 
     def calculate_field_score(self) -> int:
         score = 0
@@ -122,7 +119,53 @@ class Player(Base):
         # reduce(lambda acc, x: acc + x[1], dic.items(), 0)
 
         # total_score = card_score + field_score + resource_score
-        return 0
+        clay_room = 0
+        stone_room = 0
+        cage_barn = 0
+        empty = 0
+        cage = 0
+        farm = 0
+
+        for field in self._fields:
+            if field.get('field_type') == FieldType.EMPTY:
+                if not field.get("is_barn"):
+                    empty += 1
+            elif field.get('field_type') == FieldType.CAGE:
+                cage += 1
+                if field.get("is_barn"):
+                    cage_barn += 1
+            elif field.get('field_type') == FieldType.FARM:
+                farm += 1
+            elif field.get('field_type') == FieldType.ROOM:
+                if self._house_type == HouseType.CLAY_HOUSE:
+                    clay_room += 1
+                elif self._house_type == HouseType.STONE_HOUSE:
+                    stone_room += 1
+
+        dictionary = {'farm': farm, 'cage': cage, 'clay_room': clay_room, 'stone_room': stone_room,
+                      'cage_barn': cage_barn, 'empty': empty}
+        return dictionary
+
+    def calculate_field_score(self) -> dict:
+        dictionary = dict()
+        key_dic = self.inform_player_field()
+        keys = FIELD_SCORE_BOARD.keys()
+        for key in keys:
+            dictionary[key] = FIELD_SCORE_BOARD[key][key_dic[key]]
+
+        return dictionary
+
+    def calculate_score(self) -> dict:
+        card_score = self.calculate_card_score()
+        field_score = self.calculate_field_score()
+        resource_score = self.get("resource").calculate_score()
+
+        sum_score = dict(**card_score, **field_score, **resource_score)
+
+        # 점수 계산 로직
+        score = reduce(lambda acc, x: acc + x[1], sum_score.items(), 0)
+        result = {**sum_score, 'sum': score}
+        return result
 
     def to_dict(self) -> dict:
         dictionary = super().to_dict()

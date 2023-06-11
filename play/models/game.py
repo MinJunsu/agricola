@@ -1,4 +1,5 @@
 from functools import reduce
+from random import shuffle
 from typing import List
 
 from asgiref.sync import sync_to_async
@@ -76,22 +77,23 @@ class Game(Base):
     async def initialize(cls, players: List[str]) -> 'Game':
         redis = connection()
         cards = redis.hvals('cards')
-        # job_cards = list(filter(lambda card: "JOB" in card, cards))
-        # sub_cards = list(filter(lambda card: "SUB_FAC" in card, cards))
-        # shuffle(job_cards)
-        # shuffle(sub_cards)
-        job_cards = list(filter(lambda card: "JOB_03" in card, cards)) * 28
+        job_cards = list(filter(lambda card: "JOB" in card, cards))
         sub_cards = list(filter(lambda card: "SUB_FAC" in card, cards))
+        shuffle(job_cards)
+        shuffle(sub_cards)
+        # job_cards = list(filter(lambda card: "JOB_03" in card, cards)) * 28
+        # sub_cards = list(filter(lambda card: "SUB_FAC" in card, cards))
 
         instance = cls()
         players_instance = [Player(name=player) for player in players]
 
         for player in players_instance:
-            player_cards = job_cards[:7] + sub_cards[:7]
-            job_cards = job_cards[7:]
-            sub_cards = sub_cards[7:]
+            player_cards = sub_cards
+            # player_cards = job_cards[:7] + sub_cards[:7]
+            # job_cards = job_cards[7:]
+            # sub_cards = sub_cards[7:]
 
-            player.set("cards", [Card.from_dict(**eval(card)) for card in player_cards])
+            player.set("cards", [Card.from_dict(**{**eval(card)}) for card in player_cards])
 
         instance.set("players", players_instance)
         instance.increment_resource()
@@ -167,6 +169,10 @@ class Game(Base):
                     )
                     resources[resource] = 0
 
+        # 게임 스코어 결과 처리 확인 테스트용
+        for p in self._players:
+            print(p.calculate_score())
+
         return self.to_dict()
 
     def increment_resource(self) -> None:
@@ -210,9 +216,6 @@ class Game(Base):
             # 플레이어가 말판에 이동 시킨 가족 구성원 수 (일한 가족 구성원 수)
             player_worked = len(list(filter(lambda p: p.get('player') == self._turn, self.action_cards)))
 
-            print(player_family)
-            print(player_worked)
-
             if player_family > player_worked:
                 return
 
@@ -239,6 +242,7 @@ class Game(Base):
         for player in self._players:
             fields = player.get("fields")
             player_resource = player.get("resource")
+
             # 농장 단계
             for farm in filter(lambda f: f.get('field_type') == FieldType.FARM, fields):
                 resource = farm.get_resource()
@@ -276,9 +280,18 @@ class Game(Base):
                     player.get('fields')
                 ))
                 while available:
-                    # TODO: 좆같은 코드 바꿔야함
                     field: Field = available[0]
                     if field.place_or_none(animal, MAX_BREED):
                         player_resource.set(animal, player_resource.get(animal) + MAX_BREED)
                         break
                     available = available[1:]
+
+            # 마무리 단계 - 모든 게임이 종료된 이후 처리
+            if self._round == 13:
+                # 농장 단계
+                for farm in filter(lambda f: f.get('field_type') == FieldType.FARM, fields):
+                    resource = farm.get_resource()
+                    remain = farm.get('is_in').get(resource)
+                    if remain > 0:
+                        farm.get("is_in").set(resource, 0)
+                        player.get("resource").set(resource, player_resource.get(resource) + remain)
