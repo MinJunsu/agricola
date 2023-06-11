@@ -1,7 +1,7 @@
 from functools import reduce
 from typing import List
-from core.const import FIELD_SCORE_BOARD
 
+from core.const import FIELD_SCORE_BOARD
 from core.models import Base
 from play.enum import HouseType
 from play.models.card import Card
@@ -67,7 +67,7 @@ class Player(Base):
         dictionary = dict()
         for card in self._cards:
             if card.get("score") != 0 and card.get("is_used"):
-                dict[card.get("card_number")] = card.get("score")
+                dictionary[card.get("card_number")] = card.get("score")
         return dictionary
 
     def inform_player_field(self) -> dict:
@@ -77,7 +77,7 @@ class Player(Base):
         stone_room = 0
         cage_barn = 0
         empty = 0
-                
+
         for field in self._fields:
             if field.field_type == FieldType.EMPTY:
                 if not field.get("is_barn"):
@@ -94,30 +94,30 @@ class Player(Base):
                 elif self._house_type == HouseType.STONE_HOUSE:
                     stone_room += 1
 
-        dictionary = {'farm': farm, 'cage': cage, 'clay_room': clay_room, 'stone_room': stone_room, 'cage_barn': cage_barn, 'empty': empty}
+        dictionary = {'farm': farm, 'cage': cage, 'clay_room': clay_room, 'stone_room': stone_room,
+                      'cage_barn': cage_barn, 'empty': empty}
         return dictionary
-    
+
     def calculate_field_score(self) -> dict:
 
         dictionary = dict()
-        key_dic = self.inform_player_field(self)
+        key_dic = self.inform_player_field()
         keys = FIELD_SCORE_BOARD.keys()
         for key in keys:
             dictionary[key] = FIELD_SCORE_BOARD[key][key_dic.get(key)]
-            
+
         return dictionary
 
     def calculate_score(self) -> dict:
-        card_score = self.calculate_card_score(self)
-        field_score = self.calculate_field_score(self)
-        resource_score = self.get("resource").calculate_score(self)
-        
+        card_score = self.calculate_card_score()
+        field_score = self.calculate_field_score()
+        resource_score = self.get("resource").calculate_score()
+
         sum_score = dict(**card_score, **field_score, **resource_score)
-        
+
         # 점수 계산 로직
         score = reduce(lambda acc, x: acc + x[1], sum_score.items(), 0)
         result = {**sum_score, 'sum': score}
-        print(result)
         return result
 
     def to_dict(self) -> dict:
