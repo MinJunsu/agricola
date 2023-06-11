@@ -118,7 +118,7 @@ INITIAL_PLAYER_RESOURCE = {
     'boar': 15,
     'cattle': 13,
     'food': 76,
-    "family": 1,
+    "family": 2,
     "room": 2
 }
 

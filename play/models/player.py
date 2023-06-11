@@ -108,9 +108,9 @@ class Player(Base):
         return dictionary
 
     def calculate_score(self) -> dict:
-        card_score = self.calculate_card_score(self)
-        field_score = self.calculate_field_score(self)
-        resource_score = self.get("resource").calculate_score(self)
+        card_score = self.calculate_card_score()
+        field_score = self.calculate_field_score()
+        resource_score = self.get("resource").calculate_score()
         
         sum_score = dict(**card_score, **field_score, **resource_score)
         

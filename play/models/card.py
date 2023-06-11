@@ -27,7 +27,7 @@ class Card(Base):
         self._card_number = card_number
         self._name = name
         self._score = score
-        self._is_used = is_used
+        self._is_used = True
         self._used_round = used_round
 
     # 플레이어가 들고 있는 카드를 사용함과 동시에 라운드 카드에 특정한 이펙트를 추가해준다.
@@ -114,7 +114,8 @@ class Card(Base):
                 method=method, now_round=now_round,
                 count=count, addtional=additional
             )
-            [round_cards[r].add_addtional_action(player_id=turn, resources=resources) for r in effected_round]
+            print(effected_round)
+            # [round_cards[r].add_addtional_action(player_id=turn, resources=resources) for r in effected_round]
         pass
 
     # 조건에 상관 없이 자원을 가지고 오는 함수

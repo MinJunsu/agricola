@@ -76,7 +76,7 @@ class Action(Base):
     ) -> bool:
         player.get("resource").set(resource, player.get("resource").get(resource) + amount)
         return True
-
+ 
     # 플레이어가 이동한 행동칸에 존재하는 자원을 제거한다.
     @classmethod
     def use_round_card_resources(
@@ -222,19 +222,29 @@ class Action(Base):
                 )
             # 2. 보조설비의 조건을 확인한다.
             condition = cls.get_condition(card_number)
-
+            
             # 3. 보조설비의 비용을 확인한다.
             cost = cls.get_cost(card_number)
-
             # 4. 플레이어가 조건을 만족하는 지 확인한다.
             # 5. 플레이어가 보조설비를 내기 위해 소모되는 자원이 있는 지 확인한다. (require)
+            
             if eval(condition):
                 eval(cost)
+            else:
+                raise Exception("제출한 카드의 조건이 맞지 않아 제출할 수 없습니다.")
 
             if primary_card:
                 primary_card.set('owner', turn)
                 return True
-
+            rs = card.use(
+            player=player,
+            turn=turn,
+            round_card_number=round_card.get('card_number'),
+            card_number=card_number,
+            round_cards=round_cards,
+            now_round=used_round,
+        )
+        print(rs)
         return card.use(
             player=player,
             turn=turn,
