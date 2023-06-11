@@ -45,8 +45,8 @@ async def main():
     }) for card in cards})
     # ! 임시 코드 작성 끝
 
-    game = await Game.initialize(["1", "2", "3", "4"])
-    redis.set("game_3", str(game.to_dict()))
+    game = await Game.initialize(["3", "2", "1", "4"])
+    redis.set("game:3", str(game.to_dict()))
 
 
 if __name__ == '__main__':
