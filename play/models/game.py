@@ -170,8 +170,8 @@ class Game(Base):
                     resources[resource] = 0
 
         # 게임 스코어 결과 처리 확인 테스트용
-        for p in self._players:
-            print(p.calculate_score())
+        # for p in self._players:
+        #     print(p.calculate_score())
 
         return self.to_dict()
 
