@@ -81,17 +81,14 @@ class Game(Base):
         sub_cards = list(filter(lambda card: "SUB_FAC" in card, cards))
         shuffle(job_cards)
         shuffle(sub_cards)
-        # job_cards = list(filter(lambda card: "JOB_03" in card, cards)) * 28
-        # sub_cards = list(filter(lambda card: "SUB_FAC" in card, cards))
 
         instance = cls()
         players_instance = [Player(name=player) for player in players]
 
         for player in players_instance:
-            player_cards = sub_cards
-            # player_cards = job_cards[:7] + sub_cards[:7]
-            # job_cards = job_cards[7:]
-            # sub_cards = sub_cards[7:]
+            player_cards = job_cards[:7] + sub_cards[:7]
+            job_cards = job_cards[7:]
+            sub_cards = sub_cards[7:]
 
             player.set("cards", [Card.from_dict(**{**eval(card)}) for card in player_cards])
 
@@ -113,7 +110,6 @@ class Game(Base):
         is_done: bool = False
         command, card_number, player, additional = self.parse_command(command)
 
-        print(command, card_number, player, additional)
         command = CommandType(command)
         worked = len(list(filter(lambda p: p.get('player') is not None, self.action_cards)))
 
@@ -177,8 +173,8 @@ class Game(Base):
 
     def increment_resource(self) -> None:
         # FIXME: 라운드 카드 누적 행동칸 처리 시 수정
-        opend_round_cards = self._round_cards
-        # opend_round_cards = self._round_cards[:self._round + 1]
+        # opend_round_cards = self._round_cards
+        opend_round_cards = self._round_cards[:self._round + 1]
         stacked_cards = filter(lambda c: c.get('is_stacked'), [*self._base_cards, *opend_round_cards])
         for card in stacked_cards:
             # 리소스 dict 으로부터 특정한 리소스 키를 가져옴.

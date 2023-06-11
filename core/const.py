@@ -89,7 +89,7 @@ FIELD_SCORE_BOARD = {
 FIELD_SCORE_BOARD['farm'].update({key: 4 for key in range(6, 16)})
 FIELD_SCORE_BOARD['cage'].update({key: 4 for key in range(6, 16)})
 FIELD_SCORE_BOARD['clay_room'] = {key: key for key in range(1, 16)}
-FIELD_SCORE_BOARD['stone_room'] = {key: key*2 for key in range(1, 16)}
+FIELD_SCORE_BOARD['stone_room'] = {key: key * 2 for key in range(1, 16)}
 FIELD_SCORE_BOARD['cage_barn'] = {key: key for key in range(1, 16)}
 FIELD_SCORE_BOARD['empty'] = {key: -key for key in range(1, 16)}
 
@@ -107,20 +107,20 @@ INITIAL_COMMON_RESOURCE = {
 }
 
 # FIXME: 테스트 환경을 위해 임시로 자원 수정
-INITIAL_PLAYER_RESOURCE = {
-    'wood': 30,
-    'clay': 24,
-    'reed': 14,
-    'stone': 16,
-    'grain': 24,
-    'vegetable': 16,
-    'sheep': 18,
-    'boar': 15,
-    'cattle': 13,
-    'food': 76,
-    "family": 1,
-    "room": 2
-}
+# INITIAL_PLAYER_RESOURCE = {
+#     'wood': 30,
+#     'clay': 24,
+#     'reed': 14,
+#     'stone': 16,
+#     'grain': 24,
+#     'vegetable': 16,
+#     'sheep': 18,
+#     'boar': 15,
+#     'cattle': 13,
+#     'food': 76,
+#     "family": 1,
+#     "room": 2
+# }
 
 ROOM_UPGRADE_FUNCTION = {
     HouseType.WOOD_HOUSE: {
@@ -148,11 +148,11 @@ ROOM_CREATE_FUNCTION = {
     }
 }
 
-# INITIAL_PLAYER_RESOURCE = {
-#     "family": 2,
-#     "room": 2,
-#     "food": 3,
-# }
+INITIAL_PLAYER_RESOURCE = {
+    "family": 2,
+    "room": 2,
+    "food": 3,
+}
 
 LAST_TURN = 3
 LAST_ROUND = 14
