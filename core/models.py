@@ -1,3 +1,6 @@
+from logging import Logger
+
+
 class Base:
     """
     Base 클래스: 모든 게임 객체의 부모 클래스
@@ -8,6 +11,8 @@ class Base:
         items = self.__dict__.items()
         dictionary = dict()
         for key, value in items:
+            if isinstance(value, Logger):
+                pass
             if isinstance(value, Base):
                 dictionary[key[1:]] = value.to_dict()
             elif type(value) is list:
@@ -31,6 +36,6 @@ class Base:
 
     def remove(self, key: str):
         self.__delattr__(f'_{key}')
-        
+
     def pop(self, key: str, default=None):
         return self.__dict__.pop(f'_{key}', default)

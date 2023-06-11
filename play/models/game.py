@@ -1,3 +1,4 @@
+import logging
 from functools import reduce
 from random import shuffle
 from typing import List
@@ -35,6 +36,7 @@ class Game(Base):
     _round_cards: List[RoundCard]
     _primary_cards: List[PrimaryCard]
     _common_resources: Resource
+    logger: logging.Logger
 
     def __init__(
             self,
@@ -67,6 +69,7 @@ class Game(Base):
         ] if primary_cards else PrimaryCard.initialize_primary_cards()
         self._common_resources = Resource.from_dict(
             **common_resources) if common_resources else Resource.initialize_common_resource()
+        self.logger = logging.getLogger(__name__)
 
     @property
     def action_cards(self) -> List[RoundCard]:
@@ -90,7 +93,7 @@ class Game(Base):
             job_cards = job_cards[7:]
             sub_cards = sub_cards[7:]
 
-            player.set("cards", [Card.from_dict(**{**eval(card)}) for card in player_cards])
+            player.set("cards", [Card.from_dict(**eval(card)) for card in player_cards])
 
         instance.set("players", players_instance)
         instance.increment_resource()
@@ -109,6 +112,7 @@ class Game(Base):
         # 기본 값 설정 (is_done, command 파싱, 플레이어 행동 수)
         is_done: bool = False
         command, card_number, player, additional = self.parse_command(command)
+        self.logger.info(f"command: {command}, card_number: {card_number}, player: {player}, additional: {additional}")
 
         command = CommandType(command)
         worked = len(list(filter(lambda p: p.get('player') is not None, self.action_cards)))

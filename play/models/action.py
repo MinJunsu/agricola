@@ -1,3 +1,4 @@
+import logging
 from functools import reduce
 from typing import List, Any
 
@@ -17,6 +18,7 @@ from play.models.round_card import RoundCard
 
 class Action(Base):
     redis = connection()
+    logger: logging.Logger = logging.getLogger(__name__)
 
     @classmethod
     def run(
@@ -32,7 +34,6 @@ class Action(Base):
             primary_cards: List[PrimaryCard],
             additional: Any = None,
     ):
-
         player: Player = players[turn]
         # 데이터 저장을 위해 라운드 카드를 사용한 경우 라운드 카드 변수를 저장한다.
         round_card: RoundCard | None = None
@@ -45,7 +46,11 @@ class Action(Base):
             if round_card.get("player") is not None:
                 raise CantUseCardException
 
+        cls.logger.info("round_card: " + round_card.to_dict())
+
         card_command = cls.get_command(card_number)
+
+        cls.logger.info("command: " + card_command)
 
         # 플레이어가 라운드 카드를 선택한 경우 라운드 카드에 플레이어에 대한 정보를 넣어준다.
         if round_card:
