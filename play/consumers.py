@@ -1,3 +1,5 @@
+import logging
+
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
 from deepdiff import DeepDiff
 
@@ -10,9 +12,11 @@ from play.models.game import Game
 class GameConsumer(AsyncJsonWebsocketConsumer):
     id: int
     group_name: str
+    logger: logging.Logger
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.logger = logging.getLogger(__name__)
         self.redis = connection()
 
     async def connect(self):
@@ -49,21 +53,23 @@ class GameConsumer(AsyncJsonWebsocketConsumer):
             played_data = game.play(content)
 
         except IsNotPlayerTurnException as e:
+            self.logger.error(str(e))
             return await self.send_json(socket_response(
                 is_success=False,
                 error=str(e)
             ))
 
         except CantUseCardException as e:
+            self.logger.error(str(e))
             return await self.send_json(socket_response(
                 is_success=False,
                 error=str(e)
             ))
-        except Exception as e:
-            return await self.send_json(socket_response(
-                is_success=False,
-                error=str(e)
-            ))
+        # except Exception as e:
+        #     return await self.send_json(socket_response(
+        #         is_success=False,
+        #         error=str(e)
+        #     ))
 
         change = []
 

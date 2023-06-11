@@ -40,7 +40,7 @@ class Game(Base):
             self,
             first: int = 0,
             turn: int = 0,
-            round: int = 3,
+            round: int = 0,
             phase: int = 0,
             common_resources: dict = None,
             players: List[dict] = None,
@@ -114,7 +114,7 @@ class Game(Base):
         worked = len(list(filter(lambda p: p.get('player') is not None, self.action_cards)))
 
         # 턴에 맞지 않는 플레이어가 행동을 하려고 할 때 에러를 발생시킴.
-        if player != self._turn:
+        if player != self._turn and command != CommandType.ALWAYS:
             raise IsNotPlayerTurnException
 
         # FIXME: TEST 환경에서만 주석 처리
