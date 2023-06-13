@@ -7,7 +7,9 @@
       "card_type": "action",
       "name": "곡식 활용",
       "score": 0,
-      "command": "minus(\"vegi\", prop 1) 또는 minus(\"grain\", prop 2)"
+      "cost": null,
+      "condition": null,
+      "command": "cls.sow(player, additional)"
     }
   },
   {
@@ -18,7 +20,9 @@
       "card_type": "action",
       "name": "울타리",
       "score": 0,
-      "command": "minus(\"wood\", prop 1), plus(\"fence\", prop 2), 설치(프론트값)"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -29,7 +33,9 @@
       "card_type": "action",
       "name": "주요 설비",
       "score": 0,
-      "command": "주요/보조 선택, 선택된 주요/보조 조건 확인, 주요/보조 활성화"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -40,7 +46,9 @@
       "card_type": "action",
       "name": "양시장",
       "score": 0,
-      "command": "plus(\"sheep\", accum ), 양 배치"
+      "cost": null,
+      "condition": null,
+      "command": "cls.use_round_card_resources(player, round_card)"
     }
   },
   {
@@ -51,6 +59,8 @@
       "card_type": "action",
       "name": "서부 채석장",
       "score": 0,
+      "cost": null,
+      "condition": null,
       "command": "cls.use_round_card_resources(player, round_card)"
     }
   },
@@ -62,7 +72,9 @@
       "card_type": "action",
       "name": "집 개조",
       "score": 0,
-      "command": "minus(\"reed\",1) , minus(prop1, prop2) , 주요/보조 선택, 선택된 주요/보조 조건 확인, 주요/보조 활성화"
+      "cost": null,
+      "condition": null,
+      "command": "cls.upgrade_house(player)"
     }
   },
   {
@@ -73,7 +85,9 @@
       "card_type": "action",
       "name": "기본 가족 늘리기",
       "score": 0,
-      "command": "plus(\"family\", 1), 보조 조건 확인, 보조 활성화 ,"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -84,7 +98,9 @@
       "card_type": "action",
       "name": "돼지 시장",
       "score": 0,
-      "command": "plus(\"pig\", accum), 돼지 배치"
+      "cost": null,
+      "condition": null,
+      "command": "cls.use_round_card_resources(player, round_card)"
     }
   },
   {
@@ -95,6 +111,8 @@
       "card_type": "action",
       "name": "채소 종자",
       "score": 0,
+      "cost": null,
+      "condition": null,
       "command": "cls.use_round_card_resources(player, round_card)"
     }
   },
@@ -106,6 +124,8 @@
       "card_type": "action",
       "name": "동부 채석장",
       "score": 0,
+      "cost": null,
+      "condition": null,
       "command": "cls.use_round_card_resources(player, round_card)"
     }
   },
@@ -117,7 +137,9 @@
       "card_type": "action",
       "name": "소 시장",
       "score": 0,
-      "command": "plus(\"cow\", accum), 소 배치"
+      "cost": null,
+      "condition": null,
+      "command": "cls.use_round_card_resources(player, round_card)"
     }
   },
   {
@@ -128,7 +150,9 @@
       "card_type": "action",
       "name": "밭 농사",
       "score": 0,
-      "command": "plus(\"field\", 1), 밭 배치"
+      "cost": null,
+      "condition": null,
+      "command": "cls.plow_field(player, round_card, additional)"
     }
   },
   {
@@ -139,7 +163,9 @@
       "card_type": "action",
       "name": "급한 가족 늘리기",
       "score": 0,
-      "command": "plus(\"family\", 1)"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -150,7 +176,9 @@
       "card_type": "action",
       "name": "농장 개조",
       "score": 0,
-      "command": "minus(\"reed\",1) , minus(prop1, prop2) , minus(\"wood\", prop1), 울타리 설치"
+      "cost": null,
+      "condition": null,
+      "command": "cls.upgrade_house(player)"
     }
   },
   {
@@ -161,7 +189,9 @@
       "card_type": "job",
       "name": "양의 친구",
       "score": 0,
-      "command": "현재 라운드의 2,5,8,10을 더한 라운드가 되면 양을 1마리씩 얻는다. ( cond(round, self.round+2,5,8,10 , add(\"sheep\",1)) ) 양을 공"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -172,7 +202,9 @@
       "card_type": "job",
       "name": "목사",
       "score": 0,
-      "command": "방이 2개 뿐인 집에 사는 유일한 플레이어? -> 나무3개 흙 2개 갈대 1개 돌 1개 획득"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -183,7 +215,9 @@
       "card_type": "job",
       "name": "벽 건축가",
       "score": 0,
-      "command": "방을 만들 때, 다음 4개의 라운드 동안 라운드 시작 시 음식 1개 획득"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -194,7 +228,9 @@
       "card_type": "job",
       "name": "마부",
       "score": 0,
-      "command": "plus(\"wood\",1) , 돌집에 살고있다면? -> 남은 모든 라운드 시작 시 나무 1개를 외양간 1개로 교환 가능"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -205,7 +241,9 @@
       "card_type": "job",
       "name": "소규모 농부",
       "score": 0,
-      "command": "방이 2개 뿐인 집에 살면? -> 라운드 시작 시 plus(\"wood\", 1)"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -216,7 +254,9 @@
       "card_type": "job",
       "name": "쟁기 몰이꾼",
       "score": 0,
-      "command": "돌 집에 살면? -> 라운드 시작 시 선택 -> plus(\"field\", 1) , minus(\"food\", 1) 또는 NONE"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -227,7 +267,9 @@
       "card_type": "job",
       "name": "학자",
       "score": 0,
-      "command": "돌 집에 살면? -> 라운드 시작 시 선택 -> 보조 또는 직업 획득 -> 직업은 음식 1개 minus , 보조는 조건"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -238,7 +280,9 @@
       "card_type": "job",
       "name": "하인",
       "score": 0,
-      "command": "돌 집에 살면? -> 라운드 시작 시 plus(\"food\", 3)"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -249,7 +293,9 @@
       "card_type": "job",
       "name": "무자식",
       "score": 0,
-      "command": "room>=3, family == 2 ? -> 라운드 시작 시 plus(\"food\", 1) , 선택 -> plus(\"vegi\", 1) 또는 plus(\"grain\", 1)"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -260,7 +306,9 @@
       "card_type": "job",
       "name": "흙집 건축업자",
       "score": 0,
-      "command": "나무집 아니면? -> 다음 5라운드 동안 plus(\"soil\", 2)"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -271,7 +319,9 @@
       "card_type": "job",
       "name": "지붕 다지는 사람",
       "score": 0,
-      "command": "minus(\"food\", 1), plus(\"stone\", player.room)"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -282,7 +332,9 @@
       "card_type": "job",
       "name": "상담가",
       "score": 0,
-      "command": "plus(\"sheep\", 2)"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -293,7 +345,9 @@
       "card_type": "job",
       "name": "사제",
       "score": 0,
-      "command": "room == 2 , 흙집? -> plus(\"soil\", 3), plus(\"stone\", 2), plus(\"reed\", 2)"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -304,7 +358,9 @@
       "card_type": "job",
       "name": "가마 떼는 사람",
       "score": 0,
-      "command": "나무 누적 행동 칸 이용 시 -> 선택 -> 빵 굽기 행동 또는 NONE"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -315,7 +371,9 @@
       "card_type": "job",
       "name": "양부모",
       "score": 0,
-      "command": "가족 늘리기 행동 칸 이용 시 -> 선택 -> minus(\"food\", 1), is_kid = false 또는 NONE"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -326,7 +384,9 @@
       "card_type": "job",
       "name": "재산관리인",
       "score": 0,
-      "command": "집 고치는 행동 칸 이용시 -> 돌집 코스트 받고 바로 돌집"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -337,7 +397,9 @@
       "card_type": "job",
       "name": "골조 건축업자",
       "score": 0,
-      "command": "집 고치는 행동 칸 혹은 방 만드는 행동 칸 이용 시 -> 흙 2개 대신 나무 1개 또는 돌 2개 대신 나무 1개"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -348,7 +410,9 @@
       "card_type": "job",
       "name": "채소 장수",
       "score": 0,
-      "command": "곡식 종자 행동 칸 이용 시 -> plus(\"vegi\", 1)"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -359,7 +423,9 @@
       "card_type": "job",
       "name": "류트 연주자",
       "score": 0,
-      "command": "나를 제외한 플레이어가 유랑극단 행동 칸 이용 시 -> plus(\"food\", 1) , plus(\"wood\", 1)  선택 -> minus(\"food\", 2) , plus(\"veg"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -370,7 +436,9 @@
       "card_type": "job",
       "name": "소 사육사",
       "score": 0,
-      "command": "곡식 종자 행동 칸 이용 시 -> 선택 -> minus(\"food\", 1) , plus(\"cow\", 1) 또는 NONE"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -381,7 +449,9 @@
       "card_type": "job",
       "name": "장작 채집자",
       "score": 0,
-      "command": "농지 또는 곡식 종자 또는 곡식 활용 또는 밭 농사 행동 칸 이용시 -> plus(\"wood\", 1) 근데 이제.. 차례가 끝날 때 줘서 당장은 못쓰는 나무 형태로.."
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -392,7 +462,9 @@
       "card_type": "job",
       "name": "농번기 일꾼",
       "score": 0,
-      "command": "날품팔이 행동 칸 이용시 -> plus(\"grain\", 1)  if(round>=6) {선택 -> plus(\"grain\", 1) 또는 plus(\"vegi\", 1)"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -403,7 +475,9 @@
       "card_type": "job",
       "name": "오두막집살이",
       "score": 0,
-      "command": "날품팔이 행동 칸 이용시 -> 선택 -> 집 고치기 액션 또는 방 만들기 (1개만 가능) 액션"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -414,7 +488,9 @@
       "card_type": "job",
       "name": "작살꾼",
       "score": 0,
-      "command": "낚시 행동 칸 이용시 -> 선택 -> minus(\"wood\", 1), plus(\"food\", player.family), plus(\"reed\", 1) 또는 NONE"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -425,7 +501,9 @@
       "card_type": "job",
       "name": "창고 관리인",
       "score": 0,
-      "command": "자원 시장 행동 칸 이용시 -> 선택 -> plus(\"soil\", 1) 또는 plus(\"grain\", 1)"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -436,7 +514,9 @@
       "card_type": "job",
       "name": "산울타리지기",
       "score": 0,
-      "command": "울타리 치기 행동 칸 이용시 -> plus(\"fence\", 3) (울타리 3개 무료 제공)"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -447,7 +527,9 @@
       "card_type": "job",
       "name": "숙련 벽돌공",
       "score": 0,
-      "command": "주요 설비 행동 칸 이용시 -> 주요설비 선택하면? -> cost에서 돌을 room-2만큼 빼줌"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -458,7 +540,9 @@
       "card_type": "job",
       "name": "돌 자르는 사람",
       "score": 0,
-      "command": "설비 또는 방 만들기 또는 집 고치기 행동 칸 이용시 -> cost에서 돌 1개 빼줌"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -469,7 +553,9 @@
       "card_type": "job",
       "name": "가축 상인",
       "score": 0,
-      "command": "양 시장 또는 돼지 시장 또는 소 시장 행동 칸 이용 시 -> 선택 -> minus(\"food\", 1), plus(\"해당 시장 가축\", 1) 또는 NONE"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -480,7 +566,9 @@
       "card_type": "job",
       "name": "지질학자",
       "score": 0,
-      "command": "숲 또는 갈대밭 또는 흙 채굴장 행동 칸 이용시 -> plus(\"soil\", 1)"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -491,7 +579,9 @@
       "card_type": "job",
       "name": "나뭇가지 모으는 사람",
       "score": 0,
-      "command": "방 만들기 또는 집 고치기 행동 칸 이용시 -> 선택 -> 필요한 cost 중 갈대를 나무 1개로 바꿈 또는 NONE"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -502,7 +592,9 @@
       "card_type": "job",
       "name": "목수",
       "score": 0,
-      "command": "방 만들기 행동 칸 이용시 -> cost에서 갈대를 제외한 필요 cost 2개 빼줌"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -513,7 +605,9 @@
       "card_type": "job",
       "name": "보조 경작자",
       "score": 0,
-      "command": "날품팔이 행동 칸 이용시 -> 선택 -> plus(\"field\", 1) , 밭 배치 또는 NONE"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -524,7 +618,9 @@
       "card_type": "job",
       "name": "나무꾼",
       "score": 0,
-      "command": "누적 나무 행동 칸 이용시 -> plus(\"wood\", 1)"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -535,7 +631,9 @@
       "card_type": "job",
       "name": "버섯 따는 사람",
       "score": 0,
-      "command": "누적 나무 행동 칸 이용시 -> 선택 -> 나무 한 개 누적 칸에 남겨놓고, plus(\"food\", 2) 또는 NONE"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -546,7 +644,9 @@
       "card_type": "job",
       "name": "초벽질공",
       "score": 0,
-      "command": "방 만들기 또는 집 고치기 행동 칸 이용시 -> 흙집이면? -> plus(\"food\", 3)"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -557,7 +657,9 @@
       "card_type": "job",
       "name": "마술사",
       "score": 0,
-      "command": "유랑극단 행동 칸 이용시 -> plus(\"wood\", 1), plus(\"grain\", 1)"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -568,7 +670,9 @@
       "card_type": "job",
       "name": "잡화상인",
       "score": 0,
-      "command": "아무 때나, 선택 -> minus(\"food\", 1) plus(prop1, 1) (나무 - 곡식 - 갈대 - 돌 - 채소 - 흙 - 갈대 - 채소 리스트에서 차례대로 prop1에"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -579,7 +683,9 @@
       "card_type": "job",
       "name": "양 보행자",
       "score": 0,
-      "command": "아무 때나, 선택 -> minus(\"sheep\", 1), plus(\"pig\", 1) 또는 minus(\"sheep\", 1), plus(\"vegi\", 1) 또는 minus(\"sheep"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -590,7 +696,9 @@
       "card_type": "pri_fac",
       "name": "우물",
       "score": 4,
-      "command": "다음 5라운드 간 라운드 시작 시 plus(\"food\", 1)"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -601,7 +709,9 @@
       "card_type": "pri_fac",
       "name": "바구니 제작소",
       "score": 2,
-      "command": "수확 시? -> 선택 -> minus(\"reed\", 1), plus(\"food\", 3) 또는 NONE 계산 시? -> if(reed>=5) score+=3 \telif(reed>=4"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -612,7 +722,9 @@
       "card_type": "pri_fac",
       "name": "그릇 제작소",
       "score": 2,
-      "command": "수확 시? -> 선택 -> minus(\"soil\", 1), plus(\"food\", 2) 또는 NONE 계산 시? -> if(soil>=7) score+=3 \telif(soil>=5"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -623,7 +735,9 @@
       "card_type": "pri_fac",
       "name": "가구 제작소",
       "score": 2,
-      "command": "수확 시? -> 선택 -> minus(\"wood\", 1), plus(\"food\", 2) 또는 NONE 계산 시? -> if(wood>=7) score+=3 \telif(wood>=5"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -634,7 +748,9 @@
       "card_type": "pri_fac",
       "name": "화덕",
       "score": 1,
-      "command": "아무 때나, 선택 -> minus(\"vegi\", prop 1), plus(\"food\", prop 1 * 3) 또는 minus(\"pig\", prop 1), plus(\"food\", p"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -645,7 +761,9 @@
       "card_type": "pri_fac",
       "name": "화로",
       "score": 1,
-      "command": "아무 때나, 선택 -> minus(\"vegi\", prop 1), plus(\"food\", prop 1 * 2) 또는 minus(\"pig\", prop 1), plus(\"food\", p"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -656,7 +774,9 @@
       "card_type": "pri_fac",
       "name": "화덕",
       "score": 1,
-      "command": "아무 때나, 선택 -> minus(\"vegi\", prop 1), plus(\"food\", prop 1 * 3) 또는 minus(\"pig\", prop 1), plus(\"food\", p"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -667,7 +787,9 @@
       "card_type": "pri_fac",
       "name": "화로",
       "score": 1,
-      "command": "아무 때나, 선택 -> minus(\"vegi\", prop 1), plus(\"food\", prop 1 * 2) 또는 minus(\"pig\", prop 1), plus(\"food\", p"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -678,7 +800,9 @@
       "card_type": "pri_fac",
       "name": "돌가마",
       "score": 3,
-      "command": "설비가 activate될 때 -> 빵 굽기 행동 빵 굽기 행동 시? -> 선택 -> prop 1은 2보다 작거나 같아야 함.. minus(\"grain\", prop 1), plus("
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -689,7 +813,9 @@
       "card_type": "pri_fac",
       "name": "흙가마",
       "score": 2,
-      "command": "설비가 activate될 때 -> 빵 굽기 행동 빵 굽기 행동 시? -> 선택 -> minus(\"grain\", 1), plus(\"food\", 5) 또는 NONE"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -700,7 +826,9 @@
       "card_type": "sub_fac",
       "name": "부엌방",
       "score": 0,
-      "command": "라운드 시작 시? -> 나무집이면? -> plus(\"food\", 1)"
+      "cost": "cls.require(player, 'wood', 1), cls.require(player, 'clay', 1)",
+      "condition": "True",
+      "command": "None"
     }
   },
   {
@@ -711,7 +839,9 @@
       "card_type": "sub_fac",
       "name": "대형온실",
       "score": 0,
-      "command": "현재 라운드 +4, 7, 9 라운드 시작 시 -> plus(\"vegi\", 1) 얘도 미리 빼놔야 됨.."
+      "cost": "cls.require(player, 'wood', 2)",
+      "condition": "len(list(filter(lambda c: \"JOB\" in c.get(\"card_number\") and c.get(\"is_use\"), player.get(\"cards\"))))>=2",
+      "command": "None"
     }
   },
   {
@@ -722,7 +852,9 @@
       "card_type": "sub_fac",
       "name": "연못 오두막",
       "score": 1,
-      "command": "다음 3개의 라운드 동안 라운드 시작 시 -> plus(\"food\", 1)"
+      "cost": "cls.require(player, 'wood', 1)",
+      "condition": "len(list(filter(lambda c: \"JOB\" in c.get(\"card_number\") and c.get(\"is_use\"), player.get(\"cards\"))))==2",
+      "command": "None"
     }
   },
   {
@@ -733,7 +865,9 @@
       "card_type": "sub_fac",
       "name": "손수레",
       "score": 0,
-      "command": "5, 8, 11, 14 라운드 시작 시 -> plus(\"grain\", 1) 얘도 미리 빼놔야 됨.."
+      "cost": "cls.require(player, 'wood', 2)",
+      "condition": "len(list(filter(lambda c: \"JOB\" in c.get(\"card_number\") and c.get(\"is_use\"), player.get(\"cards\"))))>=2",
+      "command": "None"
     }
   },
   {
@@ -744,7 +878,9 @@
       "card_type": "sub_fac",
       "name": "딸기포",
       "score": 2,
-      "command": "다음 3개의 라운드 동안 라운드 시작 시 -> plus(\"food\", 1)"
+      "cost": "cls.require(player, 'wood', 1)",
+      "condition": "len(list(filter(lambda f: \"vegetable\" in f.get(\"is_in\"), player.get(\"fields\"))))>=2",
+      "command": "None"
     }
   },
   {
@@ -755,7 +891,9 @@
       "card_type": "sub_fac",
       "name": "손쟁기",
       "score": 0,
-      "command": "현재 라운드 +5 라운드 시작 시 -> plus(\"field\", 1), 밭 배치"
+      "cost": "cls.require(player, 'wood', 1)",
+      "condition": "True",
+      "command": "None"
     }
   },
   {
@@ -766,7 +904,9 @@
       "card_type": "sub_fac",
       "name": "울창한 숲",
       "score": 0,
-      "command": "짝수 라운드 시작 시? -> plus(\"wood\", 1) 얘도 미리 빼놔야 됨.."
+      "cost": "True",
+      "condition": "len(list(filter(lambda r: \"clay\" in r, player.get(\"resource\"))))>=5",
+      "command": "None"
     }
   },
   {
@@ -777,7 +917,9 @@
       "card_type": "sub_fac",
       "name": "도토리 바구니",
       "score": 0,
-      "command": "다음 2개의 라운드 동안 라운드 시작 시 -> plus(\"pig\", 1)"
+      "cost": "cls.require(player, 'reed', 1)",
+      "condition": "len(list(filter(lambda c: \"JOB\" in c.get(\"card_number\") and c.get(\"is_use\"), player.get(\"cards\"))))>=3",
+      "command": "None"
     }
   },
   {
@@ -788,7 +930,9 @@
       "card_type": "sub_fac",
       "name": "우유 주전자",
       "score": 0,
-      "command": "if('소 시장' .is_used==true)-> if(카드 소유자) plus(\"food\", 3) else plus(\"food\", 1)"
+      "cost": "cls.require(player, 'clay', 1)",
+      "condition": "True",
+      "command": "None"
     }
   },
   {
@@ -799,7 +943,9 @@
       "card_type": "sub_fac",
       "name": "청어 냄비",
       "score": 0,
-      "command": "낚시 행동 칸 이용시 -> 다음 3라운드 동안 plus(\"food\", 1)"
+      "cost": "cls.require(player, 'clay', 1)",
+      "condition": "True",
+      "command": "None"
     }
   },
   {
@@ -810,7 +956,9 @@
       "card_type": "sub_fac",
       "name": "올가미 밧줄",
       "score": 0,
-      "command": "양 시장 또는 돼지 시장 또는 소 시장 행동 칸 이용 시 -> 선택 -> 즉시 턴 또는 NONE"
+      "cost": "cls.require(player, 'reed', 1)",
+      "condition": "True",
+      "command": "None"
     }
   },
   {
@@ -821,7 +969,9 @@
       "card_type": "sub_fac",
       "name": "타작판",
       "score": 1,
-      "command": "농지 또는 밭 농사 행동 칸 이용시 -> 선택 -> 빵굽기 OR NONE"
+      "cost": "cls.require(player, 'wood', 1)",
+      "condition": "len(list(filter(lambda c: \"JOB\" in c.get(\"card_number\") and c.get(\"is_use\"), player.get(\"cards\"))))>=2",
+      "command": "None"
     }
   },
   {
@@ -832,7 +982,9 @@
       "card_type": "sub_fac",
       "name": "다진 흙",
       "score": 0,
-      "command": "plus(\"soil\", 1) , 울타리 치기 행동 시? -> 나무 대신 흙 선택 가능"
+      "cost": "True",
+      "condition": "True",
+      "command": "None"
     }
   },
   {
@@ -843,7 +995,9 @@
       "card_type": "sub_fac",
       "name": "통나무배",
       "score": 1,
-      "command": "낚시 행동 칸 이용시 -> plus(\"food\", 1), plus(\"reed\", 1)"
+      "cost": "cls.require(player, 'wood', 2)",
+      "condition": "len(list(filter(lambda c: \"JOB\" in c.get(\"card_number\") and c.get(\"is_use\"), player.get(\"cards\"))))>=1",
+      "command": "None"
     }
   },
   {
@@ -854,7 +1008,9 @@
       "card_type": "sub_fac",
       "name": "채굴 망치",
       "score": 0,
-      "command": "plus(\"food\", 1) , 집 고치기 행동 시 -> 선택 -> 외양간 짓기 OR NONE"
+      "cost": "cls.require(player, 'wood', 1)",
+      "condition": "True",
+      "command": "None"
     }
   },
   {
@@ -865,7 +1021,9 @@
       "card_type": "sub_fac",
       "name": "바구니",
       "score": 0,
-      "command": "나무 누적 행동 칸 이용 시 -> 선택 -> 나무 2개 남겨놓고 plus(\"food\", 3) OR NONE"
+      "cost": "cls.require(player, 'reed', 1)",
+      "condition": "True",
+      "command": "None"
     }
   },
   {
@@ -876,7 +1034,9 @@
       "card_type": "sub_fac",
       "name": "목수의 객실",
       "score": 0,
-      "command": "방 만들기 행동 시-> if(나무집) 만들기 나무cost-2"
+      "cost": "cls.require(player, 'wood', 1), cls.require(player, 'stone', 1)",
+      "condition": "True",
+      "command": "None"
     }
   },
   {
@@ -887,7 +1047,9 @@
       "card_type": "sub_fac",
       "name": "양토 채굴장",
       "score": 1,
-      "command": "날품팔이 행동 칸 이용시 -> plus(\"soil\", 3)"
+      "cost": "cls.require(player, 'food', 1)",
+      "condition": "len(list(filter(lambda c: \"JOB\" in c.get(\"card_number\") and c.get(\"is_use\"), player.get(\"cards\"))))>=3",
+      "command": "None"
     }
   },
   {
@@ -898,7 +1060,9 @@
       "card_type": "sub_fac",
       "name": "목재소",
       "score": 2,
-      "command": "모든 설비 cost에서 나무 -1"
+      "cost": "cls.require(player, 'stone', 2)",
+      "condition": "len(list(filter(lambda c: \"JOB\" in c.get(\"card_number\") and c.get(\"is_use\"), player.get(\"cards\"))))<=3",
+      "command": "None"
     }
   },
   {
@@ -909,7 +1073,9 @@
       "card_type": "sub_fac",
       "name": "개울",
       "score": 0,
-      "command": "갈대밭, 흙 채굴장, 숲, 1라운드카드 이용 시 -> plus(\"food\", 1)"
+      "cost": "True",
+      "condition": "Error",
+      "command": "None"
     }
   },
   {
@@ -920,7 +1086,9 @@
       "card_type": "sub_fac",
       "name": "곡식용 삽",
       "score": 0,
-      "command": "곡식 종자 행동 칸 이용 시 -> plus(\"grain\", 1)"
+      "cost": "cls.require(player, 'wood', 1)",
+      "condition": "True",
+      "command": "None"
     }
   },
   {
@@ -931,7 +1099,9 @@
       "card_type": "sub_fac",
       "name": "폐품 창고",
       "score": 0,
-      "command": "설비 내려 놓거나, 지을 때 -> plus(\"food\", 1)"
+      "cost": "cls.require(player, 'wood', 1), cls.require(player, 'clay', 1)",
+      "condition": "True",
+      "command": "None"
     }
   },
   {
@@ -942,7 +1112,9 @@
       "card_type": "sub_fac",
       "name": "빵삽",
       "score": 0,
-      "command": "plus(\"food\", 1), 직업 놓을 시 -> 빵굽기 행동"
+      "cost": "cls.require(player, 'wood', 1)",
+      "condition": "True",
+      "command": "None"
     }
   },
   {
@@ -953,7 +1125,9 @@
       "card_type": "sub_fac",
       "name": "네덜란드식 풍차",
       "score": 2,
-      "command": "수확 마친 다음 라운드(5, 8, 10, 12, 14)에 빵굽기 행동 시-> plus(\"food\", 3)"
+      "cost": "cls.require(player, 'wood', 2), cls.require(player, 'stone', 2)",
+      "condition": "True",
+      "command": "None"
     }
   },
   {
@@ -964,7 +1138,9 @@
       "card_type": "sub_fac",
       "name": "돌 집게",
       "score": 0,
-      "command": "돌 누적 칸 이용 시 -> plus(\"stone\", 1)"
+      "cost": "cls.require(player, 'wood', 1)",
+      "condition": "True",
+      "command": "None"
     }
   },
   {
@@ -975,7 +1151,9 @@
       "card_type": "sub_fac",
       "name": "이중날 쟁기",
       "score": 0,
-      "command": "미친놈인데? 뺴야할 듯"
+      "cost": "cls.require(player, 'wood', 2)",
+      "condition": "len(list(filter(lambda c: \"JOB\" in c.get(\"card_number\") and c.get(\"is_use\"), player.get(\"cards\"))))>=1",
+      "command": "None"
     }
   },
   {
@@ -986,7 +1164,9 @@
       "card_type": "sub_fac",
       "name": "쇠스랑",
       "score": 0,
-      "command": "곡식 종자 행동 칸 이용 시 -> if(농지 칸 이용 중일시) ->plus(\"food\", 3)"
+      "cost": "cls.require(player, 'wood', 1)",
+      "condition": "True",
+      "command": "None"
     }
   },
   {
@@ -997,7 +1177,9 @@
       "card_type": "sub_fac",
       "name": "경질 자기",
       "score": 0,
-      "command": "아무 때나, minus(\"soil\", 2), plus(\"stone\", 1) OR minus(\"soil\", 3), plus(\"stone\", 2) OR ..."
+      "cost": "cls.require(player, 'clay', 1)",
+      "condition": "True",
+      "command": "None"
     }
   },
   {
@@ -1008,7 +1190,9 @@
       "card_type": "sub_fac",
       "name": "삽",
       "score": 0,
-      "command": "아무 때나, 작물 2 개 이상인 밭의 작물 빈 밭으로 이동 가능..... 미친놈인듯"
+      "cost": "cls.require(player, 'wood', 1)",
+      "condition": "True",
+      "command": "None"
     }
   },
   {
@@ -1019,7 +1203,9 @@
       "card_type": "sub_fac",
       "name": "흙판",
       "score": 0,
-      "command": "plus(\"soil\", player.resource.soil/2), 카드 넘김"
+      "cost": "cls.require(player, 'food', 1)",
+      "condition": "True",
+      "command": "None"
     }
   },
   {
@@ -1030,7 +1216,9 @@
       "card_type": "sub_fac",
       "name": "노점",
       "score": 0,
-      "command": "plus(\"vegi\", 1), 카드 넘김"
+      "cost": "cls.require(player, 'grain', 1)",
+      "condition": "True",
+      "command": "None"
     }
   },
   {
@@ -1041,7 +1229,9 @@
       "card_type": "sub_fac",
       "name": "작은 우리",
       "score": 0,
-      "command": "1칸 짜리 우리 설치, 카드 넘김"
+      "cost": "cls.require(player, 'food', 2)",
+      "condition": "True",
+      "command": "None"
     }
   },
   {
@@ -1052,7 +1242,9 @@
       "card_type": "sub_fac",
       "name": "우시장",
       "score": 0,
-      "command": "plus(\"cow\", 1), 카드 넘김"
+      "cost": "cls.require(player, 'sheep', 1)",
+      "condition": "True",
+      "command": "None"
     }
   },
   {
@@ -1063,7 +1255,9 @@
       "card_type": "sub_fac",
       "name": "이동 경작",
       "score": 0,
-      "command": "plus(\"field\", 1), 밭 배치, 카드 넘김"
+      "cost": "cls.require(player, 'food', 2)",
+      "condition": "True",
+      "command": "None"
     }
   },
   {
@@ -1074,7 +1268,9 @@
       "card_type": "sub_fac",
       "name": "병",
       "score": 4,
-      "command": "minus(\"soil\", player.family), minus(\"food\", player.family)"
+      "cost": "cls.require(player, 'clay', player.get(\"resource\").get(family)), cls.require(player, 'food', player.get(\"resource\").get(family))",
+      "condition": "True",
+      "command": "None"
     }
   },
   {
@@ -1085,7 +1281,9 @@
       "card_type": "sub_fac",
       "name": "거대 농장",
       "score": 0,
-      "command": "남은 라운드 당 1점, 음식 2개"
+      "cost": "True",
+      "condition": "Error",
+      "command": "None"
     }
   },
   {
@@ -1096,7 +1294,9 @@
       "card_type": "sub_fac",
       "name": "버터 제조기",
       "score": 1,
-      "command": "수확 시작 시-> plus(\"food\", sheep/3), plus(\"food\", cow/2)"
+      "cost": "cls.require(player, 'wood', 1)",
+      "condition": "len(list(filter(lambda c: \"JOB\" in c.get(\"card_number\") and c.get(\"is_use\"), player.get(\"cards\"))))<=3",
+      "command": "None"
     }
   },
   {
@@ -1107,7 +1307,9 @@
       "card_type": "sub_fac",
       "name": "삼포식 농법",
       "score": 0,
-      "command": "수확 시작 시 -> if(곡식밭>=1&&채소밭>=1 && 빈 밭>=1) -> plus(\"food\", 3)"
+      "cost": "True",
+      "condition": "len(list(filter(lambda c: \"JOB\" in c.get(\"card_number\") and c.get(\"is_use\"), player.get(\"cards\"))))>=3",
+      "command": "None"
     }
   },
   {
@@ -1118,7 +1320,9 @@
       "card_type": "sub_fac",
       "name": "물통",
       "score": 0,
-      "command": "우리의 가축 최대 수용 수 +2"
+      "cost": "cls.require(player, 'clay', 1)",
+      "condition": "True",
+      "command": "None"
     }
   },
   {
@@ -1129,6 +1333,8 @@
       "card_type": "BASE",
       "name": "덤불",
       "score": 0,
+      "cost": null,
+      "condition": null,
       "command": "cls.use_round_card_resources(player, round_card)"
     }
   },
@@ -1140,6 +1346,8 @@
       "card_type": "BASE",
       "name": "수풀",
       "score": 0,
+      "cost": null,
+      "condition": null,
       "command": "cls.use_round_card_resources(player, round_card)"
     }
   },
@@ -1151,6 +1359,8 @@
       "card_type": "BASE",
       "name": "자원 시장",
       "score": 0,
+      "cost": null,
+      "condition": null,
       "command": "cls.use_round_card_resources(player, round_card)"
     }
   },
@@ -1162,6 +1372,8 @@
       "card_type": "BASE",
       "name": "점토 채굴장",
       "score": 0,
+      "cost": null,
+      "condition": null,
       "command": "cls.use_round_card_resources(player, round_card)"
     }
   },
@@ -1173,7 +1385,9 @@
       "card_type": "BASE",
       "name": "교습",
       "score": 0,
-      "command": "cls.job_submit_card(player, round_card, info)"
+      "cost": null,
+      "condition": null,
+      "command": "cls.submit_card(player, round_card, card_type, card_number)"
     }
   },
   {
@@ -1184,6 +1398,8 @@
       "card_type": "BASE",
       "name": "유랑극단",
       "score": 0,
+      "cost": null,
+      "condition": null,
       "command": "cls.use_round_card_resources(player, round_card)"
     }
   },
@@ -1195,7 +1411,9 @@
       "card_type": "BASE",
       "name": "농장 확장",
       "score": 0,
-      "command": "코스트 내고 방 바꾸기"
+      "cost": null,
+      "condition": null,
+      "command": "cls.build_room(player, additional)"
     }
   },
   {
@@ -1206,7 +1424,9 @@
       "card_type": "BASE",
       "name": "회합 장소",
       "score": 0,
-      "command": "선 바꾸기, 그리고/또는 보조설비"
+      "cost": null,
+      "condition": null,
+      "command": "None"
     }
   },
   {
@@ -1217,6 +1437,8 @@
       "card_type": "BASE",
       "name": "곡식 종자",
       "score": 0,
+      "cost": null,
+      "condition": null,
       "command": "cls.use_round_card_resources(player, round_card)"
     }
   },
@@ -1228,7 +1450,9 @@
       "card_type": "BASE",
       "name": "농지",
       "score": 0,
-      "command": "plus(\"field\", 1), 밭 배치"
+      "cost": null,
+      "condition": null,
+      "command": "cls.plow_field(player, round_card, additional)"
     }
   },
   {
@@ -1239,7 +1463,9 @@
       "card_type": "BASE",
       "name": "교습",
       "score": 0,
-      "command": "cls.job_submit_card(player, round_card, info)"
+      "cost": null,
+      "condition": null,
+      "command": "cls.submit_card(player, round_card, card_type, card_number)"
     }
   },
   {
@@ -1250,6 +1476,8 @@
       "card_type": "BASE",
       "name": "날품팔이",
       "score": 0,
+      "cost": null,
+      "condition": null,
       "command": "cls.use_round_card_resources(player, round_card)"
     }
   },
@@ -1261,6 +1489,8 @@
       "card_type": "BASE",
       "name": "숲",
       "score": 0,
+      "cost": null,
+      "condition": null,
       "command": "cls.use_round_card_resources(player, round_card)"
     }
   },
@@ -1272,6 +1502,8 @@
       "card_type": "BASE",
       "name": "흙 채굴장",
       "score": 0,
+      "cost": null,
+      "condition": null,
       "command": "cls.use_round_card_resources(player, round_card)"
     }
   },
@@ -1283,6 +1515,8 @@
       "card_type": "BASE",
       "name": "갈대밭",
       "score": 0,
+      "cost": null,
+      "condition": null,
       "command": "cls.use_round_card_resources(player, round_card)"
     }
   },
@@ -1294,6 +1528,8 @@
       "card_type": "BASE",
       "name": "낚시",
       "score": 0,
+      "cost": null,
+      "condition": null,
       "command": "cls.use_round_card_resources(player, round_card)"
     }
   }

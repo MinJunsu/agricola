@@ -1,3 +1,6 @@
+from logging import Logger
+
+
 class Base:
     """
     Base 클래스: 모든 게임 객체의 부모 클래스
@@ -8,6 +11,8 @@ class Base:
         items = self.__dict__.items()
         dictionary = dict()
         for key, value in items:
+            if isinstance(value, Logger):
+                pass
             if isinstance(value, Base):
                 dictionary[key[1:]] = value.to_dict()
             elif type(value) is list:
@@ -18,7 +23,7 @@ class Base:
 
     # dict 형태의 자원 정보를 객체를 생성
     @classmethod
-    def from_dict(cls, **kwargs):
+    def from_dict(cls, *args, **kwargs):
         return cls(**kwargs)
 
     # 객체에 존재하는 자원을 가져오는 함수

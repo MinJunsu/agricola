@@ -1,3 +1,7 @@
+from play.enum import HouseType
+
+# TODO: 빵굽기
+
 RESOURCE_SCORE_BOARD = {
     'grain': {
         0: -1,
@@ -54,7 +58,41 @@ RESOURCE_SCORE_BOARD = {
         7: 4,
         8: 4,
     },
+    'family': {
+        1: 3,
+        2: 6,
+        3: 9,
+        4: 12,
+        5: 15,
+    }
 }
+
+FIELD_SCORE_BOARD = {
+    'farm': {
+        0: -1,
+        1: -1,
+        2: 1,
+        3: 2,
+        4: 3,
+        5: 4,
+    },
+    'cage': {
+        0: -1,
+        1: 1,
+        2: 2,
+        3: 3,
+        4: 4,
+        5: 4,
+    }
+}
+
+FIELD_SCORE_BOARD['farm'].update({key: 4 for key in range(6, 16)})
+FIELD_SCORE_BOARD['cage'].update({key: 4 for key in range(6, 16)})
+FIELD_SCORE_BOARD['clay_room'] = {key: key for key in range(0, 16)}
+FIELD_SCORE_BOARD['stone_room'] = {key: key * 2 for key in range(0, 16)}
+FIELD_SCORE_BOARD['cage_barn'] = {key: key for key in range(0, 16)}
+FIELD_SCORE_BOARD['empty'] = {key: -key for key in range(0, 16)}
+RESOURCE_SCORE_BOARD['begging'] = {key: -3 * key for key in range(0, 9)}
 
 INITIAL_COMMON_RESOURCE = {
     'wood': 30,
@@ -80,18 +118,47 @@ INITIAL_COMMON_RESOURCE = {
 #     'sheep': 18,
 #     'boar': 15,
 #     'cattle': 13,
-#     'food': 76,
+#     'food': 0,
+#     "family": 2,
+#     "room": 2
 # }
+
+ROOM_UPGRADE_FUNCTION = {
+    HouseType.WOOD_HOUSE: {
+        'reed': 1,
+        'clay': 1
+    },
+    HouseType.CLAY_HOUSE: {
+        'reed': 1,
+        'stone': 1,
+    }
+}
+
+ROOM_CREATE_FUNCTION = {
+    HouseType.WOOD_HOUSE: {
+        'wood': 5,
+        'reed': 2
+    },
+    HouseType.CLAY_HOUSE: {
+        'clay': 5,
+        'reed': 2,
+    },
+    HouseType.STONE_HOUSE: {
+        'stone': 5,
+        'reed': 2
+    }
+}
 
 INITIAL_PLAYER_RESOURCE = {
     "family": 2,
     "room": 2,
+    "food": 3,
 }
 
 LAST_TURN = 3
 LAST_ROUND = 14
 LAST_PHASE = 13
-FIRST_CHANGE_CARD_NUMBER = "CARD_01"
+FIRST_CHANGE_CARD_NUMBER = "BASE_08"
 
 # TODO: 베이스 카드 시작 정보 값
 INITIAL_BASE_CARDS = [
@@ -328,6 +395,41 @@ INITIAL_ROUND_CARDS = {
         }
     ],
 }
+
+INITIAL_PRI_CARDS = [
+    {
+        'card_number': "PRI_FAC_01",
+        'owner': None,
+    },
+    {
+        'card_number': "PRI_FAC_02",
+        'owner': None,
+    },
+    {
+        'card_number': "PRI_FAC_03",
+        'owner': None,
+    },
+    {
+        'card_number': "PRI_FAC_04",
+        'owner': None,
+    },
+    {
+        'card_number': "PRI_FAC_05",
+        'owner': None,
+    },
+    {
+        'card_number': "PRI_FAC_06",
+        'owner': None,
+    },
+    {
+        'card_number': "PRI_FAC_07",
+        'owner': None,
+    },
+    {
+        'card_number': "PRI_FAC_08",
+        'owner': None,
+    }
+]
 
 NO_USER = -1
 

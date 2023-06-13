@@ -7,7 +7,8 @@ from cards.models import CardEffect, Card
 
 @admin.register(CardEffect)
 class CardEffectAdmin(admin.ModelAdmin):
-    list_display = ['card_number', 'effect', 'command']
+    list_display = ['card_number', 'condition', 'effect', 'command']
+
 
 @admin.register(Card)
 class CardAdmin(admin.ModelAdmin):

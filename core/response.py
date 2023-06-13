@@ -3,6 +3,7 @@ def socket_response(
         data: dict | None = None,
         error: str | None = None
 ) -> dict:
+    dictionary = dict()
     if is_success:
         return {
             "is_success": is_success,

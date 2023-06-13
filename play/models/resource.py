@@ -18,6 +18,7 @@ class Resource(Base):
     _room: int
     _fence: int
     _barn: int
+    _begging: int
 
     """
     자원 초기화 함수: 자원의 초기 값을 설정 한다.
@@ -38,7 +39,8 @@ class Resource(Base):
             family: int = 0,
             room: int = 0,
             fence: int = 0,
-            barn: int = 0
+            barn: int = 0,
+            begging: int = 0,
     ):
         self._wood = wood
         self._clay = clay
@@ -54,6 +56,7 @@ class Resource(Base):
         self._room = room
         self._fence = fence
         self._barn = barn
+        self._begging = begging
 
     @classmethod
     def initialize_common_resource(cls):
@@ -64,9 +67,9 @@ class Resource(Base):
     def initialize_player_resource(cls):
         return cls(**INITIAL_PLAYER_RESOURCE)
 
-    def calculate_score(self):
+    def calculate_score(self) -> dict:
         keys = RESOURCE_SCORE_BOARD.keys()
-        score = 0
+        dictionary = dict()
         for key in keys:
-            score += RESOURCE_SCORE_BOARD[key][min(self.get(key), 8)]
-        return score
+            dictionary[key] = RESOURCE_SCORE_BOARD[key][min(self.get(key), 8)]
+        return dictionary

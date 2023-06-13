@@ -26,7 +26,7 @@ class PlayTestCase(BaseTestCase):
     BASE_01: wood 자원이 1 증가한다.
     """
 
-    async def test_unittest_base_card_works(self):
+    async def test_moduletest_base_card_works(self):
         # GIVEN: 사용자가 사용할 커맨드
         prev = self.game.to_dict()
         turn = 0

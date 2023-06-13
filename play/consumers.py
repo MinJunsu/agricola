@@ -1,3 +1,5 @@
+import logging
+
 from channels.generic.websocket import AsyncJsonWebsocketConsumer
 from deepdiff import DeepDiff
 
@@ -10,9 +12,11 @@ from play.models.game import Game
 class GameConsumer(AsyncJsonWebsocketConsumer):
     id: int
     group_name: str
+    logger: logging.Logger
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.logger = logging.getLogger(__name__)
         self.redis = connection()
 
     async def connect(self):
@@ -24,7 +28,7 @@ class GameConsumer(AsyncJsonWebsocketConsumer):
             self.channel_name
         )
 
-        data = self.redis.get(f"game_{self.id}")
+        data = self.redis.get(f"game:{self.id}")
 
         await self.accept()
 
@@ -43,19 +47,25 @@ class GameConsumer(AsyncJsonWebsocketConsumer):
         )
 
     async def receive_json(self, content, **kwargs):
-        data = self.redis.get(f"game_{self.id}")
-
+        data = self.redis.get(f"game:{self.id}")
         game = Game.from_dict(**eval(data))
         try:
             played_data = game.play(content)
 
         except IsNotPlayerTurnException as e:
+            self.logger.error(str(e))
             return await self.send_json(socket_response(
                 is_success=False,
                 error=str(e)
             ))
 
         except CantUseCardException as e:
+            self.logger.error(str(e))
+            return await self.send_json(socket_response(
+                is_success=False,
+                error=str(e)
+            ))
+        except Exception as e:
             return await self.send_json(socket_response(
                 is_success=False,
                 error=str(e)
@@ -67,6 +77,8 @@ class GameConsumer(AsyncJsonWebsocketConsumer):
         deep_diff = DeepDiff(eval(data), played_data)
         values = deep_diff.get("values_changed", {})
         types = deep_diff.get("type_changes", {})
+        iterable_remove = deep_diff.get("iterable_item_removed", {})
+        iterable_add = deep_diff.get("iterable_item_added", {})
 
         # 이전 데이터와 변화된 데이터가 있다면 change에 추가
         if values or types:
@@ -77,8 +89,16 @@ class GameConsumer(AsyncJsonWebsocketConsumer):
                     "value": value['new_value'],
                     "prev": value['old_value']
                 })
+        if iterable_remove or iterable_add:
+            for key, value in [*iterable_remove.items(), *iterable_add.items()]:
+                if "fences" in key:
+                    new_key = key[4:28]
+                    change.append({
+                        "key": new_key,
+                        "value": eval("played_data" + new_key)
+                    })
 
-        self.redis.set(f"game_{self.id}", str(played_data))
+        self.redis.set(f"game:{self.id}", str(played_data))
 
         return await self.channel_layer.group_send(
             self.group_name,
