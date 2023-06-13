@@ -1,0 +1,3090 @@
+{
+  "first": 0,
+  "turn": 0,
+  "round": 3,
+  "phase": 0,
+  "players": [
+    {
+      "name": "1",
+      "resource": {
+        "wood": 5,
+        "clay": 3,
+        "reed": 1,
+        "stone": 1,
+        "grain": 0,
+        "vegetable": 0,
+        "sheep": 0,
+        "boar": 0,
+        "cattle": 0,
+        "food": 4,
+        "family": 2,
+        "room": 2,
+        "fence": 0,
+        "barn": 0,
+        "begging": 0
+      },
+      "fields": [
+        {
+          "field_type": "empty",
+          "position": 1,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 2,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 3,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 4,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 5,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 6,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 7,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 8,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 9,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 10,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 11,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 12,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 13,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "room",
+          "position": 14,
+          "is_in": {
+            "family": 1,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "room",
+          "position": 15,
+          "is_in": {
+            "family": 1,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        }
+      ],
+      "house_type": "wood",
+      "fences": null,
+      "cards": [
+        {
+          "card_number": "JOB_31",
+          "name": "\ub098\ubb47\uac00\uc9c0 \ubaa8\uc73c\ub294 \uc0ac\ub78c",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "JOB_21",
+          "name": "\uc7a5\uc791 \ucc44\uc9d1\uc790",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "JOB_32",
+          "name": "\ubaa9\uc218",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "JOB_34",
+          "name": "\ub098\ubb34\uafbc",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "JOB_26",
+          "name": "\uc0b0\uc6b8\ud0c0\ub9ac\uc9c0\uae30",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "JOB_19",
+          "name": "\ub958\ud2b8 \uc5f0\uc8fc\uc790",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "JOB_08",
+          "name": "\ud558\uc778",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "SUB_FAC_06",
+          "name": "\uc190\uc7c1\uae30",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "SUB_FAC_15",
+          "name": "\ucc44\uad74 \ub9dd\uce58",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "SUB_FAC_31",
+          "name": "\ub178\uc810",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "SUB_FAC_33",
+          "name": "\uc6b0\uc2dc\uc7a5",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "SUB_FAC_34",
+          "name": "\uc774\ub3d9 \uacbd\uc791",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "SUB_FAC_19",
+          "name": "\ubaa9\uc7ac\uc18c",
+          "score": 2,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "SUB_FAC_17",
+          "name": "\ubaa9\uc218\uc758 \uac1d\uc2e4",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        }
+      ],
+      "scores": {}
+    },
+    {
+      "name": "4",
+      "resource": {
+        "wood": 3,
+        "clay": 1,
+        "reed": 1,
+        "stone": 0,
+        "grain": 2,
+        "vegetable": 1,
+        "sheep": 0,
+        "boar": 0,
+        "cattle": 0,
+        "food": 3,
+        "family": 2,
+        "room": 2,
+        "fence": 0,
+        "barn": 0,
+        "begging": 0
+      },
+      "fields": [
+        {
+          "field_type": "empty",
+          "position": 1,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 2,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 3,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 4,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 5,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 6,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 7,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 8,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 9,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 10,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 11,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 12,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 13,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "room",
+          "position": 14,
+          "is_in": {
+            "family": 1,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "room",
+          "position": 15,
+          "is_in": {
+            "family": 1,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        }
+      ],
+      "house_type": "wood",
+      "fences": null,
+      "cards": [
+        {
+          "card_number": "JOB_06",
+          "name": "\uc7c1\uae30 \ubab0\uc774\uafbc",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "JOB_38",
+          "name": "\uc7a1\ud654\uc0c1\uc778",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "JOB_04",
+          "name": "\ub9c8\ubd80",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "JOB_07",
+          "name": "\ud559\uc790",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "JOB_16",
+          "name": "\uc7ac\uc0b0\uad00\ub9ac\uc778",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "JOB_22",
+          "name": "\ub18d\ubc88\uae30 \uc77c\uafbc",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "JOB_15",
+          "name": "\uc591\ubd80\ubaa8",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "SUB_FAC_10",
+          "name": "\uccad\uc5b4 \ub0c4\ube44",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "SUB_FAC_12",
+          "name": "\ud0c0\uc791\ud310",
+          "score": 1,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "SUB_FAC_03",
+          "name": "\uc5f0\ubabb \uc624\ub450\ub9c9",
+          "score": 1,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "SUB_FAC_11",
+          "name": "\uc62c\uac00\ubbf8 \ubc27\uc904",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "SUB_FAC_29",
+          "name": "\uc0bd",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "SUB_FAC_37",
+          "name": "\ubc84\ud130 \uc81c\uc870\uae30",
+          "score": 1,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "SUB_FAC_21",
+          "name": "\uace1\uc2dd\uc6a9 \uc0bd",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        }
+      ],
+      "scores": {}
+    },
+    {
+      "name": "2",
+      "resource": {
+        "wood": 15,
+        "clay": 3,
+        "reed": 2,
+        "stone": 1,
+        "grain": 1,
+        "vegetable": 0,
+        "sheep": 0,
+        "boar": 0,
+        "cattle": 0,
+        "food": 5,
+        "family": 2,
+        "room": 2,
+        "fence": 0,
+        "barn": 0,
+        "begging": 0
+      },
+      "fields": [
+        {
+          "field_type": "farm",
+          "position": 1,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 2
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 2,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 3,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 4,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 5,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 6,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 7,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 8,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 9,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 10,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 11,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 12,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 13,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "room",
+          "position": 14,
+          "is_in": {
+            "family": 1,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "room",
+          "position": 15,
+          "is_in": {
+            "family": 1,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        }
+      ],
+      "house_type": "wood",
+      "fences": null,
+      "cards": [
+        {
+          "card_number": "JOB_05",
+          "name": "\uc18c\uaddc\ubaa8 \ub18d\ubd80",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "JOB_27",
+          "name": "\uc219\ub828 \ubcbd\ub3cc\uacf5",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "JOB_14",
+          "name": "\uac00\ub9c8 \ub5bc\ub294 \uc0ac\ub78c",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "JOB_28",
+          "name": "\ub3cc \uc790\ub974\ub294 \uc0ac\ub78c",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "JOB_30",
+          "name": "\uc9c0\uc9c8\ud559\uc790",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "JOB_01",
+          "name": "\uc591\uc758 \uce5c\uad6c",
+          "score": 0,
+          "is_used": true,
+          "used_round": 2
+        },
+        {
+          "card_number": "JOB_24",
+          "name": "\uc791\uc0b4\uafbc",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "SUB_FAC_18",
+          "name": "\uc591\ud1a0 \ucc44\uad74\uc7a5",
+          "score": 1,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "SUB_FAC_14",
+          "name": "\ud1b5\ub098\ubb34\ubc30",
+          "score": 1,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "SUB_FAC_22",
+          "name": "\ud3d0\ud488 \ucc3d\uace0",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "SUB_FAC_04",
+          "name": "\uc190\uc218\ub808",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "SUB_FAC_16",
+          "name": "\ubc14\uad6c\ub2c8",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "SUB_FAC_05",
+          "name": "\ub538\uae30\ud3ec",
+          "score": 2,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "SUB_FAC_13",
+          "name": "\ub2e4\uc9c4 \ud759",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        }
+      ],
+      "scores": {}
+    },
+    {
+      "name": "3",
+      "resource": {
+        "wood": 3,
+        "clay": 2,
+        "reed": 3,
+        "stone": 2,
+        "grain": 1,
+        "vegetable": 0,
+        "sheep": 0,
+        "boar": 0,
+        "cattle": 0,
+        "food": 4,
+        "family": 2,
+        "room": 2,
+        "fence": 0,
+        "barn": 0,
+        "begging": 0
+      },
+      "fields": [
+        {
+          "field_type": "empty",
+          "position": 1,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 2,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 3,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 4,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 5,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 6,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 7,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 8,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 9,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 10,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 11,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 12,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "empty",
+          "position": 13,
+          "is_in": {
+            "family": 0,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "room",
+          "position": 14,
+          "is_in": {
+            "family": 1,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        },
+        {
+          "field_type": "room",
+          "position": 15,
+          "is_in": {
+            "family": 1,
+            "sheep": 0,
+            "boar": 0,
+            "cattle": 0,
+            "grain": 0,
+            "vegetable": 0
+          },
+          "is_barn": false
+        }
+      ],
+      "house_type": "wood",
+      "fences": null,
+      "cards": [
+        {
+          "card_number": "JOB_17",
+          "name": "\uace8\uc870 \uac74\ucd95\uc5c5\uc790",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "JOB_02",
+          "name": "\ubaa9\uc0ac",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "JOB_09",
+          "name": "\ubb34\uc790\uc2dd",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "JOB_12",
+          "name": "\uc0c1\ub2f4\uac00",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "JOB_29",
+          "name": "\uac00\ucd95 \uc0c1\uc778",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "JOB_35",
+          "name": "\ubc84\uc12f \ub530\ub294 \uc0ac\ub78c",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "JOB_36",
+          "name": "\ucd08\ubcbd\uc9c8\uacf5",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "SUB_FAC_02",
+          "name": "\ub300\ud615\uc628\uc2e4",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "SUB_FAC_07",
+          "name": "\uc6b8\ucc3d\ud55c \uc232",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "SUB_FAC_08",
+          "name": "\ub3c4\ud1a0\ub9ac \ubc14\uad6c\ub2c8",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "SUB_FAC_38",
+          "name": "\uc0bc\ud3ec\uc2dd \ub18d\ubc95",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "SUB_FAC_01",
+          "name": "\ubd80\uc5cc\ubc29",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "SUB_FAC_24",
+          "name": "\ub124\ub35c\ub780\ub4dc\uc2dd \ud48d\ucc28",
+          "score": 2,
+          "is_used": false,
+          "used_round": null
+        },
+        {
+          "card_number": "SUB_FAC_30",
+          "name": "\ud759\ud310",
+          "score": 0,
+          "is_used": false,
+          "used_round": null
+        }
+      ],
+      "scores": {}
+    }
+  ],
+  "actions": [],
+  "base_cards": [
+    {
+      "card_number": "BASE_01",
+      "is_stacked": true,
+      "count": 1,
+      "resource": {
+        "wood": 1
+      },
+      "additional_action": {
+        "0": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "1": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "2": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "3": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        }
+      },
+      "player": null
+    },
+    {
+      "card_number": "BASE_02",
+      "is_stacked": true,
+      "count": 2,
+      "resource": {
+        "wood": 2
+      },
+      "additional_action": {
+        "0": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "1": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "2": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "3": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        }
+      },
+      "player": null
+    },
+    {
+      "card_number": "BASE_03",
+      "is_stacked": false,
+      "count": 0,
+      "resource": {
+        "reed": 1,
+        "food": 1,
+        "stone": 1
+      },
+      "additional_action": {
+        "0": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "1": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "2": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "3": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        }
+      },
+      "player": null
+    },
+    {
+      "card_number": "BASE_04",
+      "is_stacked": true,
+      "count": 2,
+      "resource": {
+        "clay": 2
+      },
+      "additional_action": {
+        "0": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "1": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "2": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "3": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        }
+      },
+      "player": null
+    },
+    {
+      "card_number": "BASE_05",
+      "is_stacked": false,
+      "count": 0,
+      "resource": null,
+      "additional_action": {
+        "0": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "1": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "2": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "3": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        }
+      },
+      "player": null
+    },
+    {
+      "card_number": "BASE_06",
+      "is_stacked": true,
+      "count": 1,
+      "resource": {
+        "food": 1
+      },
+      "additional_action": {
+        "0": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "1": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "2": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "3": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        }
+      },
+      "player": null
+    },
+    {
+      "card_number": "BASE_07",
+      "is_stacked": false,
+      "count": 0,
+      "resource": null,
+      "additional_action": {
+        "0": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "1": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "2": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "3": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        }
+      },
+      "player": null
+    },
+    {
+      "card_number": "BASE_08",
+      "is_stacked": false,
+      "count": 0,
+      "resource": null,
+      "additional_action": {
+        "0": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "1": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "2": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "3": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        }
+      },
+      "player": null
+    },
+    {
+      "card_number": "BASE_09",
+      "is_stacked": false,
+      "count": 0,
+      "resource": {
+        "grain": 1
+      },
+      "additional_action": {
+        "0": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "1": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "2": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "3": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        }
+      },
+      "player": null
+    },
+    {
+      "card_number": "BASE_10",
+      "is_stacked": false,
+      "count": 0,
+      "resource": null,
+      "additional_action": {
+        "0": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "1": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "2": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "3": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        }
+      },
+      "player": null
+    },
+    {
+      "card_number": "BASE_11",
+      "is_stacked": false,
+      "count": 0,
+      "resource": null,
+      "additional_action": {
+        "0": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "1": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "2": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "3": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        }
+      },
+      "player": null
+    },
+    {
+      "card_number": "BASE_12",
+      "is_stacked": false,
+      "count": 0,
+      "resource": {
+        "food": 2
+      },
+      "additional_action": {
+        "0": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "1": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "2": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "3": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        }
+      },
+      "player": null
+    },
+    {
+      "card_number": "BASE_13",
+      "is_stacked": true,
+      "count": 3,
+      "resource": {
+        "wood": 3
+      },
+      "additional_action": {
+        "0": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "1": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "2": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "3": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        }
+      },
+      "player": null
+    },
+    {
+      "card_number": "BASE_14",
+      "is_stacked": true,
+      "count": 1,
+      "resource": {
+        "clay": 1
+      },
+      "additional_action": {
+        "0": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "1": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "2": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "3": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        }
+      },
+      "player": null
+    },
+    {
+      "card_number": "BASE_15",
+      "is_stacked": true,
+      "count": 1,
+      "resource": {
+        "reed": 1
+      },
+      "additional_action": {
+        "0": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "1": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "2": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "3": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        }
+      },
+      "player": null
+    },
+    {
+      "card_number": "BASE_16",
+      "is_stacked": true,
+      "count": 1,
+      "resource": {
+        "food": 1
+      },
+      "additional_action": {
+        "0": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "1": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "2": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "3": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        }
+      },
+      "player": null
+    }
+  ],
+  "round_cards": [
+    {
+      "card_number": "ACTION_01",
+      "is_stacked": false,
+      "count": 0,
+      "resource": null,
+      "additional_action": {
+        "0": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "1": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "2": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "3": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        }
+      },
+      "player": null
+    },
+    {
+      "card_number": "ACTION_04",
+      "is_stacked": true,
+      "count": 1,
+      "resource": {
+        "sheep": 1
+      },
+      "additional_action": {
+        "0": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "1": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "2": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "3": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        }
+      },
+      "player": null
+    },
+    {
+      "card_number": "ACTION_02",
+      "is_stacked": false,
+      "count": 0,
+      "resource": null,
+      "additional_action": {
+        "0": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "1": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "2": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "3": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        }
+      },
+      "player": null
+    },
+    {
+      "card_number": "ACTION_03",
+      "is_stacked": false,
+      "count": 0,
+      "resource": null,
+      "additional_action": {
+        "0": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "1": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "2": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "3": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        }
+      },
+      "player": null
+    },
+    {
+      "card_number": "ACTION_07",
+      "is_stacked": false,
+      "count": 0,
+      "resource": null,
+      "additional_action": {
+        "0": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "1": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "2": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 1,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "3": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        }
+      },
+      "player": null
+    },
+    {
+      "card_number": "ACTION_06",
+      "is_stacked": false,
+      "count": 0,
+      "resource": null,
+      "additional_action": {
+        "0": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "1": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "2": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "3": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        }
+      },
+      "player": null
+    },
+    {
+      "card_number": "ACTION_05",
+      "is_stacked": true,
+      "count": 1,
+      "resource": {
+        "stone": 0
+      },
+      "additional_action": {
+        "0": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "1": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "2": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "3": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        }
+      },
+      "player": null
+    },
+    {
+      "card_number": "ACTION_08",
+      "is_stacked": true,
+      "count": 1,
+      "resource": {
+        "boar": 0
+      },
+      "additional_action": {
+        "0": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "1": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "2": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 1,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "3": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        }
+      },
+      "player": null
+    },
+    {
+      "card_number": "ACTION_09",
+      "is_stacked": false,
+      "count": 0,
+      "resource": {
+        "vegetable": 1
+      },
+      "additional_action": {
+        "0": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "1": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "2": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "3": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        }
+      },
+      "player": null
+    },
+    {
+      "card_number": "ACTION_11",
+      "is_stacked": true,
+      "count": 1,
+      "resource": {
+        "cattle": 0
+      },
+      "additional_action": {
+        "0": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "1": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "2": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "3": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        }
+      },
+      "player": null
+    },
+    {
+      "card_number": "ACTION_10",
+      "is_stacked": true,
+      "count": 1,
+      "resource": {
+        "stone": 0
+      },
+      "additional_action": {
+        "0": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "1": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "2": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 1,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "3": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        }
+      },
+      "player": null
+    },
+    {
+      "card_number": "ACTION_12",
+      "is_stacked": false,
+      "count": 0,
+      "resource": null,
+      "additional_action": {
+        "0": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "1": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "2": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "3": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        }
+      },
+      "player": null
+    },
+    {
+      "card_number": "ACTION_13",
+      "is_stacked": false,
+      "count": 0,
+      "resource": null,
+      "additional_action": {
+        "0": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "1": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "2": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 1,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "3": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        }
+      },
+      "player": null
+    },
+    {
+      "card_number": "ACTION_14",
+      "is_stacked": false,
+      "count": 0,
+      "resource": null,
+      "additional_action": {
+        "0": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "1": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "2": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        },
+        "3": {
+          "wood": 0,
+          "clay": 0,
+          "reed": 0,
+          "stone": 0,
+          "grain": 0,
+          "vegetable": 0,
+          "sheep": 0,
+          "boar": 0,
+          "cattle": 0,
+          "food": 0
+        }
+      },
+      "player": null
+    }
+  ],
+  "primary_cards": [
+    {
+      "card_number": "PRI_FAC_01",
+      "owner": null
+    },
+    {
+      "card_number": "PRI_FAC_02",
+      "owner": null
+    },
+    {
+      "card_number": "PRI_FAC_03",
+      "owner": null
+    },
+    {
+      "card_number": "PRI_FAC_04",
+      "owner": null
+    },
+    {
+      "card_number": "PRI_FAC_05",
+      "owner": null
+    },
+    {
+      "card_number": "PRI_FAC_06",
+      "owner": null
+    },
+    {
+      "card_number": "PRI_FAC_07",
+      "owner": null
+    },
+    {
+      "card_number": "PRI_FAC_08",
+      "owner": null
+    }
+  ],
+  "common_resources": {
+    "wood": 24,
+    "clay": 21,
+    "reed": 13,
+    "stone": 16,
+    "grain": 24,
+    "vegetable": 16,
+    "sheep": 17,
+    "boar": 15,
+    "cattle": 13,
+    "food": 74,
+    "family": 0,
+    "room": 0,
+    "fence": 0,
+    "barn": 0,
+    "begging": 0
+  }
+}
