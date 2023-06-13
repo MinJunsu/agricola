@@ -5,6 +5,7 @@
 ```shell
 docker-compose up
 virtualenv .venv -p python3.10
+pip install -r requirements.txt
 source .venv/bin/activate
 ```
 
