@@ -86,10 +86,9 @@ class Game(Base):
         players_instance = [Player(name=player) for player in players]
 
         for index, player in enumerate(players_instance):
-            player_cards = job_cards + sub_cards
-            # player_cards = job_cards[:7] + sub_cards[:7]
-            # job_cards = job_cards[7:]
-            # sub_cards = sub_cards[7:]
+            player_cards = job_cards[:7] + sub_cards[:7]
+            job_cards = job_cards[7:]
+            sub_cards = sub_cards[7:]
 
             player.set("cards", [Card.from_dict(**eval(card)) for card in player_cards])
             if index == 0:
