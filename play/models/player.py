@@ -47,10 +47,6 @@ class Player(Base):
             return done
         return not_done
 
-    # 수확단계 수행
-    def harvest(self):
-        pass
-
     def change_field_is_in(self, position: List[int], resource: str, count: int) -> bool:
         field = list(filter(lambda x: x.position == position, self._fields))[-1]
         if field.get("field_type") == FieldType.FARM:

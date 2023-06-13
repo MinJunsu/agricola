@@ -217,17 +217,13 @@ class Action(Base):
 
             # 3. 보조설비의 비용을 확인한다.
             cost = cls.get_cost(card_number)
-            cost.replace("player", "player_clone")
 
             # 4. 플레이어가 조건을 만족하는 지 확인한다.
             # 5. 플레이어가 보조설비를 내기 위해 소모되는 자원이 있는 지 확인한다. (require)
-            player_clone = Player.from_dict(**player.to_dict())
             if eval(condition):
                 eval(cost)
             else:
                 raise Exception("설비 카드를 낼 수 없습니다.")
-
-            player.set("resource", player_clone.get("resource"))
 
             if primary_card:
                 primary_card.set('owner', turn)

@@ -1,5 +1,5 @@
-import logging
 from functools import reduce
+from random import shuffle
 from typing import List
 
 from asgiref.sync import sync_to_async
@@ -40,7 +40,7 @@ class Game(Base):
             self,
             first: int = 0,
             turn: int = 0,
-            round: int = 3,
+            round: int = 0,
             phase: int = 0,
             common_resources: dict = None,
             players: List[dict] = None,
@@ -79,19 +79,21 @@ class Game(Base):
         cards = redis.hvals('cards')
         job_cards = list(filter(lambda card: "JOB" in card, cards))
         sub_cards = list(filter(lambda card: "SUB_FAC" in card, cards))
-        # shuffle(job_cards)
-        # shuffle(sub_cards)
+        shuffle(job_cards)
+        shuffle(sub_cards)
 
         instance = cls()
         players_instance = [Player(name=player) for player in players]
 
-        for player in players_instance:
+        for index, player in enumerate(players_instance):
             player_cards = job_cards + sub_cards
             # player_cards = job_cards[:7] + sub_cards[:7]
             # job_cards = job_cards[7:]
             # sub_cards = sub_cards[7:]
 
             player.set("cards", [Card.from_dict(**eval(card)) for card in player_cards])
+            if index == 0:
+                player.get("resource").set("food", 2)
 
         instance.set("players", players_instance)
         instance.increment_resource()
@@ -111,8 +113,6 @@ class Game(Base):
         # 기본 값 설정 (is_done, command 파싱, 플레이어 행동 수)
         is_done: bool = False
         command, card_number, player, additional = self.parse_command(command)
-        logger = logging.getLogger(__name__)
-        logger.info(f"command: {command}, card_number: {card_number}, player: {player}, additional: {additional}")
 
         command = CommandType(command)
         worked = len(list(filter(lambda p: p.get('player') is not None, self.action_cards)))
@@ -139,8 +139,6 @@ class Game(Base):
         for p in self._players:
             index = self._players.index(p)
             used_cards = filter(lambda c: c.get('is_used'), p.get('cards'))
-            # logger.info(f"{index} user used_cards: {list(used_cards)}")
-            logger.info(f"index: {index}, turn: {self._turn}")
             [c.run(
                 player=p,
                 turn=self._turn,
@@ -206,16 +204,12 @@ class Game(Base):
 
         total_family = reduce(lambda acc, player: acc + player.get('resource').get('family'), self._players, 0)
         kid_family = len(list(filter(
-            lambda c: (c.get('card_number') == "ACTION_07" and c.get("player") == self._turn) or (
-                    c.get("card_number") == "ACTION_13" and c.get("player") == self._turn),
+            lambda c: (c.get('card_number') == "ACTION_07" and c.get("player") is not None) or (
+                    c.get("card_number") == "ACTION_13" and c.get("player") is not None),
             self._round_cards)))
-        logger = logging.getLogger(__name__)
-        logger.info(f"total_worked: {total_worked}")
-        logger.info(f"total_family: {total_family}, kid_family: {kid_family}")
         useable_family = total_family - kid_family
 
         while useable_family != total_worked + 1:
-            # for _ in range(10):
             # 우선 턴을 진행 시키고, 이 플레이어가 턴을 진행할 수 있는지 확인한다.
             self._turn += 1
 
