@@ -1,6 +1,5 @@
 import logging
 from functools import reduce
-from random import shuffle
 from typing import List
 
 from asgiref.sync import sync_to_async
@@ -41,7 +40,7 @@ class Game(Base):
             self,
             first: int = 0,
             turn: int = 0,
-            round: int = 0,
+            round: int = 3,
             phase: int = 0,
             common_resources: dict = None,
             players: List[dict] = None,
@@ -80,16 +79,17 @@ class Game(Base):
         cards = redis.hvals('cards')
         job_cards = list(filter(lambda card: "JOB" in card, cards))
         sub_cards = list(filter(lambda card: "SUB_FAC" in card, cards))
-        shuffle(job_cards)
-        shuffle(sub_cards)
+        # shuffle(job_cards)
+        # shuffle(sub_cards)
 
         instance = cls()
         players_instance = [Player(name=player) for player in players]
 
         for player in players_instance:
-            player_cards = job_cards[:7] + sub_cards[:7]
-            job_cards = job_cards[7:]
-            sub_cards = sub_cards[7:]
+            player_cards = job_cards + sub_cards
+            # player_cards = job_cards[:7] + sub_cards[:7]
+            # job_cards = job_cards[7:]
+            # sub_cards = sub_cards[7:]
 
             player.set("cards", [Card.from_dict(**eval(card)) for card in player_cards])
 
@@ -100,7 +100,8 @@ class Game(Base):
 
     @staticmethod
     def parse_command(command_str: dict) -> tuple[CommandType, str, int, dict]:
-        command: CommandType = command_str.get('command', CommandType.ACTION)
+        command_string: str = command_str.get('command', "action")
+        command = CommandType(command_string)
         card_number: str = command_str.get('card_number', None)
         player: int = command_str.get('player', NO_USER)
         additional: dict = command_str.get('additional', {})
@@ -120,20 +121,12 @@ class Game(Base):
         if player != self._turn and command != CommandType.ALWAYS:
             raise IsNotPlayerTurnException
 
-        # FIXME: TEST 환경에서만 주석 처리
-        # 오픈되지 않은 라운드 카드에 접근하려하면 에러를 발생시킴.
-        # round_card = find_object_or_raise_exception(
-        #     array=self._round_cards,
-        #     key="card_number", value=card_number
-        # )
-
-        # TODO: 라운드 카드 이펙트 적용과 행동 명령 처리 순서 확인 -> 이펙트 처리가 먼저라면 round_card 예외 처리 추가해주어야함.
         # 플레이어의 행동 명령을 받아서 처리한다.
         is_done = Action.run(
             command=command, card_number=card_number, players=self._players,
             action_cards=self.action_cards, turn=self._turn, common_resource=self._common_resources,
             additional=additional, used_round=self._round, round_cards=self._round_cards,
-            primary_cards=self._primary_cards
+            primary_cards=self._primary_cards, player_index=player
         )
 
         prev_round = self._round
@@ -142,21 +135,25 @@ class Game(Base):
         if card_number == FIRST_CHANGE_CARD_NUMBER:
             self._first = self._turn
 
-        # 게임의 정보를 바탕으로 게임의 턴을 변경
-        self.change_turn_and_round_and_phase(is_done=is_done, total_worked=worked)
-
         # 플레이어에 존재하는 라운드 카드들에 적용하는 카드 이펙트들을 적용한다.
         for p in self._players:
+            index = self._players.index(p)
             used_cards = filter(lambda c: c.get('is_used'), p.get('cards'))
+            # logger.info(f"{index} user used_cards: {list(used_cards)}")
+            logger.info(f"index: {index}, turn: {self._turn}")
             [c.run(
                 player=p,
                 turn=self._turn,
+                is_my_turn=index == self._turn,
                 round_card_number=card_number,
                 round_cards=self._round_cards,
                 card_number=c.get('card_number'),
                 now_round=self._round,
                 is_round_start=prev_round != self._round
             ) for c in used_cards]
+
+        # 게임의 정보를 바탕으로 게임의 턴을 변경
+        self.change_turn_and_round_and_phase(is_done=is_done, total_worked=worked)
 
         # 직업 카드 및 보조 설비 카드에서 제공하는 특정한 이펙트를 적용시킴.
         # 라운드 카드에 존재하는 카드 이펙트들을 전체적으로 적용한다.
@@ -167,10 +164,18 @@ class Game(Base):
                         resource, self._players[int(player_index)].get('resource').get(resource) + count
                     )
                     resources[resource] = 0
+                    if resource in ["boar", "cattle", "sheep"]:
+                        if not any(map(
+                                lambda f: f.place_or_none(resource, count),
+                                self._players[int(player_index)].get('fields')
+                        )):
+                            self._players[int(player_index)].get('resource').set(
+                                resource, self._players[int(player_index)].get('resource').get(resource) - count
+                            )
 
         # 게임 스코어 결과 처리 확인 테스트용
-        # for p in self._players:
-        #     print(p.calculate_score())
+        for p in self._players:
+            p.calculate_score()
 
         return self.to_dict()
 
@@ -185,7 +190,7 @@ class Game(Base):
             common_resource_count = self._common_resources.get(resource)
 
             # 리소스가 스택되는 상황이며, 공용 자원에서 충분히 배분해줄 수 있는 상황일 때 자원 변경
-            if card.get('is_stacked') and common_resource_count - card.get('count') > 0:
+            if common_resource_count - card.get('count') > 0:
                 # 리소스는 추가해주고,
                 card.get('resource')[resource] += card.get('count')
                 self._common_resources.set(resource, common_resource_count - card.get('count'))
@@ -200,8 +205,16 @@ class Game(Base):
             return
 
         total_family = reduce(lambda acc, player: acc + player.get('resource').get('family'), self._players, 0)
+        kid_family = len(list(filter(
+            lambda c: (c.get('card_number') == "ACTION_07" and c.get("player") == self._turn) or (
+                    c.get("card_number") == "ACTION_13" and c.get("player") == self._turn),
+            self._round_cards)))
+        logger = logging.getLogger(__name__)
+        logger.info(f"total_worked: {total_worked}")
+        logger.info(f"total_family: {total_family}, kid_family: {kid_family}")
+        useable_family = total_family - kid_family
 
-        while total_family != total_worked + 1:
+        while useable_family != total_worked + 1:
             # for _ in range(10):
             # 우선 턴을 진행 시키고, 이 플레이어가 턴을 진행할 수 있는지 확인한다.
             self._turn += 1
@@ -245,6 +258,8 @@ class Game(Base):
             # 농장 단계
             for farm in filter(lambda f: f.get('field_type') == FieldType.FARM, fields):
                 resource = farm.get_resource()
+                if resource == "":
+                    continue
                 amount = farm.get('is_in').get(resource)
                 if amount > 0:
                     farm.get("is_in").set(resource, amount - 1)

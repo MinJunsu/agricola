@@ -32,31 +32,31 @@ class Action(Base):
             common_resource: Resource,
             primary_cards: List[PrimaryCard],
             additional: Any = None,
+            player_index: int = None
     ):
         player: Player = players[turn]
+
         # 데이터 저장을 위해 라운드 카드를 사용한 경우 라운드 카드 변수를 저장한다.
         round_card: RoundCard | None = None
         if "BASE" in card_number or "ACTION" in card_number:
             round_card = find_object_or_raise_exception(action_cards, "card_number", card_number)
-            # FIXME: TEST를 위한 오픈되지 않은 카드 사용 가능
             # if round_cards.index(round_card) >= used_round:
             #     raise Exception("오픈되지 않은 카드는 사용할 수 없습니다.")
 
             if round_card.get("player") is not None:
                 raise CantUseCardException
 
-        logger = logging.getLogger(__name__)
-        logger.info("round_card: " + str(round_card.to_dict()))
-
         card_command = cls.get_command(card_number)
 
-        logger.info("command: " + card_command)
+        if command == CommandType.ALWAYS:
+            player: Player = players[player_index]
+        is_done = eval(card_command)
 
         # 플레이어가 라운드 카드를 선택한 경우 라운드 카드에 플레이어에 대한 정보를 넣어준다.
-        if round_card:
+        if round_card and is_done:
             round_card.set("player", turn)
 
-        return eval(card_command)
+        return is_done
 
     # 카드를 낼 때 필요한 자원을 가져간다. -> 필요한 자원을 내는 것 뿐이므로 턴이 유지되는 것은 아님
     @staticmethod
@@ -92,7 +92,9 @@ class Action(Base):
         is_dones = []
         for resource, amount in round_card.get("resource").items():
             is_dones.append(cls.plus(player, resource, amount))
-            round_card.get("resource")[resource] = 0
+            if round_card.get("is_stacked"):
+                round_card.get("resource")[resource] = 0
+
         return all(is_dones)
 
     @classmethod
@@ -124,30 +126,13 @@ class Action(Base):
         if not (field.get('field_type') == FieldType.CAGE or field.get('is_barn')):
             raise Exception('동물을 배치할 수 있는 공간이 아닙니다.')
 
-        # TODO: 동물 배치 개수를 확인하여 가능한지 여부를 확인한다.
-        limit_animal_count = 0
-        if field.get("is_barn") and field.get("field_type") == FieldType.CAGE:
-            limit_animal_count = 4
-        elif field.get("field_type") == FieldType.CAGE:
-            limit_animal_count = 2
-        elif field.get("is_barn"):
-            limit_animal_count = 1
-
+        logger = logging.getLogger(__name__)
         # 선택한 위치에 다른 동물이 존재하거나 동물 배치 개수를 초과한 경우
         for resource, amount in round_card.get('resource').items():
-            if (resource == "sheep" and (
-                    field.get("is_in").get("boar") > 0 or field.get("is_in").get("cattle") > 0)) or \
-                    (resource == "boar" and (
-                            field.get("is_in").get("sheep") > 0 or field.get("is_in").get("cattle") > 0)) or \
-                    (resource == "cattle" and (
-                            field.get("is_in").get("sheep") > 0 or field.get("is_in").get("boar") > 0)):
-                raise Exception('해당 위치에 다른 동물이 존재합니다.')
-
-            if field.get("is_in").get(resource) + amount > limit_animal_count:
+            logger.info("resource: " + str(resource))
+            logger.info("amount: " + str(amount))
+            if not field.place_or_none(resource, amount):
                 raise Exception('동물 배치 개수를 초과하였습니다.')
-
-            remain = field.get('is_in').get(resource)
-            field.get('is_in').set(resource, remain + amount)
 
         cls.use_round_card_resources(player=player_clone, round_card=round_card)
 
@@ -184,7 +169,7 @@ class Action(Base):
         #         card_number: str
         #     }
         # }
-        card_number = additional.get("card_number")
+        card_number = additional.get("card_number", None)
 
         if card_type == "JOB":
             # 1. 특정한 직업 카드를 가져온다.
@@ -221,6 +206,8 @@ class Action(Base):
                 if primary_card.get('owner') is not None:
                     raise Exception("이미 다른 플레이어가 소유하고 있는 주요 설비 카드입니다.")
             else:
+                if round_card.get('card_number') == 'BASE_08' and card_number == "":
+                    return True
                 card: Card = find_object_or_raise_exception(
                     array=player.get("cards"), key="card_number",
                     value=card_number
@@ -230,11 +217,17 @@ class Action(Base):
 
             # 3. 보조설비의 비용을 확인한다.
             cost = cls.get_cost(card_number)
+            cost.replace("player", "player_clone")
 
             # 4. 플레이어가 조건을 만족하는 지 확인한다.
             # 5. 플레이어가 보조설비를 내기 위해 소모되는 자원이 있는 지 확인한다. (require)
+            player_clone = Player.from_dict(**player.to_dict())
             if eval(condition):
                 eval(cost)
+            else:
+                raise Exception("설비 카드를 낼 수 없습니다.")
+
+            player.set("resource", player_clone.get("resource"))
 
             if primary_card:
                 primary_card.set('owner', turn)
@@ -354,31 +347,35 @@ class Action(Base):
         # TODO: 울타리 안에 들어갈 수 있는 최대 동물 수를 초과할 수 없다.
 
         # 아래 4가지 변수들의 input 값이 정상적인지 확인
-        animal: str = additional.get("animal", None)
-        position: List[int] = additional.get("position", None)
+        animal: str = additional.get("animals", None)
+        position: List[int] = additional.get("positions", None)
         departure: int = position[0]
         arrival: int = position[1]
 
         if animal is None or departure is None or arrival is None:
             raise Exception("입력값이 잘못되었습니다.")
 
-        departure_field: Field = find_object_or_raise_exception(array=fields, key="position", value=departure)
-        arrival_field: Field = find_object_or_raise_exception(array=fields, key="position", value=arrival)
+        # departure_field: Field = find_object_or_raise_exception(array=fields, key="position", value=departure)
+
+        departure_field: Field = fields[departure]
+        # arrival_field: Field = find_object_or_raise_exception(array=fields, key="position", value=arrival)
+        arrival_field: Field = fields[arrival]
 
         # 동물이 아닌 자원을 이동시킬 수는 없다.
         # if additional.get("animal") != "sheep" or "boar" or "cattle":
         #     raise Exception("동물이 아닌 자원을 이동시킬 수는 없습니다.")
 
-        # 출발지와 목적지가 울타리가 아닐 수 없다.
-        if player.get("fields")[departure - 1].get("field_type") != FieldType.CAGE or \
-                player.get("fields")[arrival - 1].get("field_type") != FieldType.CAGE:
-            raise Exception("선택한 농지가 울타리가 아닙니다.")
+        # if not departure_field.is_available(animal, 0):
+        #     raise Exception("선택한 농지가 울타리가 아닙니다.")
 
-        if departure_field.get("animal").get(animal) < 1:
-            raise Exception("출발지에 해당하는 동물이 충분하지 않습니다.")
-
-        departure_field.move(arrival=arrival_field, animal=animal, count=1)
-
+        # # 출발지와 목적지가 울타리가 아닐 수 없다.
+        # if player.get("fields")[departure - 1].get("field_type") != FieldType.CAGE or \
+        #         player.get("fields")[arrival - 1].get("field_type") != FieldType.CAGE:
+        #     raise Exception("선택한 농지가 울타리가 아닙니다.")
+        #
+        # if not arrival_field.place_or_none(animal, 1):
+        #     raise Exception("출발지에 해당하는 동물이 충분하지 않습니다.")
+        departure_field.move(arrival_field, animal, 1)
         return False
 
     """
@@ -688,7 +685,7 @@ class Action(Base):
             )
 
         if fences is not None:
-            cls.create_fence(player=player, additional={
+            cls.create_fence(player=player, common_resource=common_resource, additional={
                 "fences": fences
             })
         return True
@@ -697,6 +694,7 @@ class Action(Base):
     def create_fence(
             cls,
             player: Player,
+            common_resource: Resource,
             additional: dict
     ):
         # 펜스 로직 처리
@@ -719,6 +717,8 @@ class Action(Base):
         count = reduce(lambda acc, x: acc + len(x[1]), fences.items(), 0)
         if count > FENCE_LIMIT:
             raise Exception(f"펜스는 최대 {FENCE_LIMIT}개 까지만 칠 수 있습니다.")
+
+        cls.require(player, common_resource, 'wood', count)
 
         for index, _ in fences.items():
             player.get("fields")[int(index)].set("field_type", FieldType.CAGE)

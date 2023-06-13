@@ -11,6 +11,7 @@ class CardsConfig(AppConfig):
         super().ready()
         from cards.models import Card, CardEffect
         redis = connection()
+
         cards = Card.objects.all().values('card_number', 'command', 'name', 'score', 'cost', 'condition')
         effects = CardEffect.objects.all().values('card_number', 'condition', 'effect', 'command')
         for effect in effects:

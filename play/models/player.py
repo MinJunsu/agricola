@@ -17,6 +17,7 @@ class Player(Base):
     _fields: List[Field]
     _house_type: HouseType
     _fences: dict | None
+    _scores: dict
 
     def __init__(
             self,
@@ -26,13 +27,15 @@ class Player(Base):
             house_type: HouseType = HouseType.WOOD_HOUSE,
             fences: dict = None,
             cards: List[dict] = None,
+            scores: dict = None
     ):
         self._name = name
         self._resource = Resource.from_dict(**resource) if resource else Resource.initialize_player_resource()
         self._fields = [Field.from_dict(**field) for field in fields] if fields else Field.initialize()
-        self._house_type = HouseType.CLAY_HOUSE
+        self._house_type = house_type
         self._fences = fences if fences else None
         self._cards = [Card.from_dict(**card) for card in cards] if cards else []
+        self._scores = scores if scores else dict()
 
     # 플레이어 행동 처리 (카드 드로우, 카드 사용, 자원 사용 등)
     # 만약 행동이 종료될 경우 True, 종료되지 않을 경우 False를 반환한다. (카드의 속성에 따라 다르게 처리)
@@ -79,16 +82,16 @@ class Player(Base):
         empty = 0
 
         for field in self._fields:
-            if field.field_type == FieldType.EMPTY:
+            if field.get("field_type") == FieldType.EMPTY:
                 if not field.get("is_barn"):
                     empty += 1
-            elif field.field_type == FieldType.CAGE:
+            elif field.get("field_type") == FieldType.CAGE:
                 cage += 1
                 if field.get("is_barn"):
                     cage_barn += 1
-            elif field.field_type == FieldType.FARM:
+            elif field.get("field_type") == FieldType.FARM:
                 farm += 1
-            elif field.field_type == FieldType.ROOM:
+            elif field.get("field_type") == FieldType.ROOM:
                 if self._house_type == HouseType.CLAY_HOUSE:
                     clay_room += 1
                 elif self._house_type == HouseType.STONE_HOUSE:
@@ -99,16 +102,14 @@ class Player(Base):
         return dictionary
 
     def calculate_field_score(self) -> dict:
-
         dictionary = dict()
         key_dic = self.inform_player_field()
         keys = FIELD_SCORE_BOARD.keys()
         for key in keys:
             dictionary[key] = FIELD_SCORE_BOARD[key][key_dic.get(key)]
-
         return dictionary
 
-    def calculate_score(self) -> dict:
+    def calculate_score(self) -> None:
         card_score = self.calculate_card_score()
         field_score = self.calculate_field_score()
         resource_score = self.get("resource").calculate_score()
@@ -118,7 +119,8 @@ class Player(Base):
         # 점수 계산 로직
         score = reduce(lambda acc, x: acc + x[1], sum_score.items(), 0)
         result = {**sum_score, 'sum': score}
-        return result
+        self._scores = result
+        return None
 
     def to_dict(self) -> dict:
         dictionary = super().to_dict()

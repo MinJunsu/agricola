@@ -10,15 +10,11 @@ django.setup()
 async def main():
     from core.redis import connection
     from play.models.game import Game
-
-    redis = connection()
-
-    # redis DB 전체 초기화
-    redis.flushdb()
-
-    # ! 임시 코드 작성 시작
     from cards.models import Card, CardEffect
     redis = connection()
+
+    redis.flushdb()
+
     cards = Card.objects.all().values('card_number', 'command', 'name', 'score', 'cost', 'condition')
     effects = CardEffect.objects.all().values('card_number', 'condition', 'effect', 'command')
     for effect in effects:
@@ -43,9 +39,8 @@ async def main():
         'name': card['name'],
         'score': card['score']
     }) for card in cards})
-    # ! 임시 코드 작성 끝
 
-    game = await Game.initialize(["3", "2", "1", "4"])
+    game = await Game.initialize(["1", "5", "3", "4"])
     redis.set("game:3", str(game.to_dict()))
 
 

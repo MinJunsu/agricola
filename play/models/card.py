@@ -1,3 +1,4 @@
+import logging
 from typing import List
 
 from core.const import LAST_ROUND
@@ -42,7 +43,6 @@ class Card(Base):
     ) -> bool:
         self._is_used = True
         self._used_round = now_round
-
         redis = connection()
         if "immediately" in redis.hkeys(f'cards:{self._card_number}'):
             command = redis.hget(f'cards:{self._card_number}', 'immediately')
@@ -60,6 +60,7 @@ class Card(Base):
             self,
             player,
             turn: int,
+            is_my_turn: bool,
             round_card_number: str,
             card_number: str,
             round_cards: List[RoundCard],
@@ -67,11 +68,17 @@ class Card(Base):
             is_round_start: bool
     ):
         redis = connection()
-
+        logger = logging.getLogger(__name__)
+        logger.info("card:run:card_number: " + str(self._card_number))
+        logger.info("action 1: " + str("action" in redis.hkeys(f'cards:{self._card_number}')))
+        logger.info("action 2: " + str(self._card_number in redis.hkeys('cards:effects:action')))
         if "action" in redis.hkeys(f'cards:{self._card_number}'):
             if self._card_number in redis.hkeys('cards:effects:action'):
                 command = redis.hget(f'cards:{self._card_number}', 'action')
                 condition = redis.hget('cards:effects:action', self._card_number)
+                logger.info("condition: " + condition)
+                logger.info("command: " + command)
+                logger.info("is_my_turn: " + str(is_my_turn))
                 if eval(condition):
                     eval(command)
 
@@ -135,18 +142,20 @@ class Card(Base):
             count: int = 0,
             addtional: List = None
     ) -> List:
+        array = []
         # 거대 농장, 하인
         if method == "remain":
-            return list(range(now_round + 1, LAST_ROUND + 1))
+            array = list(range(now_round + 1, LAST_ROUND + 1))
         # 벽 건축가, 청어 냄비, 도토리 바구니, 딸기포, 연못 오두막
         elif method == "next":
-            return list(range(now_round + 1, now_round + count + 1))
+            array = list(range(now_round + 1, now_round + count + 1))
         # 대형 온실, 양의 친구
         elif method == "additional":
-            return list(set(list(map(lambda x: x + now_round, addtional))) & set(list(range(15))))
+            array = list(set(list(map(lambda x: x + now_round, addtional))) & set(list(range(15))))
         # 손수레
         elif method == "farming":
-            return [5, 8, 11, 14]
+            array = [4, 7, 10, 13]
         # 울창한 숲
         elif method == "even":
-            return list(set(list(range(now_round + 1, LAST_ROUND + 1))) & set(list(range(0, 15, 2))))
+            array = list(range(0, 15, 2))
+        return list(set(array).intersection(set(list(range(now_round + 1, LAST_ROUND)))))

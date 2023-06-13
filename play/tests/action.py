@@ -1,4 +1,5 @@
 from play.models.action import Action
+from play.models.resource import Resource
 from play.tests.base import BaseTestCase
 
 
@@ -31,6 +32,7 @@ class ActionTestCase(BaseTestCase):
 
     async def test_unittest_resource_decrease(self):
         # GIVEN: 입력값
+        common_resource = Resource()
         player = self.game.get("players")[0]
         resource = "sheep"
         amount = 4
@@ -39,7 +41,7 @@ class ActionTestCase(BaseTestCase):
 
         # WHEN: 사용자의 자원을 감소시킨다.
         prev_resource = player.get("resource").get(resource)
-        Action.require(player, resource, amount)
+        Action.require(player, common_resource, resource, amount)
 
         # THEN: 사용자의 자원이 감소하였다.
         self.assertEqual(prev_resource - 4, player.get("resource").get(resource))

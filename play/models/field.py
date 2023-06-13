@@ -85,6 +85,8 @@ class Field(Base):
 
     # 가축들이 배치가 가능하다면 배치 후 True 리턴 아니면 False 리턴
     def place_or_none(self, resource: str, amount: int) -> bool:
+        if self._field_type != FieldType.CAGE and not self._is_barn:
+            return False
         if self.is_available(resource, amount):
             self._is_in.set(resource, amount + self._is_in.get(resource))
             return True

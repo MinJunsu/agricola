@@ -105,7 +105,7 @@ class LobbyConsumer(BaseLobbyConsumer):
                     f"room_{already_watching_room_id}",
                     self.channel_name,
                 )
-
+                
             room: Room = Room.from_dict(**eval(self.redis.hget("rooms", str(room_id))))
             await self.send_json(socket_response(
                 is_success=True,
